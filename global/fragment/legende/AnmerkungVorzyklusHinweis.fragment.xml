@@ -1,0 +1,21 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Button
+        id="btnBenutzerhinweis"
+        icon="sap-icon://question-mark"
+        type="Transparent"
+        press="onOpenHinweis"
+        tooltip="Benutzungshinweise anzeigen">
+        <dependents>
+            <Popover
+                showHeader="false"
+                placement="VerticalPreferredBottom"
+                contentWidth="26rem">
+                <Text
+                    text="Die Anmerkung zum VorPlanungssituation eines Quartals wird mit einem weiteren Klick auf das zugehörige Doppelanmerkungsikon, falls vorhanden, angezeigt."
+                    class="sapUiSmallMargin" />
+            </Popover>
+        </dependents>
+    </Button>
+</core:FragmentDefinition>

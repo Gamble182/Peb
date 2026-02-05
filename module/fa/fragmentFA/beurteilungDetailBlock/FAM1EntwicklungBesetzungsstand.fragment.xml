@@ -1,0 +1,162 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mc="sap.suite.ui.microchart"
+    xmlns:rt="de.bundeswehr.zaxxx.framework.v010.global.control.ratingAndTrending">
+
+    <FlexBox
+        alignItems="Start"
+        justifyContent="SpaceBetween"
+        class="sapUiSmallMarginBottom">
+
+        <VBox>
+            <mc:AreaMicroChart
+                minXValue="0"
+                maxXValue="100"
+                minYValue="0"
+                maxYValue="100"
+                size="L"
+                tooltip="{= 'Prognosewerte:&#10;' + 
+                                       ${path: 'trend_s1', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q1} + ' / Besetzt ' + ${trend_ist_q1} + ' (' + ${trend_perc_q1} + '%)' + '&#10;' +
+                                       ${path: 'trend_s2', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q2} + ' / Besetzt ' + ${trend_ist_q2} + ' (' + ${trend_perc_q2} + '%)' + '&#10;' +
+                                       ${path: 'trend_s3', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q3} + ' / Besetzt ' + ${trend_ist_q3} + ' (' + ${trend_perc_q3} + '%)' + '&#10;' +
+                                       ${path: 'trend_s4', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q4} + ' / Besetzt ' + ${trend_ist_q4} + ' (' + ${trend_perc_q4} + '%)' + '&#10;' +
+                                       ${path: 'trend_s5', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q5} + ' / Besetzt ' + ${trend_ist_q5} + ' (' + ${trend_perc_q5} + '%)' + '&#10;' +
+                                       ${path: 'trend_s6', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q6} + ' / Besetzt ' + ${trend_ist_q6} + ' (' + ${trend_perc_q6} + '%)' + '&#10;' +
+                                       ${path: 'trend_s7', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q7} + ' / Besetzt ' + ${trend_ist_q7} + ' (' + ${trend_perc_q7} + '%)' + '&#10;' +
+                                       ${path: 'trend_s8', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q8} + ' / Besetzt ' + ${trend_ist_q8} + ' (' + ${trend_perc_q8} + '%)' + '&#10;' }">
+                <mc:firstXLabel>
+                    <mc:AreaMicroChartLabel
+                        label="{path: 'trend_from', formatter: '.formatter.getQuartalTitel', templateShareable : false}"
+                        color="sapUiChartPaletteQualitativeHue1" />
+                </mc:firstXLabel>
+
+                <mc:lastXLabel>
+                    <mc:AreaMicroChartLabel
+                        label="{path: 'trend_to', formatter: '.formatter.getQuartalTitel', templateShareable : false}"
+                        color="sapUiChartPaletteQualitativeHue1" />
+                </mc:lastXLabel>
+
+                <mc:firstYLabel>
+                    <mc:AreaMicroChartLabel
+                        label="Min: {trend_perc_min}%"
+                        color="Neutral" />
+                </mc:firstYLabel>
+                <mc:lastYLabel>
+                    <mc:AreaMicroChartLabel
+                        label="Max: {trend_perc_max}%"
+                        color="Neutral" />
+                </mc:lastYLabel>
+                <mc:chart>
+                    <mc:AreaMicroChartItem>
+                        <mc:points>
+                            <mc:AreaMicroChartPoint
+                                x="0"
+                                y="{path: 'trend_perc_q1', formatter: '.formatter.getPercentValueMax100'}" />
+                            <mc:AreaMicroChartPoint
+                                x="13"
+                                y="{path: 'trend_perc_q2', formatter: '.formatter.getPercentValueMax100'}" />
+                            <mc:AreaMicroChartPoint
+                                x="26"
+                                y="{path: 'trend_perc_q3', formatter: '.formatter.getPercentValueMax100'}" />
+                            <mc:AreaMicroChartPoint
+                                x="39"
+                                y="{path: 'trend_perc_q4', formatter: '.formatter.getPercentValueMax100'}" />
+                            <mc:AreaMicroChartPoint
+                                x="52"
+                                y="{path: 'trend_perc_q5', formatter: '.formatter.getPercentValueMax100'}" />
+                            <mc:AreaMicroChartPoint
+                                x="65"
+                                y="{path: 'trend_perc_q6', formatter: '.formatter.getPercentValueMax100'}" />
+                            <mc:AreaMicroChartPoint
+                                x="78"
+                                y="{path: 'trend_perc_q7', formatter: '.formatter.getPercentValueMax100'}" />
+                            <mc:AreaMicroChartPoint
+                                x="100"
+                                y="{path: 'trend_perc_q8', formatter: '.formatter.getPercentValueMax100'}" />
+                        </mc:points>
+                    </mc:AreaMicroChartItem>
+                </mc:chart>
+                <mc:maxThreshold>
+                    <mc:AreaMicroChartItem color="NatoGreen">
+                        <mc:points>
+                            <mc:AreaMicroChartPoint
+                                x="0"
+                                y="62" />
+                            <mc:AreaMicroChartPoint
+                                x="100"
+                                y="62" />
+                        </mc:points>
+                    </mc:AreaMicroChartItem>
+                </mc:maxThreshold>
+                <mc:innerMaxThreshold>
+                    <mc:AreaMicroChartItem color="NatoYellow">
+                        <mc:points>
+                            <mc:AreaMicroChartPoint
+                                x="0"
+                                y="84" />
+                            <mc:AreaMicroChartPoint
+                                x="100"
+                                y="84" />
+                        </mc:points>
+                    </mc:AreaMicroChartItem>
+                </mc:innerMaxThreshold>
+                <mc:innerMinThreshold>
+                    <mc:AreaMicroChartItem color="NatoOrange">
+                        <mc:points>
+                            <mc:AreaMicroChartPoint
+                                x="0"
+                                y="61" />
+                            <mc:AreaMicroChartPoint
+                                x="100"
+                                y="61" />
+                        </mc:points>
+                    </mc:AreaMicroChartItem>
+                </mc:innerMinThreshold>
+                <mc:minThreshold>
+                    <mc:AreaMicroChartItem color="NatoRed">
+                        <mc:points>
+                            <mc:AreaMicroChartPoint
+                                x="0"
+                                y="40" />
+                            <mc:AreaMicroChartPoint
+                                x="100"
+                                y="40" />
+                        </mc:points>
+                    </mc:AreaMicroChartItem>
+                </mc:minThreshold>
+            </mc:AreaMicroChart>
+            <core:Icon
+                src="{= ${DP_TrendChart_IsBelow} ? 'sap-icon://opportunity' : ''}"
+                color="{global>/aSemanticColors/Warning}"
+                class="sapUiTinyMarginBegin sapUiMediumMarginEnd "
+                tooltip="{= 'Grafik enthält nicht genauer dargestellte Werte unterhalb ' + Math.round(${DP_TrendChart_Max} * 2 / 10) }"
+                width="16px" />
+        </VBox>
+
+        <Button
+            press=".onDependentDialogOpen"
+            icon="sap-icon://hint"
+            tooltip="Begriffsdefinitionen">
+            <dependents>
+                <Dialog
+                    contentHeight="500px"
+                    contentWidth="600px"
+                    xmlns="sap.m"
+                    icon="sap-icon://hint"
+                    title="Entwicklung Besetzungsstand (2 Jahre) - Begriffsdefinitionen">
+                    <VBox class="sapUiSmallMargin">
+                        <Text text="{i18n>BegriffsdefinitionEntwicklungBesetzung}" />
+                    </VBox>
+                    <buttons>
+                        <Button
+                            text="Abbrechen"
+                            press=".onDependentDialogClose" />
+                    </buttons>
+                </Dialog>
+            </dependents>
+        </Button>
+
+    </FlexBox>
+
+</core:FragmentDefinition>            

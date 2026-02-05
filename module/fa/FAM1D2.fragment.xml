@@ -1,0 +1,513 @@
+<core:FragmentDefinition
+   height="100%"
+   xmlns:mvc="sap.ui.core.mvc"
+   xmlns:core="sap.ui.core"
+   xmlns="sap.m"
+   xmlns:l="sap.ui.layout"
+   xmlns:s="sap.f.semantic"
+   xmlns:fb="sap.ui.comp.filterbar"
+   xmlns:smartTable="sap.ui.comp.smarttable"
+   xmlns:smartField="sap.ui.comp.smartfield"
+   xmlns:commons="sap.suite.ui.commons"
+   xmlns:table="sap.ui.table"
+   xmlns:c="de.bundeswehr.zaxxx.framework.v010.global.control.page">
+
+   <!-- Handlungsbedarfe -->
+
+   <c:DetailPage
+      title="Handlungsbedarf"
+      subTitle="{global>/sStrukturelementText}"
+      editPress="onEditPress"
+      savePress="onSavePress"
+      cancelPress="onCancelPress"
+      releasePress="onReleasePress"
+      editVisible="false"
+      messagePress="onOpenMessagePopover"
+      releaseVisible="{= ${global>/bAllowRelease} &amp;&amp; false }"
+      column="{fcl>/actionButtonsInfo/midColumn}"
+      editMode="{viewModel>/bEditing}"
+      editEnabled="{= !${global>/bEditing} &amp;&amp; ${viewModel>/bCheckEdit} }"
+      releaseEnabled="{= !${global>/bEditing} &amp;&amp; ${viewModel>/bCheckRelease} }"
+      closePress="onCloseColumn"
+      exitFSPress="onExitFullScreen"
+      openFSPress="onFullScreen">
+
+      <!-- Header Content -->
+      <c:headerContent>
+
+         <core:Fragment
+            fragmentName="de.bundeswehr.zbcpl_peb_fa.global.fragment.FilterHeaderStrukturelementDetail"
+            type="XML" />
+
+         <FlexBox alignItems="End">
+
+            <fb:FilterBar
+               id="filterBarHBedarf"
+               search="onSearchFilterHeaderStrukturelement"
+               clear="onClearFilterHB"
+               useToolbar="false"
+               showFilterConfiguration="false"
+               showClearOnFB="false"
+               showRestoreButton="false"
+               showGoOnFB="false"
+               showGoButton="false"
+               visible="true">
+
+               <fb:filterGroupItems Height="100px">
+                  <fb:FilterGroupItem
+                     groupName="__HBEDARF"
+                     name="A"
+                     label="Fähigkeitsbezogene Aufgabe"
+                     labelTooltip="Fähigkeitsbezogene Aufgabe"
+                     partOfCurrentVariant="true"
+                     visibleInFilterBar="true">
+                     <fb:control>
+                        <ComboBox
+                           enabled="{= ${global>/bEditing} === false}"
+                           id="idFilterFaehBezAufg"
+                           showSecondaryValues="true"
+                           selectedKey="{viewModel>/sFaehBezAufgSelectedKey}"
+                           change="onSearchFilterHBedarf"
+                           items="{comboItemsFaehBezAufg>/}">
+                           <core:ListItem
+                              key="{comboItemsFaehBezAufg>FaehBezAufg}"
+                              text="{= ${comboItemsFaehBezAufg>FaehBezAufgName}  === '' ? ${comboItemsFaehBezAufg>FaehBezAufg} : ${comboItemsFaehBezAufg>FaehBezAufgName} }"
+                              additionalText="{comboItemsFaehBezAufg>FaehBezAufg}" />
+                        </ComboBox>
+                     </fb:control>
+                  </fb:FilterGroupItem>
+
+                  <fb:FilterGroupItem
+                     groupName="__HBEDARF"
+                     name="B"
+                     label="Erstellung durch"
+                     labelTooltip="Erstellung durch"
+                     partOfCurrentVariant="true"
+                     visibleInFilterBar="true">
+                     <fb:control>
+                        <ComboBox
+                           enabled="{= ${global>/bEditing} === false}"
+                           id="idFilterStrukturelement"
+                           showSecondaryValues="true"
+                           filterSecondaryValues="true"
+                           selectedKey="{viewModel>/sStrukturelementSelectedKey}"
+                           change="onSearchFilterHBedarf"
+                           items="{comboItemsErstellung>/}">
+                           <core:ListItem
+                              key="{comboItemsErstellung>Strukturelement}"
+                              text="{= ${comboItemsErstellung>Strukturelement_Text}  === '' ? ${comboItemsErstellung>Strukturelement} : ${comboItemsErstellung>Strukturelement_Text} }"
+                              additionalText="{comboItemsErstellung>Strukturelement}" />
+                        </ComboBox>
+                     </fb:control>
+                  </fb:FilterGroupItem>
+
+                  <fb:FilterGroupItem
+                     groupName="__HBEDARF"
+                     name="C"
+                     label="Kategorie"
+                     labelTooltip="Kategorie"
+                     partOfCurrentVariant="true"
+                     visibleInFilterBar="false">
+                     <fb:control>
+                        <ComboBox
+                           enabled="{= ${global>/bEditing} === false}"
+                           id="idFilterHandlungsfeldkategorie"
+                           showSecondaryValues="true"
+                           selectedKey="{viewModel>/sHandlungsfeldkategorieSelectedKey}"
+                           change="onSearchFilterHBedarf"
+                           items="{comboItemsKategorie>/}">
+                           <core:ListItem
+                              key="{comboItemsKategorie>Handlungsfeldkategorie}"
+                              text="{= ${comboItemsKategorie>Titel}  === '' ? ${comboItemsKategorie>Handlungsfeldkategorie} : ${comboItemsKategorie>Titel} }"
+                              additionalText="{comboItemsKategorie>Handlungsfeldkategorie}" />
+                        </ComboBox>
+                     </fb:control>
+                  </fb:FilterGroupItem>
+
+                  <fb:FilterGroupItem
+                     groupName="__HBEDARF"
+                     name="D"
+                     label="Status"
+                     labelTooltip="Handlungsbedarfstatus"
+                     partOfCurrentVariant="true"
+                     visibleInFilterBar="true">
+                     <fb:control>
+                        <ComboBox
+                           enabled="{= ${global>/bEditing} === false}"
+                           id="idFilterHandlungsbedarfstatus"
+                           showSecondaryValues="true"
+                           selectedKey="{viewModel>/sHandlungsbedarfstatusSelectedKey}"
+                           change="onSearchFilterHBedarf"
+                           items="{ path: '/ZBCPL_C_SD_HANDBEDSTATUS_TX',
+                                    sorter: { path: 'Handlungsbedarfstatus',
+                                       descending: false,
+                                       group: false
+                                    }
+                                 }">
+                           <core:ListItem
+                              key="{Handlungsbedarfstatus}"
+                              text="{= ${Text}  === '' ? ${Handlungsbedarfstatus} : ${Text} }"
+                              additionalText="{Handlungsbedarfstatus}" />
+                        </ComboBox>
+                     </fb:control>
+                  </fb:FilterGroupItem>
+
+                  <fb:FilterGroupItem
+                     groupName="__HBEDARF"
+                     name="E"
+                     label="Weiterleitung"
+                     labelTooltip="Weiterleitungsstatus"
+                     partOfCurrentVariant="true"
+                     visibleInFilterBar="true">
+                     <fb:control>
+                        <ComboBox
+                           enabled="{= ${global>/bEditing} === false}"
+                           id="idFilterHandlungsbedarfstatusWlg"
+                           showSecondaryValues="true"
+                           selectedKey="{viewModel>/sHandlungsbedarfstatusWlgSelectedKey}"
+                           change="onSearchFilterHBedarf"
+                           items="{ path: '/ZBCPL_C_SD_HANDBEDWLSTATUS_TX',
+                                    sorter: { path: 'HandlungsbedarfstatusWlg',
+                                       descending: false,
+                                       group: false
+                                    }
+                                  }">
+                           <core:ListItem
+                              key="{HandlungsbedarfstatusWlg}"
+                              text="{= ${Text}  === '' ? ${HandlungsbedarfstatusWlg} : ${Text} }"
+                              additionalText="{HandlungsbedarfstatusWlg}" />
+                        </ComboBox>
+                     </fb:control>
+                  </fb:FilterGroupItem>
+               </fb:filterGroupItems>
+            </fb:FilterBar>
+
+            <OverflowToolbar
+               design="Transparent"
+               style="Clear"
+               valign="sap.ui.core.VerticalAlign.Bottom">
+               <ToolbarSpacer />
+               <Button
+                  icon="sap-icon://clear-filter"
+                  type="Transparent"
+                  press="onClearFilterHB"
+                  tooltip="Filtereinstellungen zurücksetzen"
+                  class="sapUiMediumMarginBegin sapUiSmallMarginEnd" />
+            </OverflowToolbar>
+
+         </FlexBox>
+      </c:headerContent>
+
+      <c:content>
+
+         <smartTable:SmartTable
+            id="smartTable_HBEDARF"
+            height="100%"
+            entitySet="ZBCPL_C_HBW_HBWORGHIER"
+            tableType="TreeTable"
+            useExportToExcel="false"
+            useVariantManagement="false"
+            useTablePersonalisation="false"
+            showRowCount="false"
+            enableAutoBinding="false"
+            beforeRebindTable="onBeforeRebindTableTree"
+            header="Handlungsbedarfe ({viewModel>/iCountHB})">
+
+            <smartTable:customToolbar>
+               <OverflowToolbar
+                  design="Transparent"
+                  class="sapMSticky sapMSticky4">
+                  <ToolbarSpacer />
+                  <!-- <Button text="Print" press="onPrint"/> -->
+                  <SegmentedButton
+                     id='sbSichttyp'
+                     selectedKey="Kategorie"
+                     selectionChange="onSelectionChangeSichttyp">
+                     <items>
+                        <SegmentedButtonItem
+                           text="Kategorie"
+                           key="Kategorie"
+                           tooltip="Aufriss nach Kategorie" />
+                        <SegmentedButtonItem
+                           text="Strukturelement"
+                           key="Strukturelement"
+                           tooltip="Aufriss nach Strukturelelemt" />
+                     </items>
+                  </SegmentedButton>
+
+                  <OverflowToolbarButton
+                     icon="sap-icon://add"
+                     tooltip="Handlungsbedarf erstellen"
+                     text="Handlungsbedarf erstellen"
+                     enabled="{= !${global>/bEditing} &amp;&amp; !${viewModel>/bEditing} &amp;&amp; ${viewModel>/bCheckCreate} }"
+                     visible="{= ['MidColumnFullScreen', 'TwoColumnsMidExpanded'].includes( ${fcl>/layout} ) &amp;&amp; ${global>/bAllowWrite} }"
+                     press=".onListItemCreatePress($event, {}, 2, 'ZBCPL_CR_HBD_HANDBED')" />
+
+                  <OverflowToolbarButton
+                     icon="sap-icon://collapse-all"
+                     tooltip="Alles zuklappen"
+                     text="Alles zuklappen"
+                     enabled="true"
+                     visible="{= ['MidColumnFullScreen', 'TwoColumnsMidExpanded'].includes( ${fcl>/layout} ) }"
+                     press="onCollapseAll" />
+
+                  <OverflowToolbarButton
+                     icon="sap-icon://expand-all"
+                     tooltip="Alles aufklappen"
+                     text="Alles aufklappen"
+                     enabled="true"
+                     visible="{= ['MidColumnFullScreen', 'TwoColumnsMidExpanded'].includes( ${fcl>/layout} ) }"
+                     press="onExpandAll" />
+
+                  <core:Fragment
+                     fragmentName="de.bundeswehr.zbcpl_peb_fa.global.fragment.legende.LegendeHandlungsbedarf"
+                     type="XML" />
+
+               </OverflowToolbar>
+            </smartTable:customToolbar>
+
+            <smartTable:layoutData>
+               <FlexItemData growFactor="1" />
+            </smartTable:layoutData>
+            <table:TreeTable
+               id="treeTable_HBEDARF"
+               rootLevel="1"
+               selectionBehavior="Row"
+               collapseRecursive="true"
+               minAutoRowCount="1"
+               fixedRowCount="0"
+               fixedBottomRowCount="0"
+               busyIndicatorDelay="0"
+               fixedColumnCount="1"
+               selectionMode="Single"
+               rowSelectionChange="onListItemPress"
+               rowActionCount="{= ( ${Drillstate} === 'leaf' ) ? 1 : 0 }"
+               visibleRowCountMode="InlineRepeat"
+               class="sapUiSmallMarginBottom">
+
+               <table:extension />
+
+               <table:columns>
+                  <table:Column
+                     width="25rem"
+                     hAlign="Begin">
+                     <table:customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "NodeId", "columnIndex":"1", "leadingProperty": "NodeId, NodeTitel", "sortProperty": "NodeTitel"}' />
+                     </table:customData>
+
+                     <Label text="ObjektId" />
+                     <table:template>                        
+                        <VBox>
+                           <Label
+                              text="{NodeTitel}"
+                              tooltip="{NodeTitel} - {NodeId}"
+                              wrapping="false"
+                              visible="{= ${Drillstate} !== 'leaf' }"
+                              design="Bold" />
+
+                           <Text
+                              text="{NodeTitel}"
+                              tooltip="{NodeTitel} - {NodeId}"
+                              wrapping="true"
+                              wrappingType="Normal"
+                              visible="{= ${Drillstate} === 'leaf' }" />
+                        </VBox>
+                     </table:template>
+                  </table:Column>
+
+                  <table:Column
+                     hAlign="Begin"
+                     width="20rem"
+                     visible="{= ['MidColumnFullScreen', 'TwoColumnsMidExpanded'].includes( ${fcl>/layout} ) }">
+                     <table:customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "LeafTitel", "columnIndex":"2", "leadingProperty": "LeafTitel,Sichttyp", "sortProperty": "LeafTitel"}' />
+                     </table:customData>
+                     <Label
+                        text="{= ${Sichttyp} === 'S' ? 'Kategorie - Unterkategorie' : 'Erstellung durch' }"
+                        id="idLeafTitel" />
+                     <table:template>
+                        <VBox>
+                           <Text
+                              text="{LeafTitel}"
+                              tooltip="{LeafTitel}"
+                              wrapping="true"
+                              wrappingType="Normal"
+                              maxLines="1" />                           
+                        </VBox>
+                     </table:template>
+                  </table:Column>
+
+                  <table:Column hAlign="Begin">
+                     <table:customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "FaehBezAufg", "columnIndex":"3", "leadingProperty": "FaehBezAufg", "sortProperty": "FaehBezAufgId"}' />
+                     </table:customData>
+                     <Label text="FähigkbezAufg" />
+                     <table:template>
+                        <VBox>
+                           <Text
+                              text="{FaehBezAufg_Text}"
+                              tooltip="{FaehBezAufg}"
+                              wrapping="true"
+                              wrappingType="Normal"
+                              maxLines="1" />                           
+                        </VBox>
+                     </table:template>
+                  </table:Column>
+
+                  <table:Column
+                     hAlign="Begin"
+                     width="20rem">
+                     <table:customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "Handlungsbedarfstatus", "columnIndex":"4", "leadingProperty": "Handlungsbedarfstatus,Drillstate,WlgStatus9,WlgStatus8,WlgStatus7,WlgStatus6,WlgStatus5,WlgStatus4,WlgStatus3,WlgStatus2,WlgStatus1", "sortProperty": "Handlungsbedarfstatus"}' />
+                     </table:customData>
+                     <Label text="Weiterleitung" />
+                     <table:template>
+                        <FlexBox
+                           alignItems="Center"
+                           justifyContent="End">
+                           <commons:MicroProcessFlow visible="{= ${Drillstate} === 'leaf' }">
+                              <commons:content>
+                                 <commons:MicroProcessFlowItem
+                                    visible="{= ${IstTeilHBWlg9} === 'X'}"
+                                    state="{ parts: [{ path: 'WlgStatus9' }, { path: 'WlgMeldeSts9' }, { path: 'WlgStrElm9' }, { path: 'global>/sStrukturelementId' }],
+                                             formatter: '.formatter.getWeiterleitungProcessState',
+                                             templateShareable : false
+                                          }"
+                                    icon="{ parts: [{ path: 'WlgStatus9' }, { path: 'WlgMeldeSts9' }, { path: 'WlgStrElm9' }, { path: 'global>/sStrukturelementId' }, { path: 'Strukturelement' }],
+                                             formatter: '.formatter.getWeiterleitungProcessIcon'
+                                          }"
+                                    title="{ parts: [{ path: 'WlgRolle9' }, { path: 'WlgStrElm9_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                                    showIntermediary="{= (${WlgMeldeSts9} === '30') &amp;&amp; (${WlgStatus9} === '30') }"
+                                    showSeparator="{= (${IstTeilHBWlg9} === 'X') &amp;&amp; ( (${WlgMeldeSts9} !== '30') || (${WlgStatus9} !== '30') ) }" />
+
+                                 <commons:MicroProcessFlowItem
+                                    visible="{= ${IstTeilHBWlg8} === 'X'}"
+                                    state="{ parts: [{ path: 'WlgStatus8' }, { path: 'WlgMeldeSts8' }, { path: 'WlgStrElm8' }, { path: 'global>/sStrukturelementId' }],
+                                             formatter: '.formatter.getWeiterleitungProcessState',
+                                             templateShareable : false
+                                          }"
+                                    icon="{ parts: [{ path: 'WlgStatus8' }, { path: 'WlgMeldeSts8' }, { path: 'WlgStrElm8' }, { path: 'global>/sStrukturelementId' }, { path: 'Strukturelement' }],
+                                             formatter: '.formatter.getWeiterleitungProcessIcon'
+                                          }"
+                                    title="{ parts: [{ path: 'WlgRolle8' }, { path: 'WlgStrElm8_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                                    showIntermediary="{= (${WlgMeldeSts8} === '30') &amp;&amp; (${WlgStatus8} === '30') }"
+                                    showSeparator="{= (${IstTeilHBWlg8} === 'X') &amp;&amp; ( (${WlgMeldeSts8} !== '30') || (${WlgStatus8} !== '30') ) }" />
+                                 <commons:MicroProcessFlowItem
+                                    visible="{= ${IstTeilHBWlg7} === 'X'}"
+                                    state="{ parts: [{ path: 'WlgStatus7' }, { path: 'WlgMeldeSts7' }, { path: 'WlgStrElm7' }, { path: 'global>/sStrukturelementId' }],
+                                             formatter: '.formatter.getWeiterleitungProcessState',
+                                             templateShareable : false
+                                          }"
+                                    icon="{ parts: [{ path: 'WlgStatus7' }, { path: 'WlgMeldeSts7' }, { path: 'WlgStrElm7' }, { path: 'global>/sStrukturelementId' }, { path: 'Strukturelement' }],
+                                          formatter: '.formatter.getWeiterleitungProcessIcon'
+                                       }"
+                                    title="{ parts: [{ path: 'WlgRolle7' }, { path: 'WlgStrElm7_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                                    showIntermediary="{= (${WlgMeldeSts7} === '30') &amp;&amp; (${WlgStatus7} === '30') }"
+                                    showSeparator="{= (${IstTeilHBWlg7} === 'X') &amp;&amp; ( (${WlgMeldeSts7} !== '30') || (${WlgStatus7} !== '30') ) }" />
+                                 <commons:MicroProcessFlowItem
+                                    visible="{= ${IstTeilHBWlg6} === 'X'}"
+                                    state="{ parts: [{ path: 'WlgStatus6' }, { path: 'WlgMeldeSts6' }, { path: 'WlgStrElm6' }, { path: 'global>/sStrukturelementId' }],
+                                             formatter: '.formatter.getWeiterleitungProcessState',
+                                             templateShareable : false
+                                          }"
+                                    icon="{ parts: [{ path: 'WlgStatus6' }, { path: 'WlgMeldeSts6' }, { path: 'WlgStrElm6' }, { path: 'global>/sStrukturelementId' }, { path: 'Strukturelement' }],
+                                          formatter: '.formatter.getWeiterleitungProcessIcon'
+                                       }"
+                                    title="{ parts: [{ path: 'WlgRolle6' }, { path: 'WlgStrElm6_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                                    showIntermediary="{= (${WlgMeldeSts6} === '30') &amp;&amp; (${WlgStatus6} === '30') }"
+                                    showSeparator="{= (${IstTeilHBWlg6} === 'X') &amp;&amp; ( (${WlgMeldeSts6} !== '30') || (${WlgStatus6} !== '30') ) }" />
+                                 <commons:MicroProcessFlowItem
+                                    visible="{= ${IstTeilHBWlg5} === 'X'}"
+                                    state="{ parts: [{ path: 'WlgStatus5' }, { path: 'WlgMeldeSts5' }, { path: 'WlgStrElm5' }, { path: 'global>/sStrukturelementId' }],
+                                             formatter: '.formatter.getWeiterleitungProcessState',
+                                             templateShareable : false
+                                          }"
+                                    icon="{ parts: [{ path: 'WlgStatus5' }, { path: 'WlgMeldeSts5' }, { path: 'WlgStrElm5' }, { path: 'global>/sStrukturelementId' }, { path: 'Strukturelement' }],
+                                          formatter: '.formatter.getWeiterleitungProcessIcon'
+                                       }"
+                                    title="{ parts: [{ path: 'WlgRolle5' }, { path: 'WlgStrElm5_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                                    showIntermediary="{= (${WlgMeldeSts5} === '30') &amp;&amp; (${WlgStatus5} === '30') }"
+                                    showSeparator="{= (${IstTeilHBWlg5} === 'X') &amp;&amp; ( (${WlgMeldeSts5} !== '30') || (${WlgStatus5} !== '30') ) }" />
+                                 <commons:MicroProcessFlowItem
+                                    visible="{= ${IstTeilHBWlg4} === 'X'}"
+                                    state="{ parts: [{ path: 'WlgStatus4' }, { path: 'WlgMeldeSts4' }, { path: 'WlgStrElm4' }, { path: 'global>/sStrukturelementId' }],
+                                             formatter: '.formatter.getWeiterleitungProcessState',
+                                             templateShareable : false
+                                          }"
+                                    icon="{ parts: [{ path: 'WlgStatus4' }, { path: 'WlgMeldeSts4' }, { path: 'WlgStrElm4' }, { path: 'global>/sStrukturelementId' }, { path: 'Strukturelement' }],
+                                            formatter: '.formatter.getWeiterleitungProcessIcon'
+                                          }"
+                                    title="{ parts: [{ path: 'WlgRolle4' }, { path: 'WlgStrElm4_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                                    showIntermediary="{= (${WlgMeldeSts4} === '30') &amp;&amp; (${WlgStatus4} === '30') }"
+                                    showSeparator="{= (${IstTeilHBWlg4} === 'X') &amp;&amp; ( (${WlgMeldeSts4} !== '30') || (${WlgStatus4} !== '30') ) }" />
+
+                                 <commons:MicroProcessFlowItem
+                                    visible="{= ${IstTeilHBWlg3} === 'X'}"
+                                    state="{ parts: [{ path: 'WlgStatus3' }, { path: 'WlgMeldeSts3' }, { path: 'WlgStrElm3' }, { path: 'global>/sStrukturelementId' }],
+                                             formatter: '.formatter.getWeiterleitungProcessState',
+                                             templateShareable : false
+                                          }"
+                                    icon="{ parts: [{ path: 'WlgStatus3' }, { path: 'WlgMeldeSts3' }, { path: 'WlgStrElm3' }, { path: 'global>/sStrukturelementId' }, { path: 'Strukturelement' }],
+                                            formatter: '.formatter.getWeiterleitungProcessIcon'
+                                          }"
+                                    title="{ parts: [{ path: 'WlgRolle3' }, { path: 'WlgStrElm3_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                                    showIntermediary="{= (${WlgMeldeSts3} === '30') &amp;&amp; (${WlgStatus3} === '30') }"
+                                    showSeparator="{= (${IstTeilHBWlg3} === 'X') &amp;&amp; ( (${WlgMeldeSts3} !== '30') || (${WlgStatus3} !== '30') ) }" />
+
+                                 <commons:MicroProcessFlowItem
+                                    visible="{= ${IstTeilHBWlg2} === 'X'}"
+                                    state="{ parts: [{ path: 'WlgStatus2' }, { path: 'WlgMeldeSts2' }, { path: 'WlgStrElm2' }, { path: 'global>/sStrukturelementId' }],
+                                             formatter: '.formatter.getWeiterleitungProcessState',
+                                             templateShareable : false
+                                          }"
+                                    icon="{ parts: [{ path: 'WlgStatus2' }, { path: 'WlgMeldeSts2' }, { path: 'WlgStrElm2' }, { path: 'global>/sStrukturelementId' }, { path: 'Strukturelement' }],
+                                            formatter: '.formatter.getWeiterleitungProcessIcon'
+                                          }"
+                                    title="{ parts: [{value: 'PEB_KONSO'}, { path: 'WlgStrElm2_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                                    showIntermediary="{= (${WlgMeldeSts2} === '30') &amp;&amp; (${WlgStatus2} === '30') }"
+                                    showSeparator="{= (${IstTeilHBWlg2} === 'X') &amp;&amp; ( (${WlgMeldeSts2} !== '30') || (${WlgStatus2} !== '30') ) }" />
+
+                                 <commons:MicroProcessFlowItem
+                                    visible="{= ${IstTeilHBWlg1} === 'X'}"
+                                    state="{ parts: [{ path: 'WlgStatus1' }, { path: 'WlgMeldeSts1' }, { path: 'WlgStrElm1' }, { path: 'global>/sStrukturelementId' }],
+                                             formatter: '.formatter.getWeiterleitungProcessState',
+                                             templateShareable : false
+                                          }"
+                                    icon="{ parts: [{ path: 'WlgStatus1' }, { path: 'WlgMeldeSts1' }, { path: 'WlgStrElm1' }, { path: 'global>/sStrukturelementId' }, { path: 'Strukturelement' }],
+                                            formatter: '.formatter.getWeiterleitungProcessIcon'
+                                          }"
+                                    title="{ parts: [{value: 'PEB_FASUP'}, { path: 'WlgStrElm1_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                                    showIntermediary="{= (${WlgMeldeSts1} === '30') &amp;&amp; (${WlgStatus1} === '30') }"
+                                    showSeparator="{= (${IstTeilHBWlg1} === 'X') &amp;&amp; ( (${WlgMeldeSts1} !== '30') || (${WlgStatus1} !== '30') ) }" />
+                              </commons:content>
+                           </commons:MicroProcessFlow>
+                        </FlexBox>
+                     </table:template>
+                  </table:Column>
+
+               </table:columns>
+
+               <table:rowActionTemplate>
+                  <table:RowAction>
+                     <table:RowActionItem
+                        visible="{= ${Handlungsbedarf} !== ''}"
+                        press="onListItemPress"
+                        icon="sap-icon://feeder-arrow"
+                        tooltip="Zu Detailsicht wechseln" />
+                  </table:RowAction>
+               </table:rowActionTemplate>
+            </table:TreeTable>
+         </smartTable:SmartTable>
+      </c:content>
+
+   </c:DetailPage>
+
+</core:FragmentDefinition>

@@ -1,0 +1,22 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+   <ObjectStatus
+      visible="{= !${viewModel>/bCheckBearbeiten} &amp;&amp; !!${viewModel>/sInfoBearbeiten} }"
+      text="{viewModel>/sInfoBearbeiten}"
+      icon="sap-icon://message-warning"
+      state="Warning" />
+   <ObjectStatus
+      visible="{= !${viewModel>/bCheckFreigeben} &amp;&amp; !!${viewModel>/sInfoFreigeben} }"
+      text="{viewModel>/sInfoFreigeben}"
+      icon="sap-icon://message-warning"
+      state="Warning" />
+   <ObjectStatus
+      visible="{= !${viewModel>/bCheckNeu} &amp;&amp; !!${viewModel>/sInfoNeu} }"
+      text="{viewModel>/sInfoNeu}"
+      icon="sap-icon://message-warning"
+      state="Warning" />
+
+</core:FragmentDefinition>

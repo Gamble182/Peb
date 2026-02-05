@@ -1,0 +1,88 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:rt="de.bundeswehr.zaxxx.framework.v010.global.control.ratingAndTrending">
+
+    <FlexBox
+        alignItems="Start"
+        justifyContent="SpaceBetween"
+        class="sapUiSmallMarginBottom">
+
+        <VBox width="100%">
+            <Label
+                text="Beurteilung und Trend (2 Jahre):"
+                required="{= ${viewModel>/bEditing} }"
+                class="sapUiSmallMarginEnd" />
+
+            <HBox class="sapUiSmallMarginBegin">
+                <rt:RatingAndTrending
+                    id="RatingAndTrendingDienstbereitschaft"
+                    visibleRatingLeft="false"
+                    visibleRatingRight="false"
+                    visibleTrendingLeft="false"
+                    visibleTrendingRight="false"
+                    enableRatingTrendingCheck="true"
+                    ratingButtonWidth="200px"
+                    tooltipRatingRot="sehr kritisch"
+                    tooltipRatingGelb="kritisch"
+                    tooltipRatingKeine="keine Angabe"
+                    tooltipRatingGruen="unkritisch"
+                    valueRating1="{BeurDienstbereit}"
+                    valueTrending1="{TrendDienstbereit}"
+                    ratingEditable="{= ${viewModel>/bEditing} }"
+                    trendingEditable="{= ${viewModel>/bEditing} }" />
+            </HBox>
+
+            <Label
+                text="Anmerkung Einsatzfähigkeit:"
+                required="{= ${viewModel>/bEditing} }"
+                class="sapUiTinyMarginTop" />
+
+            <TextArea
+                value="{ path: 'AnmerkungDienstbereit', type: 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 500} }"
+                valueStateText="Anmerkung Dienstbereitschaft kann nur bis 500 Zeichen beinhalten und darf nicht leer sein."
+                showExceededText="true"
+                visible="{= ${viewModel>/bEditing} }"
+                editable="{= ${viewModel>/bEditing} }"
+                maxLength="500"
+                width="100%"
+                growing="true"
+                growingMaxLines="7"
+                valueLiveUpdate="false"
+                liveChange="handleLiveChange"
+                class="sapUiSmallMarginBegin" />
+
+            <Text
+                text="{= ${AnmerkungDienstbereit} === '' ? 'Keine Anmerkungen vorhanden' : ${AnmerkungDienstbereit}}"
+                visible="{= !${viewModel>/bEditing} }"
+                width="100%"
+                class="sapUiSmallMarginBegin" />
+
+        </VBox>
+
+        <Button
+            press=".onDependentDialogOpen"
+            icon="sap-icon://hint"
+            tooltip="Begriffsdefinitionen">
+            <dependents>
+                <Dialog
+                    contentHeight="300px"
+                    contentWidth="600px"
+                    xmlns="sap.m"
+                    icon="sap-icon://hint"
+                    title="Einsatzfähigkeit - Begriffsdefinitionen">
+                    <VBox class="sapUiSmallMargin">
+                        <Text text="{i18n>BegriffsdefinitionEinsatzfaehigkeit}" />
+                    </VBox>
+                    <buttons>
+                        <Button
+                            text="Abbrechen"
+                            press=".onDependentDialogClose" />
+                    </buttons>
+                </Dialog>
+            </dependents>
+        </Button>
+
+    </FlexBox>
+
+</core:FragmentDefinition>            

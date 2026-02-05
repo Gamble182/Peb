@@ -1,0 +1,13 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:mvc="sap.ui.core.mvc">
+
+    <VBox visible="{= ${fcl>/layout} === 'MidColumnFullScreen' }">
+        <core:Fragment
+            fragmentName="de.bundeswehr.zbcpl_peb_fa.global.fragment.FilterHeaderStrukturelementReadonly"
+            type="XML" />
+    </VBox>
+
+</core:FragmentDefinition>   

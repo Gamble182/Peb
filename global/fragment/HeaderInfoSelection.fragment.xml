@@ -1,0 +1,9 @@
+<core:FragmentDefinition
+      xmlns="sap.m"
+      xmlns:core="sap.ui.core"
+      xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+      <ObjectAttribute text="Planungssituation: {global>/sPlanungssituationBeurteilungsstichtag}" />
+      <ObjectAttribute text="Strukturelement: {global>/sStrukturelementText}" />
+
+</core:FragmentDefinition>

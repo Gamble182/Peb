@@ -1,0 +1,32 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core">
+   <OverflowToolbarButton
+      class="sapUiTinyMarginBegin"
+      press="onOpenFirstDependentPress"
+      icon="sap-icon://legend"
+      tooltip="Legende anzeigen">
+      <dependents>
+         <Popover
+            showHeader="false"
+            placement="VerticalPreferredBottom"
+            contentHeight="5rem"
+            contentWidth="23rem">
+            <VBox width="200px">
+               <HBox height="35px">
+                  <core:Icon
+                     src="sap-icon://discussion-2"
+                     color="#104477"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="Anmerkung mit Abweichung zum VorPlanungssituation" />
+                  <Label
+                     text="Anmerkung mit Abweichung zum VorPlanungssituation"
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+            </VBox>
+         </Popover>
+      </dependents>
+   </OverflowToolbarButton>
+</core:FragmentDefinition>

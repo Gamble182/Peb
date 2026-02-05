@@ -1,0 +1,158 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core"
+    xmlns:rt="de.bundeswehr.zaxxx.framework.v010.global.control.ratingAndTrending"
+    xmlns:smartTable="sap.ui.comp.smarttable">
+
+    <Table
+        growing="true"
+        growingThreshold="{global>/iListGrowing}"
+        growingScrollToLoad="true"
+        mode="SingleSelectMaster"
+        itemPress=".onListItemDetailPress($event,{layout: 'TwoColumnsMidExpanded'})"
+        width="auto"
+        sticky="HeaderToolbar,InfoToolbar,ColumnHeaders">
+
+        <columns>
+            <Column>
+                <customData>
+                    <core:CustomData
+                        key="p13nData"
+                        value='\{"columnKey": "Strukturelement", "columnIndex":"0", "leadingProperty": "Strukturelement_Text,Strukturelement,StrukturelementStamm,HierarchyLevel,Meldestatus,EinsatzbedingteAbwesenheit,NichtBeurEinsatzbereit", "sortProperty": "Strukturelement_Text"}' />
+                </customData>
+                <Label text="Strukturelement" />
+            </Column>
+            <Column
+                hAlign="Center"
+                width="{= (${fcl>/layout} !== 'ThreeColumnsEndExpanded') ? '14rem' : '6rem' }">
+                <customData>
+                    <core:CustomData
+                        key="p13nData"
+                        value='\{"columnKey": "BeurDienstbereit", "columnIndex":"1", "leadingProperty": "BeurDienstbereit,TrendDienstbereit,AnmerkungDienstbereit", "sortProperty": "BeurDienstbereit"}' />
+                </customData>
+                <Text text="{= (${fcl>/layout} !== 'ThreeColumnsEndExpanded') ? 'Einsatzfähigkeit (2 Jahre)' : 'Einsatzfähigkeit' }" />
+            </Column>
+
+            <Column
+                hAlign="Center"
+                width="{= (${fcl>/layout} !== 'ThreeColumnsEndExpanded') ? '14rem' : '6rem' }">
+                <customData>
+                    <core:CustomData
+                        key="p13nData"
+                        value='\{"columnKey": "BeurEinsatzbereit", "columnIndex":"2", "leadingProperty": "BeurEinsatzbereit,TrendEinsatzbereit,AnmerkungEinsatzbereit", "sortProperty": "BeurEinsatzbereit"}' />
+                </customData>
+                <Text text="{= (${fcl>/layout} !== 'ThreeColumnsEndExpanded') ? 'Einsatzbereitschaft (2 Jahre)' : 'Einsatzbereitschaft' }" />
+            </Column>
+
+            <Column
+                hAlign="Center"
+                width="{= (${global>/bEditing} || ${viewModel>/bEditing}) ? '15rem' : '0rem' }">
+                <customData>
+                    <core:CustomData
+                        key="p13nData"
+                        value='\{"columnKey": "Meldestatus", "columnIndex":"3", "leadingProperty": "Meldestatus,StrukturelementStamm", "sortProperty": ""}' />
+                </customData>
+                <Text text="" />
+            </Column>
+        </columns>
+
+        <items>
+            <ColumnListItem type="{= ((${Meldestatus} === '30') || (${StrukturelementStamm} === ${Strukturelement})) ? 'Navigation' : 'Inactive' }">
+                <cells>
+                    <FlexBox
+                        width="100%"
+                        alignItems="Center"
+                        justifyContent="Start">
+                        <core:Icon
+                            visible="{= ${EinsatzbedingteAbwesenheit} === 'X' }"
+                            src="sap-icon://journey-arrive"
+                            size="1.5rem"
+                            color="#1C4C98"
+                            class="sapUiSmallMarginEnd"
+                            tooltip="Strukturelement wird in der aktuellen Planungssituation nicht beurteilt. Angezeigte Daten sind aus der vorherigen Planungssituation übernommen." />
+                        <ObjectIdentifier
+                            class="sapUiMicroMargin"
+                            title="{Strukturelement_Text}"
+                            text="{Strukturelement}"
+                            tooltip="{Strukturelement_Text} ({Strukturelement})" />
+                    </FlexBox>
+
+
+                    <FlexBox
+                        width="100%"
+                        alignItems="Center"
+                        justifyContent="Center"
+                        tooltip="{AnmerkungDienstbereit}">
+                        <rt:RatingAndTrending
+                            visible="{= (${Meldestatus} === '30') || (${StrukturelementStamm} === ${Strukturelement}) }"
+                            valueRating1="{BeurDienstbereit}"
+                            valueTrending1="{TrendDienstbereit}"
+                            tooltipRatingRot="sehr kritisch"
+                            tooltipRatingGelb="kritisch"
+                            tooltipRatingKeine="keine Angabe"
+                            tooltipRatingGruen="unkritisch"
+                            ratingIconSize="1.2rem"
+                            trendingIconSize="1.2rem" />
+                        <HBox
+                            renderType="Bare"
+                            class="sapUiTinyMargin"
+                            visible="{= (${Meldestatus} !== '30') &amp;&amp; (${StrukturelementStamm} !== ${Strukturelement}) }">
+                            <ObjectStatus
+                                text="noch nicht freigegeben"
+                                inverted="false"
+                                state="None" />
+                        </HBox>
+                    </FlexBox>
+
+                    <FlexBox
+                        width="100%"
+                        alignItems="Center"
+                        justifyContent="Center"
+                        tooltip="{AnmerkungEinsatzbereit}">
+                        <rt:RatingAndTrending
+                            visible="{= ((${Meldestatus} === '30') || (${StrukturelementStamm} === ${Strukturelement})) &amp;&amp; ${NichtBeurEinsatzbereit} !== 'X' }"
+                            valueRating1="{BeurEinsatzbereit}"
+                            valueTrending1="{TrendEinsatzbereit}"
+                            tooltipRatingRot="sehr kritisch"
+                            tooltipRatingGelb="kritisch"
+                            tooltipRatingKeine="keine Angabe"
+                            tooltipRatingGruen="unkritisch"
+                            ratingIconSize="1.2rem"
+                            trendingIconSize="1.2rem" />
+                        <core:Icon
+                            src="sap-icon://decline"
+                            tooltip="nicht beurteilt"
+                            color="rgb(67, 140, 213)"
+                            size="1.2rem"
+                            visible="{= ((${Meldestatus} === '30') || (${StrukturelementStamm} === ${Strukturelement})) &amp;&amp; ${NichtBeurEinsatzbereit} === 'X' }" />
+                        <HBox
+                            renderType="Bare"
+                            class="sapUiTinyMargin"
+                            visible="{= (${Meldestatus} !== '30') &amp;&amp; (${StrukturelementStamm} !== ${Strukturelement}) }">
+                            <ObjectStatus
+                                text="noch nicht freigegeben"
+                                inverted="false"
+                                state="None" />
+                        </HBox>
+                    </FlexBox>
+
+                    <FlexBox
+                        alignItems="Center"
+                        justifyContent="Center">
+                        <Button
+                            text="Beurteilung übernehmen"
+                            press="onBeurteilungUebernehmen"
+                            visible="{= (${global>/bEditing} || ${viewModel>/bEditing}) &amp;&amp; ((${Meldestatus} === '30') || (${StrukturelementStamm} === ${Strukturelement})) }"
+                            tooltip="Beurteilung übernehmen"
+                            icon="sap-icon://cause"
+                            type="Default" />
+                    </FlexBox>
+
+                </cells>
+            </ColumnListItem>
+        </items>
+
+    </Table>
+
+</core:FragmentDefinition>

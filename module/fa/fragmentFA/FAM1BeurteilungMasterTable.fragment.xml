@@ -1,0 +1,650 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:mc="sap.suite.ui.microchart"
+    xmlns:rt="de.bundeswehr.zaxxx.framework.v010.global.control.ratingAndTrending"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:xc="de.bundeswehr.zaxxx.framework.v010.global.control.suite.microchart"
+>
+    <Table
+        growing="true"
+        growingThreshold="{global>/iListGrowing}"
+        growingScrollToLoad="true"
+        mode="SingleSelectMaster"
+        itemPress=".onListItemPressBeurteilung($event,{layout: 'TwoColumnsMidExpanded'})"
+        delete=".onDeleteListItem"
+        width="auto"
+        updateFinished="tableUpdateFinishedErstbeurteilung"
+        sticky="ColumnHeaders,HeaderToolbar,InfoToolbar"
+    >
+        <headerToolbar>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+
+                <Label text="Teilfähigkeit:" />
+                <Select
+                    editable="{= ${fcl>/columnsVisibility/midColumn} !== true }"
+                    showSecondaryValues="false"
+                    width="15rem"
+                    wrapItemsText="true"
+                    selectedKey="{global>/sSearchTeilfaehigkeitSelectedKey}"
+                    change="onFilterTableBeurteilungChange"
+                    items="{comboSearchTeilfaehigkeit>/}"
+                >
+                    <core:ListItem
+                        key="{comboSearchTeilfaehigkeit>Teilfaehigkeit}"
+                        text="{= ${comboSearchTeilfaehigkeit>TeilfaehigkeitText}  === '' ? ${comboSearchTeilfaehigkeit>Teilfaehigkeit} : ${comboSearchTeilfaehigkeit>TeilfaehigkeitText} }"
+                        additionalText="{comboSearchTeilfaehigkeit>Teilfaehigkeit}"
+                    />
+                </Select>
+
+                <CheckBox
+                    enabled="{= ${fcl>/columnsVisibility/midColumn} !== true }"
+                    class="sapUiLargeMarginBegin sapUiTinyMarginEnd"
+                    text="ohne Angabe"
+                    select="onFilterTableBeurteilungChange"
+                    selected="{global>/bCheckboxShowOnlyOhneAngabe}"
+                />
+
+                <FlexBox
+                    visible="{= ${global>/bCheckboxShowOnlyOhneAngabe} !== true }"
+                    class="sapUiTinyMarginBegin"
+                    alignItems="Center"
+                    justifyContent="Start"
+                >
+                    <Label text="Einsatzfähigkeit:" />
+                    <Select
+                        editable="{= ${fcl>/columnsVisibility/midColumn} !== true }"
+                        class="sapUiTinyMarginBegin"
+                        showSecondaryValues="false"
+                        width="10rem"
+                        wrapItemsText="true"
+                        selectedKey="{global>/sSearchDienstbereitschaftSelectedKey}"
+                        change="onFilterTableBeurteilungChange"
+                        items="{
+                            path: 'comboSearchBeurteilung>/',
+                            filters:[{path:'Beurteilung',operator:'NE',value1:-1}]
+                        }"
+                    >
+                        <core:ListItem
+                            key="{comboSearchBeurteilung>Beurteilung}"
+                            text="{= ${comboSearchBeurteilung>Beurteilung_Text}  === '' ? ${comboSearchBeurteilung>Beurteilung} : ${comboSearchBeurteilung>Beurteilung_Text} }"
+                            additionalText="{comboSearchBeurteilung>Beurteilung}"
+                        />
+                    </Select>
+                </FlexBox>
+                <FlexBox
+                    visible="{= ${global>/bCheckboxShowOnlyOhneAngabe} !== true }"
+                    class="sapUiLargeMarginEnd sapUiTinyMarginBegin"
+                    alignItems="Center"
+                    justifyContent="Start"
+                >
+                    <Label text="Einsatzbereitschaft:" />
+                    <Select
+                        editable="{= ${fcl>/columnsVisibility/midColumn} !== true }"
+                        class="sapUiTinyMarginBegin"
+                        showSecondaryValues="false"
+                        width="10rem"
+                        wrapItemsText="true"
+                        selectedKey="{global>/sSearchEinsatzbereitschaftSelectedKey}"
+                        change="onFilterTableBeurteilungChange"
+                        items="{comboSearchBeurteilung>/}"
+                    >
+                        <core:ListItem
+                            key="{comboSearchBeurteilung>Beurteilung}"
+                            text="{= ${comboSearchBeurteilung>Beurteilung_Text}  === '' ? ${comboSearchBeurteilung>Beurteilung} : ${comboSearchBeurteilung>Beurteilung_Text} }"
+                            additionalText="{comboSearchBeurteilung>Beurteilung}"
+                        />
+                    </Select>
+                </FlexBox>
+
+                <FlexBox
+                    class="sapUiLargeMarginEnd sapUiTinyMarginBegin"
+                    alignItems="Center"
+                    justifyContent="Start"
+                >
+                    <Label text="Bearbeitungsstatus:" />
+                    <Select
+                        editable="{= ${fcl>/columnsVisibility/midColumn} !== true }"
+                        class="sapUiTinyMarginBegin"
+                        showSecondaryValues="false"
+                        width="10rem"
+                        wrapItemsText="true"
+                        selectedKey="{global>/sSearchBearbeitungsstatusSelectedKey}"
+                        change="onFilterTableBeurteilungChange"
+                        items="{comboSearchBearbeitungsstatus>/}"
+                    >
+                        <core:ListItem
+                            key="{comboSearchBearbeitungsstatus>Bearbeitungsstatus}"
+                            text="{= ${comboSearchBearbeitungsstatus>Bearbeitungsstatus_Text}  === '' ? ${comboSearchBearbeitungsstatus>Bearbeitungsstatus} : ${comboSearchBearbeitungsstatus>Bearbeitungsstatus_Text} }"
+                            additionalText="{comboSearchBearbeitungsstatus>Bearbeitungsstatus}"
+                        />
+                    </Select>
+                </FlexBox>
+
+                <Button
+                    icon="sap-icon://clear-filter"
+                    type="Transparent"
+                    press="onClearFilterBeurteilung"
+                    tooltip="Filtereinstellungen zurücksetzen"
+                    class="sapUiMediumMarginBegin sapUiSmallMarginEnd"
+                />
+            </OverflowToolbar>
+        </headerToolbar>
+
+        <columns>
+            <Column>
+                <customData>
+                    <core:CustomData
+                        key="p13nData"
+                        value='\{"columnKey": "FaehBezAufg", "columnIndex":"0", "leadingProperty": "FaehBezAufg,FaehBezAufgText,Strukturelement,StrukturelementText", "sortProperty": "FaehBezAufgText"}'
+                    />
+                </customData>
+                <Text
+                    text="{/#ZBCPL_CR_FA_FAUFBEURType/FaehBezAufg/@sap:label}"
+                />
+            </Column>
+
+            <Column visible="{= ${fcl>/columnsVisibility/midColumn} !== true }">
+                <customData>
+                    <core:CustomData
+                        key="p13nData"
+                        value='\{"columnKey": "to_FAufgabe/Teilfaehigkeit", "columnIndex":"1", "leadingProperty": "to_FAufgabe/Teilfaehigkeit,to_FAufgabe/TeilfaehigkeitText", "sortProperty": "to_FAufgabe/TeilfaehigkeitText"}'
+                    />
+                </customData>
+                <Text text="{/#ZBCPL_CR_FA_FAUFType/Teilfaehigkeit/@sap:label}" />
+            </Column>
+
+            <Column
+                hAlign="End"
+                visible="{= ${fcl>/columnsVisibility/midColumn} !== true }"
+            >
+                <customData>
+                    <core:CustomData
+                        key="p13nData"
+                        value='\{"columnKey": "Meldetyp", "columnIndex":"2", "leadingProperty": "" }'
+                    />
+                </customData>
+                <Text text="Dienstposten" />
+            </Column>
+
+            <Column
+                hAlign="Begin"
+                width="250px"
+                visible="{= ${fcl>/columnsVisibility/midColumn} !== true }"
+            >
+                <customData>
+                    <core:CustomData
+                        key="p13nData"
+                        value='\{"columnKey": "besetzungsstand", "columnIndex":"3", "leadingProperty": "" }'
+                    />
+                </customData>
+                <Text text="Besetzungsstand" />
+            </Column>
+
+            <Column
+                hAlign="Begin"
+                width="250px"
+                visible="{= ${fcl>/columnsVisibility/midColumn} !== true }"
+            >
+                <customData>
+                    <core:CustomData
+                        key="p13nData"
+                        value='\{"columnKey": "trendchart_from", "columnIndex":"4", "leadingProperty": "" }'
+                    />
+                </customData>
+                <Text text="Entwicklung (2 Jahre)" />
+            </Column>
+
+            <Column
+                hAlign="Center"
+                width="{= (${fcl>/columnsVisibility/midColumn} !== true) ? '14rem' : '6rem' }"
+            >
+                <customData>
+                    <core:CustomData
+                        key="p13nData"
+                        value='\{"columnKey": "BeurDienstbereit", "columnIndex":"5", "leadingProperty": "BeurDienstbereit,TrendDienstbereit,to_FAufgabe/IstKeinAusschluss", "sortProperty": "BeurDienstbereit"}'
+                    />
+                </customData>
+                <Text
+                    text="{= ${fcl>/columnsVisibility/midColumn} !== true ? 'Einsatzfähigkeit (2 Jahre)' : 'Einsatzfähigkeit'}"
+                />
+            </Column>
+
+            <Column
+                hAlign="Center"
+                width="{= (${fcl>/columnsVisibility/midColumn} !== true) ? '14rem' : '6rem' }"
+            >
+                <customData>
+                    <core:CustomData
+                        key="p13nData"
+                        value='\{"columnKey": "BeurEinsatzbereit", "columnIndex":"6", "leadingProperty": "BeurEinsatzbereit,TrendEinsatzbereit", "sortProperty": "BeurEinsatzbereit"}'
+                    />
+                </customData>
+                <Text
+                    text="{= ${fcl>/columnsVisibility/midColumn} !== true ? 'Einsatzbereitschaft (2 Jahre)' : 'Einsatzbereitschaft'}"
+                />
+            </Column>
+
+            <Column
+                hAlign="Center"
+                visible="{= ${fcl>/columnsVisibility/midColumn} !== true }"
+                width="{= (${fcl>/columnsVisibility/midColumn} !== true) ? '150px' : '110px' }"
+            >
+                <customData>
+                    <core:CustomData
+                        key="p13nData"
+                        value='\{"columnKey": "Bearbeitungsstatus", "columnIndex":"7", "leadingProperty": "Bearbeitungsstatus", "sortProperty": "Bearbeitungsstatus"}'
+                    />
+                </customData>
+                <Text
+                    text="{/#ZBCPL_CR_FA_FAUFBEURType/Bearbeitungsstatus/@sap:label}"
+                />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem
+                type="{= ${viewModel>/bEditing} ? 'Active' : 'Navigation' }"
+                highlight="{
+                    path: 'Bearbeitungsstatus',
+                    formatter: '.formatter.getBearbeitungStatusColor',
+                    templateShareable : false
+                }"
+            >
+                <cells>
+                    <FlexBox
+                        alignItems="Center"
+                        justifyContent="Start"
+                    >
+                        <core:Icon
+                            src="sap-icon://alert"
+                            class="sapUiTinyMarginEnd"
+                            tooltip="Pflichtfelder nicht gefüllt"
+                            color="#0854a0"
+                            size="1.2rem"
+                            visible="{= 
+                                ${BeurDienstbereit} === '0' || 
+                                ${TrendDienstbereit} === '0' || 
+                                ${AnmerkungDienstbereit} === '' || 
+                                (
+                                    ${NichtBeurEinsatzbereit} !== 'X' &amp;&amp;
+                                    (
+                                        ${BeurEinsatzbereit} === '0' || 
+                                        ${TrendEinsatzbereit} === '0' || 
+                                        ${AnmerkungEinsatzbereit} === ''
+                                    )
+                                )
+                            }"
+                        />
+
+                        <ObjectIdentifier
+                            class="sapUiMicroMargin"
+                            title="{FaehBezAufg_Text}"
+                            text="{FaehBezAufg}"
+                            tooltip="{FaehBezAufg_Text} ({FaehBezAufg})"
+                        />
+                    </FlexBox>
+
+                    <ObjectIdentifier
+                        class="sapUiMicroMargin"
+                        title="{= ${to_FAufgabe/Teilfaehigkeit} === '00000' ? '' :  ${to_FAufgabe/TeilfaehigkeitText} }"
+                        text="{= ${to_FAufgabe/Teilfaehigkeit} === '00000' ? 'Ohne Teilfähigkeit' :  ${to_FAufgabe/Teilfaehigkeit} }"
+                        tooltip="{= ${to_FAufgabe/Teilfaehigkeit} === '00000' ? 'Ohne Teilfähigkeit' :  ${to_FAufgabe/TeilfaehigkeitText} } ({to_FAufgabe/Teilfaehigkeit})"
+                    />
+
+                    <!-- FAM1Beurteilung.controller / ZBCPL_C_FA_BESETZSTRUELEMFA -->
+                    <FlexBox
+                        width="100%"
+                        alignItems="Center"
+                        justifyContent="End"
+                    >
+                        <Text
+                            visible="{= ${IstKeinAusschluss} }"
+                            text="{i18n>Ist}: {path: 'besetzungsstand_ist', type: 'sap.ui.model.type.Float'}&#10;{i18n>Soll}: {path: 'besetzungsstand_soll', type: 'sap.ui.model.type.Float'}"
+                        />
+                        <HBox
+                            renderType="Bare"
+                            class="sapUiTinyMargin"
+                            visible="{= !${IstKeinAusschluss} }"
+                        >
+                            <core:Icon
+                                src="sap-icon://private"
+                                color="#1C4C98"
+                                tooltip="Keine Berechtigung. Fähigkeitsbezogene Aufgabe über die zugeh. Teilfähigkeit ausgeschlossen."
+                            />
+                        </HBox>
+                    </FlexBox>
+
+                    <!-- FAM1Beurteilung.controller / ZBCPL_C_FA_BESETZSTRUELEMFA -->
+                    <!-- visible="{= ${IstKeinAusschluss} }" -->
+                    <FlexBox
+                        width="100%"
+                        alignItems="Center"
+                        justifyContent="Start"
+                    >
+                        <mc:BulletMicroChart
+                            visible="{= ${IstKeinAusschluss} }"
+                            scale="%"
+                            busyIndicatorDelay="0"
+                            showValueMarker="false"
+                            showTargetValue="false"
+                            size="L"
+                            minValue="0"
+                            maxValue="100"
+                            tooltip="{
+                            parts: [
+                               { path: 'besetzungsstand_ist' },
+                               { path: 'besetzungsstand_soll' }
+                            ],
+                            formatter: '.formatter.getBesetzungTooltip'
+                         }"
+                        >
+                            <mc:actual>
+                                <xc:BulletMicroChartData
+                                    value="{= parseInt(${besetzungsstand})}"
+                                    color="{ 
+                                    parts: [
+                                       { path: 'besetzungsstand_ist' },
+                                       { path: 'besetzungsstand_soll' }
+                                    ],
+                                    formatter: '.formatter.getBesetzungColor' }"
+                                />
+                            </mc:actual>
+                            <mc:thresholds>
+                                <xc:BulletMicroChartData
+                                    value="0"
+                                    color="NatoRed"
+                                    tooltip="{i18n>BesetzungUngenuegendTooltip}"
+                                />
+                                <xc:BulletMicroChartData
+                                    value="60"
+                                    color="NatoOrange"
+                                    tooltip="{i18n>BesetzungGrenzwertigTooltip}"
+                                />
+                                <xc:BulletMicroChartData
+                                    value="75"
+                                    color="NatoYellow"
+                                    tooltip="{i18n>BesetzungZufriedenstellendTooltip}"
+                                />
+                                <xc:BulletMicroChartData
+                                    value="90"
+                                    color="NatoGreen"
+                                    tooltip="{i18n>BesetzungAusgezeichnetTooltip}"
+                                />
+                            </mc:thresholds>
+                        </mc:BulletMicroChart>
+                        <HBox
+                            renderType="Bare"
+                            class="sapUiTinyMargin"
+                            visible="{= !${IstKeinAusschluss} }"
+                        >
+                            <core:Icon
+                                src="sap-icon://private"
+                                color="#1C4C98"
+                                tooltip="Keine Berechtigung. Fähigkeitsbezogene Aufgabe über die zugeh. Teilfähigkeit ausgeschlossen."
+                            />
+                        </HBox>
+                    </FlexBox>
+
+                    <!-- FAM1Beurteilung.controller / ZBCPL_C_FA_BESETZSTRUELEMFA -->
+                    <FlexBox
+                        width="100%"
+                        alignItems="Center"
+                        justifyContent="Start"
+                    >
+                        <HBox
+                            visible="{= ${IstKeinAusschluss} &amp;&amp; (${fcl>/columnsSizes/beginColumn} &gt; 60) }"
+                            justifyContent="Center"
+                            alignItems="Start"
+                        >
+                            <mc:AreaMicroChart
+                                minXValue="0"
+                                maxXValue="100"
+                                minYValue="0"
+                                maxYValue="100"
+                                size="L"
+                                tooltip="{= 'Prognosewerte:&#10;' + 
+                                                           ${path: 'trend_s1', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q1} + ' / Besetzt ' + ${trend_ist_q1} + ' (' + ${trend_perc_q1} + '%)' + '&#10;' +
+                                                           ${path: 'trend_s2', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q2} + ' / Besetzt ' + ${trend_ist_q2} + ' (' + ${trend_perc_q2} + '%)' + '&#10;' +
+                                                           ${path: 'trend_s3', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q3} + ' / Besetzt ' + ${trend_ist_q3} + ' (' + ${trend_perc_q3} + '%)' + '&#10;' +
+                                                           ${path: 'trend_s4', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q4} + ' / Besetzt ' + ${trend_ist_q4} + ' (' + ${trend_perc_q4} + '%)' + '&#10;' +
+                                                           ${path: 'trend_s5', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q5} + ' / Besetzt ' + ${trend_ist_q5} + ' (' + ${trend_perc_q5} + '%)' + '&#10;' +
+                                                           ${path: 'trend_s6', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q6} + ' / Besetzt ' + ${trend_ist_q6} + ' (' + ${trend_perc_q6} + '%)' + '&#10;' +
+                                                           ${path: 'trend_s7', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q7} + ' / Besetzt ' + ${trend_ist_q7} + ' (' + ${trend_perc_q7} + '%)' + '&#10;' +
+                                                           ${path: 'trend_s8', formatter: '.formatter.getQuartalTitel', templateShareable : false} + ': Soll ' + ${trend_q8} + ' / Besetzt ' + ${trend_ist_q8} + ' (' + ${trend_perc_q8} + '%)' + '&#10;' }"
+                            >
+                                <mc:firstXLabel>
+                                    <mc:AreaMicroChartLabel
+                                        label="{path: 'trend_from', formatter: '.formatter.getQuartalTitel', templateShareable : false}"
+                                        color="sapUiChartPaletteQualitativeHue1"
+                                    />
+                                </mc:firstXLabel>
+
+                                <mc:lastXLabel>
+                                    <mc:AreaMicroChartLabel
+                                        label="{path: 'trend_to', formatter: '.formatter.getQuartalTitel', templateShareable : false}"
+                                        color="sapUiChartPaletteQualitativeHue1"
+                                    />
+                                </mc:lastXLabel>
+
+                                <mc:firstYLabel>
+                                    <mc:AreaMicroChartLabel
+                                        label="Min: {trend_perc_min}%"
+                                        color="Neutral"
+                                    />
+                                </mc:firstYLabel>
+                                <mc:lastYLabel>
+                                    <mc:AreaMicroChartLabel
+                                        label="Max: {trend_perc_max}%"
+                                        color="Neutral"
+                                    />
+                                </mc:lastYLabel>
+                                <mc:chart>
+                                    <mc:AreaMicroChartItem>
+                                        <mc:points>
+                                            <mc:AreaMicroChartPoint
+                                                x="0"
+                                                y="{path: 'trend_perc_q1', formatter: '.formatter.getPercentValueMax100'}"
+                                            />
+                                            <mc:AreaMicroChartPoint
+                                                x="13"
+                                                y="{path: 'trend_perc_q2', formatter: '.formatter.getPercentValueMax100'}"
+                                            />
+                                            <mc:AreaMicroChartPoint
+                                                x="26"
+                                                y="{path: 'trend_perc_q3', formatter: '.formatter.getPercentValueMax100'}"
+                                            />
+                                            <mc:AreaMicroChartPoint
+                                                x="39"
+                                                y="{path: 'trend_perc_q4', formatter: '.formatter.getPercentValueMax100'}"
+                                            />
+                                            <mc:AreaMicroChartPoint
+                                                x="52"
+                                                y="{path: 'trend_perc_q5', formatter: '.formatter.getPercentValueMax100'}"
+                                            />
+                                            <mc:AreaMicroChartPoint
+                                                x="65"
+                                                y="{path: 'trend_perc_q6', formatter: '.formatter.getPercentValueMax100'}"
+                                            />
+                                            <mc:AreaMicroChartPoint
+                                                x="78"
+                                                y="{path: 'trend_perc_q7', formatter: '.formatter.getPercentValueMax100'}"
+                                            />
+                                            <mc:AreaMicroChartPoint
+                                                x="100"
+                                                y="{path: 'trend_perc_q8', formatter: '.formatter.getPercentValueMax100'}"
+                                            />
+                                        </mc:points>
+                                    </mc:AreaMicroChartItem>
+                                </mc:chart>
+                                <mc:maxThreshold>
+                                    <mc:AreaMicroChartItem color="NatoGreen">
+                                        <mc:points>
+                                            <mc:AreaMicroChartPoint
+                                                x="0"
+                                                y="62"
+                                            />
+                                            <mc:AreaMicroChartPoint
+                                                x="100"
+                                                y="62"
+                                            />
+                                        </mc:points>
+                                    </mc:AreaMicroChartItem>
+                                </mc:maxThreshold>
+                                <mc:innerMaxThreshold>
+                                    <mc:AreaMicroChartItem color="NatoYellow">
+                                        <mc:points>
+                                            <mc:AreaMicroChartPoint
+                                                x="0"
+                                                y="84"
+                                            />
+                                            <mc:AreaMicroChartPoint
+                                                x="100"
+                                                y="84"
+                                            />
+                                        </mc:points>
+                                    </mc:AreaMicroChartItem>
+                                </mc:innerMaxThreshold>
+                                <mc:innerMinThreshold>
+                                    <mc:AreaMicroChartItem color="NatoOrange">
+                                        <mc:points>
+                                            <mc:AreaMicroChartPoint
+                                                x="0"
+                                                y="61"
+                                            />
+                                            <mc:AreaMicroChartPoint
+                                                x="100"
+                                                y="61"
+                                            />
+                                        </mc:points>
+                                    </mc:AreaMicroChartItem>
+                                </mc:innerMinThreshold>
+                                <mc:minThreshold>
+                                    <mc:AreaMicroChartItem color="NatoRed">
+                                        <mc:points>
+                                            <mc:AreaMicroChartPoint
+                                                x="0"
+                                                y="40"
+                                            />
+                                            <mc:AreaMicroChartPoint
+                                                x="100"
+                                                y="40"
+                                            />
+                                        </mc:points>
+                                    </mc:AreaMicroChartItem>
+                                </mc:minThreshold>
+                            </mc:AreaMicroChart>
+                            <core:Icon
+                                src="{= ${DP_TrendChart_IsBelow} ? 'sap-icon://opportunity' : ''}"
+                                color="{global>/aSemanticColors/Warning}"
+                                class="sapUiTinyMarginBegin sapUiMediumMarginEnd "
+                                tooltip="{= 'Grafik enthält nicht genauer dargestellte Werte unterhalb ' + Math.round(${DP_TrendChart_Max} * 2 / 10) }"
+                                width="16px"
+                            />
+                        </HBox>
+                        <HBox
+                            renderType="Bare"
+                            class="sapUiTinyMargin"
+                            visible="{= !${IstKeinAusschluss} }"
+                        >
+                            <core:Icon
+                                src="sap-icon://private"
+                                color="#1C4C98"
+                                tooltip="Keine Berechtigung. Fähigkeitsbezogene Aufgabe über die zugeh. Teilfähigkeit ausgeschlossen."
+                            />
+                        </HBox>
+                    </FlexBox>
+
+                    <FlexBox
+                        width="100%"
+                        alignItems="Center"
+                        justifyContent="Center"
+                    >
+                        <rt:RatingAndTrending
+                            visible="{= ${to_FAufgabe/IstKeinAusschluss} }"
+                            valueRating1="{BeurDienstbereit}"
+                            valueTrending1="{TrendDienstbereit}"
+                            tooltipRatingRot="sehr kritisch"
+                            tooltipRatingGelb="kritisch"
+                            tooltipRatingKeine="keine Angabe"
+                            tooltipRatingGruen="unkritisch"
+                            ratingIconSize="{= ${fcl>/columnsVisibility/midColumn} !== true ? '1.2rem' : '0.8rem'}"
+                            trendingIconSize="{= ${fcl>/columnsVisibility/midColumn} !== true ? '1.2rem' : '0.8rem'}"
+                        />
+                        <HBox
+                            renderType="Bare"
+                            class="sapUiTinyMargin"
+                            visible="{= !${to_FAufgabe/IstKeinAusschluss} }"
+                        >
+                            <core:Icon
+                                src="sap-icon://private"
+                                color="#1C4C98"
+                                tooltip="Keine Berechtigung. Fähigkeitsbezogene Aufgabe über die zugeh. Teilfähigkeit ausgeschlossen."
+                            />
+                        </HBox>
+                    </FlexBox>
+
+                    <FlexBox
+                        width="100%"
+                        alignItems="Center"
+                        justifyContent="Center"
+                    >
+                        <HBox
+                            justifyContent="Center"
+                            visible="{= ${to_FAufgabe/IstKeinAusschluss} }"
+                        >
+                            <rt:RatingAndTrending
+                                valueRating1="{BeurEinsatzbereit}"
+                                valueTrending1="{TrendEinsatzbereit}"
+                                tooltipRatingRot="sehr kritisch"
+                                tooltipRatingGelb="kritisch"
+                                tooltipRatingKeine="keine Angabe"
+                                tooltipRatingGruen="unkritisch"
+                                ratingIconSize="{= ${fcl>/columnsVisibility/midColumn} !== true ? '1.2rem' : '0.8rem'}"
+                                trendingIconSize="{= ${fcl>/columnsVisibility/midColumn} !== true ? '1.2rem' : '0.8rem'}"
+                                visible="{= ${NichtBeurEinsatzbereit} !== 'X' }"
+                            />
+
+                            <core:Icon
+                                src="sap-icon://decline"
+                                tooltip="nicht beurteilt"
+                                color="rgb(67, 140, 213)"
+                                size="1.2rem"
+                                visible="{= ${NichtBeurEinsatzbereit} === 'X' }"
+                            />
+                        </HBox>
+                        <HBox
+                            renderType="Bare"
+                            class="sapUiTinyMargin"
+                            visible="{= !${to_FAufgabe/IstKeinAusschluss} }"
+                        >
+                            <core:Icon
+                                src="sap-icon://private"
+                                color="#1C4C98"
+                                tooltip="Keine Berechtigung. Fähigkeitsbezogene Aufgabe über die zugeh. Teilfähigkeit ausgeschlossen."
+                            />
+                        </HBox>
+                    </FlexBox>
+
+                    <HBox justifyContent="Center">
+                        <ObjectStatus
+                            inverted="true"
+                            class="objectStatus"
+                            text="{
+                                    path: 'Bearbeitungsstatus',
+                                    formatter: '.formatter.getBearbeitungStatusText',
+                                    templateShareable : false
+                                }"
+                            state="{
+                                    path: 'Bearbeitungsstatus',
+                                    formatter: '.formatter.getBearbeitungStatusState',
+                                    templateShareable : false
+                                }"
+                        />
+                    </HBox>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</core:FragmentDefinition>

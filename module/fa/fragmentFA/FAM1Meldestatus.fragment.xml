@@ -1,0 +1,404 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:smartTable="sap.ui.comp.smarttable"
+   xmlns:table="sap.ui.table"
+   height="100%">
+
+   <core:InvisibleText
+      id="unlockButtonText"
+      text="Beurteilung zurücksetzen." />
+
+   <ScrollContainer
+      horizontal="false"
+      vertical="true"
+      height="100%"
+      width="100%">
+
+      <FlexBox
+         direction="Column"
+         alignItems="Start">
+
+         <smartTable:SmartTable
+            id="smartTableMeldestatus"
+            persistencyKey="IhfMeldestatusTableVorebene"
+            header="Meldestatus der Vorebene"
+            entitySet="ZBCPL_C_FA_MELDESTATUSVOREBENE"
+            tableType="ResponsiveTable"
+            showFullScreenButton="false"
+            showTablePersonalisation="false"
+            demandPopin="true"
+            showRowCount="true"
+            enableAutoBinding="false"
+            useExportToExcel="false"
+            useVariantManagement="false"
+            beforeRebindTable="onBeforeRebindTableMeldestatus"
+            class="sapUiMediumMarginBottom">
+
+            <Table
+               id="tableMeldestatus"
+               growing="true"
+               growingThreshold="{global>/iListGrowing}"
+               growingScrollToLoad="true"
+               mode="SingleSelectMaster"
+               width="auto"
+               sticky="HeaderToolbar,InfoToolbar,ColumnHeaders">
+               <columns>
+
+                  <Column>
+                     <customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "Strukturelement_Text", 
+                              "columnIndex":"0", 
+                              "leadingProperty": "Strukturelement_Text,Strukturelement,StrukturelementParent_Text",
+                              "sortProperty": "Strukturelement_Text"}' />
+                     </customData>
+                     <Label text="{/#ZBCPL_C_FA_MELDESTATUSVOREBENEType/Strukturelement/@sap:label}" />
+                  </Column>
+
+                  <Column hAlign="Begin">
+                     <customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "Rolle", 
+                              "columnIndex":"1",
+                              "leadingProperty": "Rolle",
+                              "sortProperty": "Rolle"}' />
+                     </customData>
+                     <Label text="Zugeordnete Rolle" />
+                  </Column>
+
+                  <Column hAlign="Begin">
+                     <customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "RolleAggr", 
+                              "columnIndex":"2",
+                              "leadingProperty": "RolleAggr",
+                              "sortProperty": "RolleAggr"}' />
+                     </customData>
+                     <Label text="Rolle NWF" />
+                  </Column>
+
+                  <Column
+                     width="18rem"
+                     hAlign="Center"
+                     visible="{= ${global>/bRoleKommentierung} === true || ${global>/bRoleKonsolidierung} === true || ${global>/bRoleFachsupport} === true }">
+                     <customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "EinsatzbedingteAbwesenheit", 
+                              "columnIndex":"3", 
+                              "leadingProperty": "EinsatzbedingteAbwesenheit,Rolle,HierarchyLevel", 
+                              "sortProperty": "EinsatzbedingteAbwesenheit"}' />
+                     </customData>
+                     <Label text="Strukturelement wird nicht beurteilt" />
+                  </Column>
+
+
+                  <Column
+                     width="12rem"
+                     hAlign="Center"
+                     visible="{= ${global>/bRoleKommentierung} === true || ${global>/bRoleKonsolidierung} === true || ${global>/bRoleFachsupport} === true }">
+                     <customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "Meldestatus_Text",
+                              "columnIndex":"4",
+                              "leadingProperty": "Meldestatus_Text,Meldestatus,MeldestatusParent",
+                              "sortProperty": "Meldestatus_Text"}' />
+                     </customData>
+                     <Label text="Beurteilung zurücksetzen" />
+                  </Column>
+
+                  <Column hAlign="End">
+                     <customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "Meldestatus",
+                              "columnIndex":"5",
+                              "leadingProperty": "Meldestatus_Text,Meldestatus",
+                              "sortProperty": "Meldestatus_Text"}' />
+                     </customData>
+                     <Label text="{/#ZBCPL_C_FA_MELDESTATUSVOREBENEType/Meldestatus/@sap:label}" />
+                  </Column>
+
+               </columns>
+
+               <items>
+                  <ColumnListItem type="Inactive">
+                     <cells>
+                        <ObjectIdentifier text="{Strukturelement_Text} ({Strukturelement})" />
+
+                        <Text text="{ parts: [{path: 'Rolle'}, {path: 'HierarchyLevel'}], formatter: '.formatter.getRolename'}" />
+
+                        <HBox justifyContent="Start">
+                           <Text
+                              text="{RolleAggr}"
+                              visible="{= ${RolleAggr} !== '' }" />
+                           <core:Icon
+                              src="sap-icon://message-warning"
+                              tooltip="Keine Nutzenden der Rolle zugeordnet!"
+                              color="Critical"
+                              size="1.2rem"
+                              visible="{= ${RolleAggr} === '' }" />
+                        </HBox>
+
+                        <ToggleButton
+                           icon="sap-icon://offsite-work"
+                           visible="{= ( ( ${global>/bAllowRelease} === true &amp;&amp; ( ${Rolle} === 'PEB_EB_FA' || ${Rolle} === 'PEB_KOMME' ) ) || ${Rolle} === 'PEB_FASUP' ) }"
+                           enabled="{= ${global>/bPlanungssituationInBearbeitung} &amp;&amp; ${Meldestatus} !== '30' &amp;&amp; ${MeldestatusParent} !== '30' &amp;&amp; ${EinsatzbedingteAbwesenheit} !== true &amp;&amp; ${global>/bViewIsBusy} !== true}"
+                           pressed="{EinsatzbedingteAbwesenheit}"
+                           press="onPressEinsatzbedingteAbwesenheit"
+                           tooltip="{= ${EinsatzbedingteAbwesenheit} ? 
+                              ${Strukturelement_Text} + ' wird aufgrund langfristiger Abwesenheit, bspw. Einsatzbedingte Abwesenheit, Übungen oder nichtaktiver Truppenteil nicht beurteilt' : 
+                              '\'Strukturelement wird nicht beurteilt\' für ' + ${Strukturelement_Text} + ' aktivieren'}" />
+
+                        <Button
+                           icon="sap-icon://unlocked"
+                           type="Transparent"
+                           press="onPressUnlockRessource"
+                           ariaLabelledBy="unlockButtonText"
+                           class="sapUiTinyMarginBegin"
+                           tooltip="Beurteilung zurücksetzen"
+                           visible="{= ${global>/bPlanungssituationInBearbeitung} &amp;&amp; ( ( ${global>/bRoleFA} &amp;&amp; ${global>/bAllowWithdraw} ) || ${global>/bRoleFachsupport} ) &amp;&amp; ${Meldestatus} === '30' &amp;&amp; ${MeldestatusParent} !== '30' }"
+                           enabled="{= !${global>/bViewIsBusy} }" />
+
+                        <FlexBox
+                           alignItems="Center"
+                           justifyContent="End">
+                           <ObjectStatus
+                              text="{
+                              path: 'Meldestatus',
+                              formatter: '.formatter.getMeldungStatusString',
+                              templateShareable : false
+                           }"
+                              inverted="true"
+                              class="objectStatusMeldestatus"
+                              visible="{= ${Meldestatus} !== '00' &amp;&amp; ${Meldestatus} !== '05' }"
+                              state="{
+                               path: 'Meldestatus',
+                               formatter: '.formatter.getMeldungStatus',
+                               templateShareable : false
+                           }" />
+                           <ObjectStatus
+                              text="{
+                              path: 'Meldestatus',
+                              formatter: '.formatter.getMeldungStatusString',
+                              templateShareable : false
+                           }"
+                              inverted="false"
+                              class="objectStatusMeldestatus"
+                              visible="{= ${Meldestatus} === '00' || ${Meldestatus} === '05' }"
+                              state="{
+                               path: 'Meldestatus',
+                               formatter: '.formatter.getMeldungStatus',
+                               templateShareable : false
+                           }" />
+                        </FlexBox>
+
+
+                     </cells>
+                  </ColumnListItem>
+               </items>
+            </Table>
+         </smartTable:SmartTable>
+
+
+         <smartTable:SmartTable
+            id="smartTableFortschrittTree"
+            header="Fortschritt ({viewModel>/iCountFortschrittTree})"
+            entitySet="ZBCPL_C_FA_FAUFFORTSCHRITT"
+            tableType="TreeTable"
+            showFullScreenButton="false"
+            showTablePersonalisation="false"
+            showRowCount="false"
+            enableAutoBinding="false"
+            useExportToExcel="false"
+            useVariantManagement="false"
+            width="100%"
+            class="sapUiMediumMarginBottom"
+            beforeRebindTable="onBeforeRebindTableFortschrittTree">
+
+            <smartTable:customToolbar>
+               <OverflowToolbar
+                  design="Transparent"
+                  class="sapMSticky sapMSticky4">
+                  <ToolbarSpacer />
+
+                  <OverflowToolbarButton
+                     icon="sap-icon://collapse-all"
+                     tooltip="Alles zuklappen"
+                     text="Alles zuklappen"
+                     enabled="true"
+                     visible="{= ['OneColumn', 'TwoColumnsMidExpanded'].includes( ${fcl>/layout} ) }"
+                     press="onFortschrittCollapseAll" />
+
+                  <OverflowToolbarButton
+                     icon="sap-icon://expand-all"
+                     tooltip="Alles aufklappen"
+                     text="Alles aufklappen"
+                     enabled="true"
+                     visible="{= ['OneColumn', 'TwoColumnsMidExpanded'].includes( ${fcl>/layout} ) }"
+                     press="onFortschrittExpandAll" />
+
+               </OverflowToolbar>
+            </smartTable:customToolbar>
+
+            <smartTable:layoutData>
+               <FlexItemData growFactor="1" />
+            </smartTable:layoutData>
+
+            <table:TreeTable
+               id="treeTableFortschrittTree"
+               selectionMode="Single"
+               selectionBehavior="Row"
+               enableColumnReordering="false"
+               rootLevel="1"
+               rowHeight="70px"
+               rowSelectionChange="onListItemPressFortschrittTree"
+               class="sapFDynamicPageAlignContent"
+               expandFirstLevel="true">
+
+               <table:columns>
+                  <table:Column label="Strukturelement">
+                     <table:customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "Strukturelement", "columnIndex":"1", "leadingProperty": "Strukturelement_Text,Strukturelement,HierarchyLevel,Meldestatus", "sortProperty": ""}' />
+                     </table:customData>
+                     <table:template>
+                        <ObjectIdentifier
+                           class="sapUiMicroMargin"
+                           title="{Strukturelement_Text}"
+                           text="{Strukturelement}"
+                           tooltip="{Strukturelement_Text} ({Strukturelement})" />
+                     </table:template>
+                  </table:Column>
+
+                  <table:Column
+                     label="Freigabe am"
+                     hAlign="Center"
+                     visible="{= ${fcl>/layout} === 'OneColumn' }">
+                     <table:customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "FreigabeAm", "columnIndex":"2", "leadingProperty": "FreigabeAm", "sortProperty": ""}' />
+                     </table:customData>
+                     <table:template>
+                        <Text
+                           visible="{= ${FreigabeAm} !== '19000101000000' }"
+                           text="{ parts: [{ path: 'FreigabeAm' }], formatter: '.formatter.getConvertedDateShortForm',
+                                   templateShareable : false
+                              }"
+                           tooltip="{ parts: [{ path: 'FreigabeAm' }], formatter: '.formatter.getConvertedDateLongForm',
+                                      templateShareable : false
+                              }" />
+                     </table:template>
+                  </table:Column>
+
+                  <table:Column
+                     label="Freigabe durch"
+                     hAlign="Center"
+                     visible="{= ${fcl>/layout} === 'OneColumn' }">
+                     <table:customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "FreigabeVon", "columnIndex":"3", "leadingProperty": "FreigabeVon", "sortProperty": ""}' />
+                     </table:customData>
+                     <table:template>
+                        <Text text="{FreigabeVon}" />
+                     </table:template>
+                  </table:Column>
+
+                  <table:Column
+                     label="Letzte Bearbeitung am"
+                     hAlign="Center"
+                     visible="{= ${fcl>/layout} === 'OneColumn' }">
+                     <table:customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "GeaendertAmBew", "columnIndex":"4", "leadingProperty": "GeaendertAmBew", "sortProperty": ""}' />
+                     </table:customData>
+                     <table:template>
+                        <Text
+                           text="{ parts: [{ path: 'GeaendertAmBew' }], formatter: '.formatter.getConvertedDateShortForm', templateShareable : false }"
+                           tooltip="{ parts: [{ path: 'GeaendertAmBew' }], formatter: '.formatter.getConvertedDateLongForm', templateShareable : false }" />
+                     </table:template>
+                  </table:Column>
+
+                  <table:Column
+                     label="Letzte Bearbeitung durch"
+                     hAlign="Center"
+                     visible="{= ${fcl>/layout} === 'OneColumn' }">
+                     <table:customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "GeaendertVonBew", "columnIndex":"5", "leadingProperty": "GeaendertVonBew", "sortProperty": ""}' />
+                     </table:customData>
+                     <table:template>
+                        <Text text="{GeaendertVonBew}" />
+                     </table:template>
+                  </table:Column>
+
+
+                  <table:Column
+                     width="15rem"
+                     hAlign="Begin"
+                     visible="{= ${fcl>/layout} === 'OneColumn' }">
+                     <table:customData>
+                        <core:CustomData
+                           key="p13nData"
+                           value='\{"columnKey": "Meldestatus", "columnIndex":"6", "leadingProperty": "Meldestatus", "sortProperty": ""}' />
+                     </table:customData>
+
+                     <Label text="Meldestatus" />
+                     <table:template>
+                        <FlexBox
+                           alignItems="Center"
+                           justifyContent="End">
+                           <ObjectStatus
+                              text="{
+                           path: 'Meldestatus',
+                           formatter: '.formatter.getMeldungStatusString',
+                           templateShareable : false
+                        }"
+                              inverted="true"
+                              class="objectStatusMeldestatus"
+                              visible="{= ${Meldestatus} !== '00' &amp;&amp; ${Meldestatus} !== '05' }"
+                              state="{
+                            path: 'Meldestatus',
+                            formatter: '.formatter.getMeldungStatus',
+                            templateShareable : false
+                        }" />
+                           <ObjectStatus
+                              text="{
+                           path: 'Meldestatus',
+                           formatter: '.formatter.getMeldungStatusString',
+                           templateShareable : false
+                        }"
+                              inverted="false"
+                              class="objectStatusMeldestatus"
+                              visible="{= ${Meldestatus} === '00' || ${Meldestatus} === '05' }"
+                              state="{
+                            path: 'Meldestatus',
+                            formatter: '.formatter.getMeldungStatus',
+                            templateShareable : false
+                        }" />
+                        </FlexBox>
+
+
+                     </table:template>
+                  </table:Column>
+
+               </table:columns>
+
+            </table:TreeTable>
+         </smartTable:SmartTable>
+
+      </FlexBox>
+
+   </ScrollContainer>
+
+</core:FragmentDefinition>

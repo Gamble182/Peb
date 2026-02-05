@@ -1,0 +1,97 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mc="sap.suite.ui.microchart"
+    xmlns:xc="de.bundeswehr.zaxxx.framework.v010.global.control.suite.microchart"
+    xmlns:rt="de.bundeswehr.zaxxx.framework.v010.global.control.ratingAndTrending">
+
+    <FlexBox
+        alignItems="Start"
+        justifyContent="SpaceBetween"
+        class="sapUiSmallMarginBottom">
+
+        <VBox>
+            <FlexBox
+                alignItems="Center"
+                justifyContent="Start">
+                <Text
+                    text="{i18n>Ist}: {path: 'besetzungsstand_ist', type: 'sap.ui.model.type.Float'}&#10;{i18n>Soll}: {path: 'besetzungsstand_soll', type: 'sap.ui.model.type.Float'}"
+                    class="sapUiLargeMarginEnd" />
+                <Text text="{
+                        path: 'besetzungsstand',
+                        formatter: '.formatter.getBesetzungText'
+                     }" />
+            </FlexBox>
+
+            <mc:BulletMicroChart
+                scale="%"
+                showValueMarker="false"
+                showTargetValue="false"
+                size="L"
+                minValue="0"
+                maxValue="100"
+                tooltip="{
+                     parts: [
+                        { path: 'besetzungsstand_ist' },
+                        { path: 'besetzungsstand_soll' }
+                     ],
+                     formatter: '.formatter.getBesetzungTooltip'
+                  }">
+                <mc:actual>
+                    <xc:BulletMicroChartData
+                        value="{= parseInt(${besetzungsstand})}"
+                        color="{ 
+                           parts: [
+                              { path: 'besetzungsstand_ist' },
+                              { path: 'besetzungsstand_soll' }
+                           ],
+                           formatter: '.formatter.getBesetzungColor' 
+                        }" />
+                </mc:actual>
+                <mc:thresholds>
+                    <xc:BulletMicroChartData
+                        value="0"
+                        color="NatoRed"
+                        tooltip="{i18n>BesetzungUngenuegendTooltip}" />
+                    <xc:BulletMicroChartData
+                        value="60"
+                        color="NatoOrange"
+                        tooltip="{i18n>BesetzungGrenzwertigTooltip}" />
+                    <xc:BulletMicroChartData
+                        value="75"
+                        color="NatoYellow"
+                        tooltip="{i18n>BesetzungZufriedenstellendTooltip}" />
+                    <xc:BulletMicroChartData
+                        value="90"
+                        color="NatoGreen"
+                        tooltip="{i18n>BesetzungAusgezeichnetTooltip}" />
+                </mc:thresholds>
+            </mc:BulletMicroChart>
+        </VBox>
+
+        <Button
+            press=".onDependentDialogOpen"
+            icon="sap-icon://hint"
+            tooltip="Begriffsdefinitionen">
+            <dependents>
+                <Dialog
+                    contentHeight="550px"
+                    contentWidth="700px"
+                    xmlns="sap.m"
+                    icon="sap-icon://hint"
+                    title="Besetzungsstand - Begriffsdefinitionen">
+                    <VBox class="sapUiSmallMargin">
+                        <Text text="{i18n>BegriffsdefinitionBesetzungsstand}" />
+                    </VBox>
+                    <buttons>
+                        <Button
+                            text="Abbrechen"
+                            press=".onDependentDialogClose" />
+                    </buttons>
+                </Dialog>
+            </dependents>
+        </Button>
+
+    </FlexBox>
+
+</core:FragmentDefinition>            

@@ -1,0 +1,206 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:mc="sap.suite.ui.microchart"
+   xmlns:si="sap.suite.ui.commons.statusindicator"
+   xmlns:core="sap.ui.core">
+   <OverflowToolbarButton
+      class="sapUiTinyMarginBegin"
+      press="onOpenFirstDependentPress"
+      icon="sap-icon://legend"
+      type="Transparent"
+      tooltip="Legende zu Meldestatus anzeigen">
+      <dependents>
+         <Popover
+            showHeader="false"
+            placement="VerticalPreferredBottom"
+            contentHeight="460px"
+            contentWidth="760px">
+            <Text
+               text="Der Meldestatus zeigt für jede Kommandobehörde auf Basis beurteilungsfähiger Verwendungsbereiche den aktuellen Gesamtarbeitsvorrat, in den Kreischarts den aktuellen Bearbeitungszustand je Phase OrgBer Erstbeurteilung, BAPersBw Beurteilung und Org Ber Nachkommentierung sowie den Gesamtbearbeitungsstand an."
+               class="sapUiTinyMargin" />
+
+            <Panel class="PanelNoBottom sapUiTinyMarginTop">
+               <headerToolbar>
+                  <OverflowToolbar>
+                     <Title text="Gesamtarbeitsvorrat" />
+                  </OverflowToolbar>
+               </headerToolbar>
+               <HBox justifyContent="Start">
+                  <HBox
+                     justifyContent="Center"
+                     alignItems="Center"
+                     alignContent="Center">
+                     <HBox
+                        width="4rem"
+                        justifyContent="End"
+                        alignItems="Center"
+                        alignContent="Center">
+                        <ObjectNumber
+                           number="112"
+                           textAlign="End"
+                           tooltip="Gesamtanzahl im OrgBer verfügbarer Verwendungsbereiche" />
+                     </HBox>
+                     <si:StatusIndicator
+                        width="4rem"
+                        height="50px"
+                        viewBox="-1 -1 77 102"
+                        showLabel="true"
+                        labelPosition="Top"
+                        value="62">
+                        <si:ShapeGroup>
+                           <si:Rectangle
+                              x="0"
+                              y="0"
+                              width="75"
+                              height="100"
+                              fullAnimationDuration="2000"
+                              fillColor="Neutral"
+                              strokeWidth="1"
+                              animationOnStartup="true"
+                              fillingType="Linear" />
+                        </si:ShapeGroup>
+                     </si:StatusIndicator>
+                     <HBox
+                        width="4rem"
+                        justifyContent="Start"
+                        alignItems="Center"
+                        alignContent="Center">
+                        <ObjectNumber
+                           number="69"
+                           textAlign="Begin"
+                           tooltip="Gesamtanzahl in Bearbeitung genommener Verwendungsbereiche innerhalb des OrgBer"
+                           state="{
+                           value: '20',
+                           formatter: '.formatter.getMeldungStatus',
+                           templateShareable : false
+                       }" />
+                     </HBox>
+                  </HBox>
+                  <VBox justifyContent="SpaceBetween">
+                     <Text text="Bei der Anzeige des Gesamtarbeitsvorrates gibt die obere linke Zahl die max. Anzahl verfügbarer Verwendungsbereiche innerhalb der KdoBeh an." />
+                     <Text
+                        text="Balkenhöhe und Prozentangabe zeigen den Bearbeitungsgrad über alle verfügbaren Verwendungsbereiche zur KdoBeh an."
+                        class="sapUiTinyMarginTop sapUiTinyMarginBottom" />
+                     <Text text="Die untere rechte Zahl entspricht der Anzahl der Verwendungsbereiche, die dem Beurteilungsprozess zugeführt werden." />
+                  </VBox>
+               </HBox>
+            </Panel>
+            <Panel class="PanelNoBottom">
+               <headerToolbar>
+                  <OverflowToolbar>
+                     <Title text="Bearbeitungsfortschritt" />
+                  </OverflowToolbar>
+               </headerToolbar>
+               <HBox
+                  class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
+                  alignContent="Center"
+                  alignItems="Center">
+                  <HBox>
+                     <VBox
+                        justifyContent="Start"
+                        alignItems="End">
+                        <Button
+                           icon="sap-icon://redo"
+                           type="Transparent"
+                           press="onPressResetOrgBerErstbeurVBDemo"
+                           ariaLabelledBy="resetOrgBerErstbeurVB"
+                           class="sapUiTinyMarginBegin sapUiSmallMarginTop"
+                           tooltip="Freigabe OrgBer Erstbeurteilung zurücknehmen"
+                           enabled="true" />
+                     </VBox>
+                     <mc:RadialMicroChart
+                        alignContent="Center"
+                        size="Responsive"
+                        height="8rem"
+                        tooltip=" "
+                        valueColor="Good"
+                        percentage="75" />
+                     <VBox
+                        justifyContent="Center"
+                        alignItems="Start"
+                        width="3rem">
+                        <ObjectStatus
+                           text="15"
+                           state="Success" />
+                        <Text
+                           text="20"
+                           class="sapUiLargeMarginTop" />
+                     </VBox>
+                  </HBox>
+
+                  <VBox justifyContent="SpaceBetween">
+                     <Text text="Die obere Zahl entspricht der Anzahl Verwendungsbereiche zu freigegebenen Kommentierungen und Beurteilungen." />
+                     <Text
+                        text="Segmentgröße und Prozentangabe zeigen den Fertigstellungsgrad des aktuellen Arbeitsvorrats an."
+                        class="sapUiTinyMarginTop sapUiTinyMarginBottom" />
+                     <Text text="Die untere Zahl entspricht der Anzahl der Verwendungsbereiche im aktuellen Arbeitsvorrat." />
+                  </VBox>
+               </HBox>
+               <Text
+                  text="Mit einem Klick auf das Rücknahmesymbol wird der Meldestatus eines Verwendungsbereichs zum OrgBer zurückgesetzt. Die Auswahl des Verwendungsbereichs erfolgt im Folgedialog."
+                  class="sapUiTinyMarginBegin sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+            </Panel>
+            <Panel class="PanelNoBottom">
+               <headerToolbar>
+                  <OverflowToolbar>
+                     <Title text="Gesamtbearbeitungsstand" />
+                  </OverflowToolbar>
+               </headerToolbar>
+               <HBox
+                  justifyContent="Start"
+                  class="sapUiMediumMarginBegin">
+                  <HBox justifyContent="Center">
+                     <HBox
+                        width="10rem"
+                        justifyContent="Center"
+                        alignItems="Center"
+                        alignContent="Center">
+                        <si:StatusIndicator
+                           width="4rem"
+                           height="50px"
+                           viewBox="-1 -1 77 102"
+                           showLabel="true"
+                           labelPosition="Top"
+                           value="14">
+                           <si:ShapeGroup>
+                              <si:Rectangle
+                                 x="0"
+                                 y="0"
+                                 width="75"
+                                 height="100"
+                                 fullAnimationDuration="2000"
+                                 fillColor="Good"
+                                 strokeWidth="1"
+                                 animationOnStartup="true"
+                                 fillingType="Linear" />
+                           </si:ShapeGroup>
+                        </si:StatusIndicator>
+                        <HBox
+                           width="4rem"
+                           justifyContent="Start"
+                           alignItems="Center"
+                           alignContent="Center">
+                           <ObjectNumber
+                              number="10"
+                              textAlign="Begin"
+                              tooltip="Gesamtanzahl abgeschlossener Verwendungsbereiche innerhalb der KdoBeh"
+                              state="{
+                           value: '30',
+                           formatter: '.formatter.getMeldungStatus',
+                           templateShareable : false
+                       }" />
+                        </HBox>
+                     </HBox>
+                  </HBox>
+                  <VBox justifyContent="SpaceBetween">
+                     <Text
+                        text="Balkenhöhe und Prozentangabe zeigen den Fertigstellungsgrad über alle zu bearbeitenden Verwendungsbereiche innerhalb der KdoBeh an."
+                        class="sapUiTinyMarginTop sapUiTinyMarginBottom" />
+                     <Text text="Die rechte Zahl entspricht der Anzahl der fertiggestellten Verwendungsbereiche zur KdoBeh am Ende des Beurteilungsprozesses." />
+                  </VBox>
+               </HBox>
+            </Panel>
+         </Popover>
+      </dependents>
+   </OverflowToolbarButton>
+</core:FragmentDefinition>

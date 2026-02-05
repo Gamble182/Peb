@@ -1,0 +1,150 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:tnt="sap.tnt"
+   xmlns:RaT="de.bundeswehr.zaxxx.framework.v010.global.control.ratingAndTrending">
+   <OverflowToolbarButton
+      class="sapUiTinyMarginBegin"
+      press="onOpenFirstDependentPress"
+      icon="sap-icon://legend"
+      tooltip="Legende anzeigen"
+      visible="{= ['OneColumn'].includes( ${fcl>/layout} ) }">
+      <dependents>
+         <Popover
+            showHeader="false"
+            placement="VerticalPreferredBottom"
+            contentHeight="26rem"
+            contentWidth="60rem">
+            <VBox width="80px">
+
+               <HBox height="35px">
+                  <Label
+                     text="Folgende Abbildung zeigt den Zustand eines Strukturelements während und nach der Freigabe:"
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+
+
+               <HBox height="45px">
+                  <RaT:RatingAndTrending
+                     countTrendingControlHistory="1"
+                     countRatingControl="1"
+                     countTrendingControl="1"
+                     trendingIconSizeHistory="1.5rem"
+                     ratingIconSize="1.5rem"
+                     trendingIconSize="1.5rem"
+                     valueTrending1History="1"
+                     valueRating1="3"
+                     valueTrending1="3"
+                     tooltipRatingGruen="Beurteilung"
+                     tooltipRatingGelb=""
+                     tooltipRatingRot=""
+                     tooltipRatingKeine=""
+                     direction="Row"
+                     visible="true" />
+               </HBox>
+               <HBox
+                  height="35px"
+                  class="sapUiSmallMarginBegin">
+                  <core:Icon
+                     src="sap-icon://trend-down"
+                     color="#6A7070"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="Entwicklung der Beurteilung gegenüber der vorangegangenen Planung." />
+                  <Label
+                     text="(Symbol links) Entwicklung der Beurteilung gegenüber der vorangegangenen Planung."
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <HBox
+                  height="35px"
+                  class="sapUiSmallMarginBegin">
+                  <core:Icon
+                     src="sap-icon://circle-task-2"
+                     color="#2b7c2b"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="Beurteilung der aktuellen Planung." />
+                  <Label
+                     text="(Symbol mitte) Beurteilung der aktuellen Planung."
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <HBox
+                  height="35px"
+                  class="sapUiSmallMarginBegin">
+                  <core:Icon
+                     src="sap-icon://trend-up"
+                     color="#6A7070"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="Trend der aktuellen Planung." />
+                  <Label
+                     text="(Symbol rechts) Trend der aktuellen Planung."
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+
+               <HBox
+                  height="35px"
+                  class="sapUiMediumMarginTop">
+                  <Label
+                     text="Folgende Abbildung zeigt den Zustand eines Strukturelements vor Freigabe:"
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <HBox height="45px">
+                  <RaT:RatingAndTrending
+                     countTrendingControlHistory="1"
+                     countRatingControl="1"
+                     countTrendingControl="1"
+                     trendingIconSizeHistory="1.5rem"
+                     ratingIconSize="1.5rem"
+                     trendingIconSize="1.5rem"
+                     valueTrending1History=""
+                     valueRating1=""
+                     valueTrending1=""
+                     tooltipRatingGruen=""
+                     tooltipRatingGelb=""
+                     tooltipRatingRot=""
+                     tooltipRatingKeine=""
+                     direction="Row"
+                     visible="true" />
+               </HBox>
+               <HBox height="45px">
+                  <Label
+                     text="n.b."
+                     design="Bold"
+                     width="auto"
+                     class="sapUiMediumMarginTop sapUiSmallMargin" />
+                  <Label
+                     text="nicht bewertet"
+                     width="auto"
+                     class="sapUiMediumMarginTop sapUiSmallMargin" />
+               </HBox>
+               <HBox height="45px">
+                  <!--                  
+                  <Label
+                     text="k.B."
+                     design="Bold"
+                     width="auto"
+                     class="sapUiMediumMarginTop sapUiSmallMargin" />
+-->
+                  <core:Icon
+                     src="sap-icon://private"
+                     color="#1C4C98"
+                     class="sapUiMediumMarginTop sapUiSmallMargin"
+                     tooltip="Keine Berechtigung. Fähigkeitsbezogene Aufgabe über die zugeh. Teilfähigkeit ausgeschlossen." />
+                  <Label
+                     text="Keine Berechtigung. Fähigkeitsbezogene Aufgabe über die zugeh. Teilfähigkeit ausgeschlossen."
+                     width="auto"
+                     class="sapUiMediumMarginTop sapUiSmallMargin" />
+               </HBox>
+
+            </VBox>
+         </Popover>
+      </dependents>
+   </OverflowToolbarButton>
+
+</core:FragmentDefinition>

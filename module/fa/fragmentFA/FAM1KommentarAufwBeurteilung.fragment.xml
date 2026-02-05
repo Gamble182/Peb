@@ -1,0 +1,51 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:l="sap.ui.layout"
+   height="100%">
+
+   <l:VerticalLayout
+      visible="{= ${viewModel>/bDataAvailable} &amp;&amp; ${viewModel>/bEditing} }"
+      width="100%"
+      class="sapUiSmallMarginTop">
+
+      <Label
+         text="Zusammenfassende Beurteilung:"
+         required="true" />
+
+      <TextArea
+         value="{ path: 'to_AnmerkungAufw/Anmerkung', type: 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 2000} }"
+         showExceededText="true"
+         editable="true"
+         maxLength="2000"
+         width="100%"
+         growing="true"
+         growingMaxLines="7"
+         valueLiveUpdate="false"
+         valueState="{= ( ${to_AnmerkungAufw/Anmerkung} === '' || ${to_AnmerkungAufw/Anmerkung}.length &gt; 2000 ) &amp;&amp; ${viewModel>/bValidate} ? 'Error' : 'None' }"
+         liveChange="handleLiveChange" />
+
+   </l:VerticalLayout>
+
+   <l:VerticalLayout
+      visible="{= ${viewModel>/bDataAvailable} &amp;&amp; !${viewModel>/bEditing} }"
+      width="100%"
+      class="sapUiSmallMarginTop sapUiSmallMarginBottom">
+
+      <Label
+         text="Zusammenfassende Beurteilung:"
+         required="false" />
+      <Text
+         text="{= ${to_AnmerkungAufw/Anmerkung} === '' ? 'Die Erfassung einer zusammenfassenden Beurteilung ist noch nicht erfolgt! Pflichtfeld!' : ${to_AnmerkungAufw/Anmerkung}}"
+         width="100%"
+         class="sapUiTinyMarginBegin" />
+
+   </l:VerticalLayout>
+
+   <Text
+      text="Keine Daten vorhanden"
+      visible="{= !${viewModel>/bDataAvailable} }"
+      width="100%"
+      textAlign="Begin" />
+
+</core:FragmentDefinition>

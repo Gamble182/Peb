@@ -1,0 +1,9 @@
+<mvc:View
+  controllerName="de.bundeswehr.zbcpl_peb_rep.module.bl.BlM1"
+  xmlns:core="sap.ui.core"
+  xmlns:mvc="sap.ui.core.mvc"
+  height="100%">
+  <core:Fragment
+    fragmentName="de.bundeswehr.zbcpl_peb_rep.module.bl.BlM1"
+    type="XML" />
+</mvc:View>

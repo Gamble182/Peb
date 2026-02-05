@@ -1,0 +1,238 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:mc="sap.suite.ui.microchart"
+    xmlns:rt="de.bundeswehr.zaxxx.framework.v010.global.control.ratingAndTrending">
+
+    <ScrollContainer
+        horizontal="false"
+        vertical="true"
+        height="100%"
+        width="100%">
+
+        <smartTable:SmartTable
+            id="smartTableVergleichNachDienststellenTree"
+            header="Vergleich FähigBezAufg nach Dienststellen ({viewModel>/iCountVergleichNachDienststellenTree})"
+            entitySet="ZBCPL_C_FA_FAUFAUFWBEUR"
+            tableType="TreeTable"
+            showFullScreenButton="false"
+            showTablePersonalisation="false"
+            showRowCount="false"
+            enableAutoBinding="false"
+            useExportToExcel="false"
+            useVariantManagement="false"
+            width="100%"
+            class="sapUiMediumMarginBottom"
+            beforeRebindTable="onBeforeRebindTableVergleichNachDienststellenTree">
+
+            <smartTable:customToolbar>
+                <OverflowToolbar
+                    design="Transparent"
+                    class="sapMSticky sapMSticky4">
+                    <ToolbarSpacer />
+
+                    <OverflowToolbarButton
+                        icon="sap-icon://collapse-all"
+                        tooltip="Alles zuklappen"
+                        text="Alles zuklappen"
+                        enabled="true"
+                        visible="{= ['OneColumn', 'TwoColumnsMidExpanded'].includes( ${fcl>/layout} ) }"
+                        press="onCollapseAll" />
+
+                    <OverflowToolbarButton
+                        icon="sap-icon://expand-all"
+                        tooltip="Alles aufklappen"
+                        text="Alles aufklappen"
+                        enabled="true"
+                        visible="{= ['OneColumn', 'TwoColumnsMidExpanded'].includes( ${fcl>/layout} ) }"
+                        press="onExpandAll" />
+
+                </OverflowToolbar>
+            </smartTable:customToolbar>
+
+            <smartTable:layoutData>
+                <FlexItemData growFactor="1" />
+            </smartTable:layoutData>
+
+            <table:TreeTable
+                id="treeTableVergleichNachDienststellenTree"
+                selectionMode="Single"
+                selectionBehavior="Row"
+                enableColumnReordering="false"
+                rootLevel="1"
+                rowHeight="70px"
+                rowSelectionChange="onListItemPressVergleichNachDienststellenTree"
+                class="sapFDynamicPageAlignContent"
+                expandFirstLevel="true">
+
+                <table:columns>
+                    <table:Column label="Strukturelement">
+                        <table:customData>
+                            <core:CustomData
+                                key="p13nData"
+                                value='\{"columnKey": "Strukturelement", "columnIndex":"1", "leadingProperty": "Strukturelement_Text,Strukturelement,HierarchyLevel,Meldestatus,EinsatzbedingteAbwesenheit,AnzahlBeur,AnzahlBeurAusschluss,AnzahlBeurKeinAusschluss", "sortProperty": "Strukturelement_Text"}' />
+                        </table:customData>
+                        <table:template>
+                            <FlexBox
+                                width="100%"
+                                alignItems="Center"
+                                justifyContent="SpaceBetween">
+                                <FlexBox
+                                    width="100%"
+                                    alignItems="Center"
+                                    justifyContent="Start">
+                                    <core:Icon
+                                        visible="{= ${EinsatzbedingteAbwesenheit} === 'X' }"
+                                        src="sap-icon://journey-arrive"
+                                        size="1.5rem"
+                                        color="#1C4C98"
+                                        class="sapUiSmallMarginEnd"
+                                        tooltip="Strukturelement wird in der aktuellen Planungssituation nicht beurteilt. Angezeigte Daten sind aus der vorherigen Planungssituation übernommen." />
+                                    <ObjectIdentifier
+                                        class="sapUiMicroMargin"
+                                        title="{Strukturelement_Text}"
+                                        text="{Strukturelement}"
+                                        tooltip="{Strukturelement_Text} ({Strukturelement})" />
+                                </FlexBox>
+                                <core:Icon
+                                    visible="{= ${AnzahlBeurAusschluss} > 0 }"
+                                    src="sap-icon://private"
+                                    size="1.2rem"
+                                    color="#1C4C98"
+                                    class="sapUiSmallMarginEnd"
+                                    tooltip="Nur {AnzahlBeurKeinAusschluss} von {AnzahlBeur} Beurteilungen werden ihnen angezeigt, da {AnzahlBeurAusschluss} Fähigkeitsbezogene Aufgabe über die zugeh. Teilfähigkeit ausgeschlossen ist." />
+                            </FlexBox>
+                        </table:template>
+                    </table:Column>
+
+                    <table:Column
+                        label="Einsatzfähigkeit"
+                        hAlign="Center"
+                        visible="{= ${fcl>/layout} === 'OneColumn' }">
+                        <table:customData>
+                            <core:CustomData
+                                key="p13nData"
+                                value='\{"columnKey": "BeurDienstbereitSehrKritisch", "columnIndex":"2", "leadingProperty": "BeurDienstbereitKeineAngabe,BeurDienstbereitSehrKritisch,BeurDienstbereitKritisch,BeurDienstbereitUnkritisch", "sortProperty": "BeurDienstbereitSehrKritisch"}' />
+                        </table:customData>
+                        <table:template>
+                            <FlexBox
+                                width="100%"
+                                alignItems="Center"
+                                justifyContent="Center">
+                                <mc:ColumnMicroChart
+                                    size="M"
+                                    class="sapUiSmallMargin"
+                                    allowColumnLabels="true"
+                                    tooltip="{ parts: [{value: 'Beurteilungen'}, {value: false}, 
+                                                   { value: 'Unkritisch' }, { path: 'BeurDienstbereitUnkritisch' }, {value: false},
+                                                   { value: 'Kritisch' }, { path: 'BeurDienstbereitKritisch' },  {value: false},
+                                                   { value: 'sehr Kritisch' }, { path: 'BeurDienstbereitSehrKritisch' },    {value: false},
+                                                   { value: 'keine Angabe' }, { path: 'BeurDienstbereitKeineAngabe' },  {value: false}                                                                                              
+                                                ], formatter: '.formatter.getMicroChartTooltip', templateShareable : false }"
+                                    visible="{= ${Meldestatus} === '30' }">
+                                    <mc:columns>
+                                        <mc:ColumnMicroChartData
+                                            value="{BeurDienstbereitUnkritisch}"
+                                            tooltip=""
+                                            color="Good" />
+                                        <mc:ColumnMicroChartData
+                                            value="{BeurDienstbereitKritisch}"
+                                            tooltip=""
+                                            color="Critical" />
+                                        <mc:ColumnMicroChartData
+                                            value="{BeurDienstbereitSehrKritisch}"
+                                            tooltip=""
+                                            color="Error" />
+                                        <mc:ColumnMicroChartData
+                                            value="{BeurDienstbereitKeineAngabe}"
+                                            tooltip=""
+                                            color="Neutral" />
+                                    </mc:columns>
+                                </mc:ColumnMicroChart>
+                                <HBox
+                                    renderType="Bare"
+                                    class="sapUiTinyMargin"
+                                    visible="{= ${Meldestatus} !== '30' }">
+                                    <ObjectStatus
+                                        text="noch nicht freigegeben"
+                                        inverted="false"
+                                        state="None" />
+                                </HBox>
+                            </FlexBox>
+                        </table:template>
+                    </table:Column>
+
+                    <table:Column
+                        label="Einsatzbereitschaft"
+                        hAlign="Center"
+                        visible="{= ${fcl>/layout} === 'OneColumn' }">
+                        <table:customData>
+                            <core:CustomData
+                                key="p13nData"
+                                value='\{"columnKey": "BeurEinsatzbereitSehrKritisch", "columnIndex":"3", "leadingProperty": "BeurEinsatzbereitKeineAngabe,BeurEinsatzbereitSehrKritisch,BeurEinsatzbereitKritisch,BeurEinsatzbereitUnkritisch,BeurEinsatzbereitNichtBeur", "sortProperty": "BeurEinsatzbereitSehrKritisch"}' />
+                        </table:customData>
+                        <table:template>
+                            <FlexBox
+                                width="100%"
+                                alignItems="Center"
+                                justifyContent="Center">
+                                <mc:ColumnMicroChart
+                                    size="M"
+                                    allowColumnLabels="true"
+                                    showBottomLabels="false"
+                                    class="sapUiTinyMargin"
+                                    tooltip="{ parts: [{value: 'Beurteilungen'}, {value: false}, 
+                                                   { value: 'Unkritisch' }, { path: 'BeurEinsatzbereitUnkritisch' }, {value: false},
+                                                   { value: 'Kritisch' }, { path: 'BeurEinsatzbereitKritisch' },  {value: false},
+                                                   { value: 'sehr Kritisch' }, { path: 'BeurEinsatzbereitSehrKritisch' },    {value: false},
+                                                   { value: 'nicht beurteilt' }, { path: 'BeurEinsatzbereitNichtBeur' },  {value: false},
+                                                   { value: 'keine Angabe' }, { path: 'BeurEinsatzbereitKeineAngabe' },  {value: false}
+                                                ], formatter: '.formatter.getMicroChartTooltip', templateShareable : false }"
+                                    visible="{= ${Meldestatus} === '30' }">
+                                    <mc:columns>
+                                        <mc:ColumnMicroChartData
+                                            value="{BeurEinsatzbereitUnkritisch}"
+                                            tooltip=""
+                                            color="Good" />
+                                        <mc:ColumnMicroChartData
+                                            value="{BeurEinsatzbereitKritisch}"
+                                            tooltip=""
+                                            color="Critical" />
+                                        <mc:ColumnMicroChartData
+                                            value="{BeurEinsatzbereitSehrKritisch}"
+                                            tooltip=""
+                                            color="Error" />
+                                        <mc:ColumnMicroChartData
+                                            value="{BeurEinsatzbereitNichtBeur}"
+                                            tooltip=""
+                                            color="Neutral" />
+                                        <mc:ColumnMicroChartData
+                                            value="{BeurEinsatzbereitKeineAngabe}"
+                                            tooltip=""
+                                            color="Neutral" />
+                                    </mc:columns>
+                                </mc:ColumnMicroChart>
+
+                                <HBox
+                                    renderType="Bare"
+                                    class="sapUiTinyMargin"
+                                    visible="{= ${Meldestatus} !== '30' }">
+                                    <ObjectStatus
+                                        text="noch nicht freigegeben"
+                                        inverted="false"
+                                        state="None" />
+                                </HBox>
+                            </FlexBox>
+                        </table:template>
+                    </table:Column>
+
+                </table:columns>
+
+            </table:TreeTable>
+        </smartTable:SmartTable>
+
+    </ScrollContainer>
+
+</core:FragmentDefinition>

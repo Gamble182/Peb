@@ -1,0 +1,45 @@
+<core:FragmentDefinition
+      xmlns="sap.m"
+      xmlns:core="sap.ui.core"
+      xmlns:smartTable="sap.ui.comp.smarttable">
+
+      <ToolbarSpacer width="40px" />
+      <OverflowToolbarButton
+            icon="sap-icon://sort"
+            tooltip="Sortieren"
+            text="Sortieren"
+            enabled="{= !${global>/bEditing} &amp;&amp; !${viewModel>/bEditing} }"
+            visible="{= ['MidColumnFullScreen', 'TwoColumnsMidExpanded'].includes( ${fcl>/layout} ) }"
+            press="onSmarttableSort" />
+      <OverflowToolbarButton
+            icon="sap-icon://filter"
+            tooltip="Filtern"
+            text="Filtern"
+            enabled="{= !${global>/bEditing} &amp;&amp; !${viewModel>/bEditing} }"
+            visible="{= ['MidColumnFullScreen', 'TwoColumnsMidExpanded'].includes( ${fcl>/layout} ) }"
+            press="onSmarttableFilter" />
+      <OverflowToolbarButton
+            icon="sap-icon://group-2"
+            tooltip="Gruppieren"
+            text="Gruppieren"
+            enabled="{= !${global>/bEditing} &amp;&amp; !${viewModel>/bEditing} }"
+            visible="{= ['MidColumnFullScreen', 'TwoColumnsMidExpanded'].includes( ${fcl>/layout} ) }"
+            press="onSmarttableGroup" />
+      <OverflowToolbarButton
+            icon="sap-icon://filter-fields"
+            tooltip="Spalten"
+            text="Spalten"
+            enabled="{= !${global>/bEditing} &amp;&amp; !${viewModel>/bEditing} }"
+            visible="{= ['MidColumnFullScreen', 'TwoColumnsMidExpanded'].includes( ${fcl>/layout} ) }"
+            press="onSmarttableColumns" />
+      <ToolbarSpacer width="20px" />
+      <OverflowToolbarButton
+            icon="sap-icon://clear-filter"
+            tooltip="Zurücksetzen"
+            text="Zurücksetzen"
+            enabled="{= !${global>/bEditing} &amp;&amp; !${viewModel>/bEditing} }"
+            visible="{= ['MidColumnFullScreen', 'TwoColumnsMidExpanded'].includes( ${fcl>/layout} ) }"
+            press="onSmarttableResetPersonalisation" />
+      <ToolbarSpacer width="20px" />
+
+</core:FragmentDefinition>

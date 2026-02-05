@@ -1,0 +1,28 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:grid="sap.ui.layout.cssgrid"
+   xmlns:f="sap.f"
+   height="100%">
+
+   <ScrollContainer
+      horizontal="false"
+      vertical="true"
+      height="100%"
+      width="100%">
+
+      <f:GridList
+         id="gridListHandBedarf"
+         mode="SingleSelectMaster"
+         selectionChange="onSelectionChangeHandlungsfeldKategorie"
+         class="sapUiSmallMarginTop">
+
+         <f:customLayout>
+            <grid:GridBoxLayout boxMinWidth="24rem" />
+         </f:customLayout>
+
+      </f:GridList>
+
+   </ScrollContainer>
+
+</core:FragmentDefinition>

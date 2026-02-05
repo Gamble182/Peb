@@ -1,0 +1,770 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:f="sap.f"
+   xmlns:grid="sap.ui.layout.cssgrid"
+   xmlns:mc="sap.suite.ui.microchart"
+   xmlns:xc="de.bundeswehr.zaxxx.framework.v010.global.control.suite.microchart"
+   xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+   height="100%">
+
+   <ScrollContainer
+      horizontal="false"
+      vertical="true"
+      height="100%"
+      width="100%">
+
+      <Panel
+         width="auto"
+         class="PanelNoBottom"
+         visible="{= ${global>/selectedRole} !==  'PEB_EB_FA' }">
+         <headerToolbar>
+            <OverflowToolbar>
+               <Title text="Aufwachsende Beurteilung" />
+            </OverflowToolbar>
+         </headerToolbar>
+         <content>
+
+            <MessageStrip
+               visible="{= ${to_Kennzahlen/AnzahlBeurAusschluss} > 0 }"
+               text="Nur {to_Kennzahlen/AnzahlBeurteilungenKeinAUsschluss} von {to_Kennzahlen/AnzahlBeur} Beurteilungen werden ihnen angezeigt, da {to_Kennzahlen/AnzahlBeurAusschluss} Fähigkeitsbezogene Aufgabe über die zugeh. Teilfähigkeit ausgeschlossen ist."
+               type="Information"
+               showIcon="true"
+               customIcon="sap-icon://private"
+               showCloseButton="false"
+               class="sapUiSmallMarginBottom" />
+
+            <f:GridList
+               mode="None"
+               class="sapUiSmallMarginTop">
+
+               <f:customLayout>
+                  <grid:GridBoxLayout boxMinWidth="15rem" />
+               </f:customLayout>
+
+               <f:GridListItem class="GridListItemRadius">
+                  <VBox
+                     height="100%"
+                     justifyContent="SpaceBetween">
+                     <layoutData>
+                        <FlexItemData
+                           growFactor="1"
+                           shrinkFactor="0" /> <!-- Don't shrink below minimum size. Fill space if available. -->
+                     </layoutData>
+
+                     <VBox class="sapUiSmallMargin">
+
+                        <Title
+                           text="Einsatzfähigkeit"
+                           wrapping="true"
+                           class="sapUiSmallMarginBottom" />
+                        <mc:ComparisonMicroChart
+                           scale=""
+                           minValue="0"
+                           maxValue="{to_Kennzahlen/AnzahlBeur}"
+                           tooltip="Einsatzfähigkeit Aufwachsende Beurteilung"
+                           size="Responsive"
+                           colorPalette="sapUiChartPaletteSemanticGood, sapUiChartPaletteSemanticCritical, sapUiChartPaletteSemanticBad, sapUiChartPaletteSemanticNeutral">
+                           <mc:data>
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="3"
+                                 app:kennzahlBeurteilungArt="D"
+                                 app:kennzahlMeldetyp="K"
+                                 title="unkritisch"
+                                 value="{to_Kennzahlen/BeurDienstbereitUnkritisch}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="2"
+                                 app:kennzahlBeurteilungArt="D"
+                                 app:kennzahlMeldetyp="K"
+                                 title="kritisch"
+                                 value="{to_Kennzahlen/BeurDienstbereitkritisch}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="1"
+                                 app:kennzahlBeurteilungArt="D"
+                                 app:kennzahlMeldetyp="K"
+                                 title="sehr kritisch"
+                                 value="{to_Kennzahlen/BeurDienstbereitSehrkritisch}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="0"
+                                 app:kennzahlBeurteilungArt="D"
+                                 app:kennzahlMeldetyp="K"
+                                 title="keine Angabe"
+                                 value="{to_Kennzahlen/BeurDienstbereitKeineAngabe}" />
+                           </mc:data>
+                        </mc:ComparisonMicroChart>
+                     </VBox>
+                  </VBox>
+               </f:GridListItem>
+
+
+               <f:GridListItem class="GridListItemRadius">
+                  <VBox
+                     height="100%"
+                     justifyContent="SpaceBetween">
+                     <layoutData>
+                        <FlexItemData
+                           growFactor="1"
+                           shrinkFactor="0" /> <!-- Don't shrink below minimum size. Fill space if available. -->
+                     </layoutData>
+
+                     <VBox class="sapUiSmallMargin">
+
+                        <Title
+                           text="Einsatzbereitschaft"
+                           wrapping="true"
+                           class="sapUiSmallMarginBottom" />
+                        <mc:ComparisonMicroChart
+                           scale=""
+                           minValue="0"
+                           maxValue="{to_Kennzahlen/AnzahlBeur}"
+                           tooltip="Einsatzbereitschaft Aufwachsende Beurteilung"
+                           size="Responsive"
+                           colorPalette="sapUiChartPaletteSemanticGood, sapUiChartPaletteSemanticCritical, sapUiChartPaletteSemanticBad, sapUiChartPaletteQualitativeHue1, sapUiChartPaletteSemanticNeutral">
+                           <mc:data>
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="3"
+                                 app:kennzahlBeurteilungArt="E"
+                                 app:kennzahlMeldetyp="K"
+                                 title="unkritisch"
+                                 value="{to_Kennzahlen/BeurEinsatzbereitUnkritisch}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="2"
+                                 app:kennzahlBeurteilungArt="E"
+                                 app:kennzahlMeldetyp="K"
+                                 title="kritisch"
+                                 value="{to_Kennzahlen/BeurEinsatzbereitkritisch}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="1"
+                                 app:kennzahlBeurteilungArt="E"
+                                 app:kennzahlMeldetyp="K"
+                                 title="sehr kritisch"
+                                 value="{to_Kennzahlen/BeurEinsatzbereitSehrkritisch}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="-1"
+                                 app:kennzahlBeurteilungArt="E"
+                                 app:kennzahlMeldetyp="K"
+                                 title="nicht beurteilt"
+                                 value="{to_Kennzahlen/BeurEinsatzbereitNichtBeurteil}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="0"
+                                 app:kennzahlBeurteilungArt="E"
+                                 app:kennzahlMeldetyp="K"
+                                 title="keine Angabe"
+                                 value="{to_Kennzahlen/BeurEinsatzbereitKeineAngabe}" />
+                           </mc:data>
+                        </mc:ComparisonMicroChart>
+                     </VBox>
+                  </VBox>
+               </f:GridListItem>
+
+
+               <f:GridListItem
+                  class="GridListItemRadius"
+                  id="gridListItemBesetzungsstandAufwachsendeGesamt">
+                  <VBox
+                     class="sapUiSmallMargin"
+                     width="100%">
+
+                     <Title
+                        text="Besetzungsstand (Gesamt)"
+                        wrapping="true"
+                        class="sapUiSmallMarginBottom" />
+                     <mc:BulletMicroChart
+                        scale="%"
+                        showValueMarker="false"
+                        showTargetValue="false"
+                        press="pressBesetzungsstand"
+                        size="L"
+                        minValue="0"
+                        maxValue="100"
+                        tooltip="{
+                              parts: [
+                                 { path: 'besetzungsstand_ist' },
+                                 { path: 'besetzungsstand_soll' }
+                              ],
+                              formatter: '.formatter.getBesetzungTooltip'
+                           }">
+                        <mc:actual>
+                           <xc:BulletMicroChartData
+                              value="{= parseInt(${besetzungsstand})}"
+                              color="{ 
+                                 parts: [
+                                    { path: 'besetzungsstand_ist' },
+                                    { path: 'besetzungsstand_soll' }
+                                 ],
+                                 formatter: '.formatter.getBesetzungColor' }" />
+                        </mc:actual>
+                        <mc:thresholds>
+                           <xc:BulletMicroChartData
+                              value="0"
+                              color="NatoRed"
+                              tooltip="{i18n>BesetzungUngenuegendTooltip}" />
+                           <xc:BulletMicroChartData
+                              value="60"
+                              color="NatoOrange"
+                              tooltip="{i18n>BesetzungGrenzwertigTooltip}" />
+                           <xc:BulletMicroChartData
+                              value="75"
+                              color="NatoYellow"
+                              tooltip="{i18n>BesetzungZufriedenstellendTooltip}" />
+                           <xc:BulletMicroChartData
+                              value="90"
+                              color="NatoGreen"
+                              tooltip="{i18n>BesetzungAusgezeichnetTooltip}" />
+                        </mc:thresholds>
+                     </mc:BulletMicroChart>
+                     <FlexBox
+                        alignItems="Center"
+                        justifyContent="Start">
+                        <Label
+                           text="{i18n>Soll}: {path: 'besetzungsstand_soll', type: 'sap.ui.model.type.Float'}"
+                           class="sapUiSmallMarginEnd" />
+                        <Label
+                           text="{i18n>Ist}: {path: 'besetzungsstand_ist', type: 'sap.ui.model.type.Float'}"
+                           class="sapUiSmallMarginEnd" />
+                        <Label
+                           text="{
+                              path: 'besetzungsstand',
+                              formatter: '.formatter.getBesetzungText'
+                           }"
+                           class="sapUiSmallMarginEnd" />
+                     </FlexBox>
+                  </VBox>
+               </f:GridListItem>
+
+
+               <f:GridListItem
+                  class="GridListItemRadius"
+                  id="gridListItemBesetzungsstandAufwachsende"
+                  visible="{= ${global>/bReserveAktiv} &amp;&amp; ${global>/bPlanungssituationReserveAktiv} }">
+
+                  <FlexBox
+                     direction="Column"
+                     alignItems="Start">
+
+                     <VBox class="sapUiSmallMarginTop sapUiSmallMarginBegin">
+
+                        <Title
+                           text="Besetzungsstand (aktive Kräfte)"
+                           wrapping="true" />
+                        <mc:BulletMicroChart
+                           scale="%"
+                           showValueMarker="true"
+                           showTargetValue="false"
+                           press="pressBesetzungsstand"
+                           width="12rem"
+                           minValue="0"
+                           maxValue="100"
+                           tooltip="{
+                        parts: [
+                           { path: 'besetzungsstand_aktiv_ist' },
+                           { path: 'besetzungsstand_aktiv_soll' }
+                        ],
+                        formatter: '.formatter.getBesetzungTooltip'
+                     }">
+                           <mc:actual>
+                              <xc:BulletMicroChartData
+                                 value="{= parseInt(${besetzungsstand})}"
+                                 color="{ 
+                              parts: [
+                                 { path: 'besetzungsstand_aktiv_ist' },
+                                 { path: 'besetzungsstand_aktiv_soll' }
+                              ],
+                              formatter: '.formatter.getBesetzungColor' }" />
+                           </mc:actual>
+                           <mc:thresholds>
+                              <xc:BulletMicroChartData
+                                 value="0"
+                                 color="NatoRed"
+                                 tooltip="{i18n>BesetzungUngenuegendTooltip}" />
+                              <xc:BulletMicroChartData
+                                 value="60"
+                                 color="NatoOrange"
+                                 tooltip="{i18n>BesetzungGrenzwertigTooltip}" />
+                              <xc:BulletMicroChartData
+                                 value="75"
+                                 color="NatoYellow"
+                                 tooltip="{i18n>BesetzungZufriedenstellendTooltip}" />
+                              <xc:BulletMicroChartData
+                                 value="90"
+                                 color="NatoGreen"
+                                 tooltip="{i18n>BesetzungAusgezeichnetTooltip}" />
+                           </mc:thresholds>
+                        </mc:BulletMicroChart>
+                        <FlexBox
+                           alignItems="Center"
+                           justifyContent="Start">
+                           <Label
+                              text="{i18n>Soll}: {path: 'besetzungsstand_aktiv_soll', type: 'sap.ui.model.type.Float'}"
+                              class="sapUiSmallMarginEnd" />
+                           <Label
+                              text="{i18n>Ist}: {path: 'besetzungsstand_aktiv_ist', type: 'sap.ui.model.type.Float'}"
+                              class="sapUiSmallMarginEnd" />
+                           <Label
+                              text="{ path: 'besetzungsstand_aktiv', formatter: '.formatter.getBesetzungText' }"
+                              class="sapUiSmallMarginEnd" />
+                        </FlexBox>
+                     </VBox>
+
+
+                     <VBox class="sapUiSmallMarginTop sapUiSmallMarginBegin sapUiSmallMarginBottom">
+
+                        <Title
+                           text="Besetzungsstand (VstkgRes)"
+                           wrapping="true" />
+                        <mc:BulletMicroChart
+                           scale="%"
+                           showValueMarker="true"
+                           showTargetValue="false"
+                           press="pressBesetzungsstand"
+                           width="12rem"
+                           minValue="0"
+                           maxValue="100"
+                           tooltip="{
+                        parts: [
+                           { path: 'besetzungsstand_vstkgres_ist' },
+                           { path: 'besetzungsstand_vstkgres_soll' }
+                        ],
+                        formatter: '.formatter.getBesetzungTooltip'
+                     }">
+                           <mc:actual>
+                              <xc:BulletMicroChartData
+                                 value="{= parseInt(${besetzungsstand})}"
+                                 color="{ 
+                              parts: [
+                                 { path: 'besetzungsstand_vstkgres_ist' },
+                                 { path: 'besetzungsstand_vstkgres_soll' }
+                              ],
+                              formatter: '.formatter.getBesetzungColor' }" />
+                           </mc:actual>
+                           <mc:thresholds>
+                              <xc:BulletMicroChartData
+                                 value="0"
+                                 color="NatoRed"
+                                 tooltip="{i18n>BesetzungUngenuegendTooltip}" />
+                              <xc:BulletMicroChartData
+                                 value="60"
+                                 color="NatoOrange"
+                                 tooltip="{i18n>BesetzungGrenzwertigTooltip}" />
+                              <xc:BulletMicroChartData
+                                 value="75"
+                                 color="NatoYellow"
+                                 tooltip="{i18n>BesetzungZufriedenstellendTooltip}" />
+                              <xc:BulletMicroChartData
+                                 value="90"
+                                 color="NatoGreen"
+                                 tooltip="{i18n>BesetzungAusgezeichnetTooltip}" />
+                           </mc:thresholds>
+                        </mc:BulletMicroChart>
+                        <FlexBox
+                           alignItems="Center"
+                           justifyContent="Start">
+                           <Label
+                              text="{i18n>Soll}: {path: 'besetzungsstand_vstkgres_soll', type: 'sap.ui.model.type.Float'}"
+                              class="sapUiSmallMarginEnd" />
+                           <Label
+                              text="{i18n>Ist}: {path: 'besetzungsstand_vstkgres_ist', type: 'sap.ui.model.type.Float'}"
+                              class="sapUiSmallMarginEnd" />
+                           <Label
+                              text="{ path: 'besetzungsstand_vstkgres', formatter: '.formatter.getBesetzungText' }"
+                              class="sapUiSmallMarginEnd" />
+                        </FlexBox>
+                     </VBox>
+
+                  </FlexBox>
+
+               </f:GridListItem>
+
+
+            </f:GridList>
+
+         </content>
+      </Panel>
+
+
+      <Panel
+         width="auto"
+         class="PanelNoBottom"
+         visible="{= ${viewModel>/bHasSelbstBeurteilung} }">
+         <headerToolbar>
+            <OverflowToolbar>
+               <Title text="Selbstbeurteilung" />
+            </OverflowToolbar>
+         </headerToolbar>
+         <content>
+
+            <MessageStrip
+               visible="{= ${to_KennzahlenSelbst/AnzahlBeurAusschluss} > 0 }"
+               text="Nur {to_KennzahlenSelbst/AnzahlBeurKeinAusschluss} von {to_KennzahlenSelbst/AnzahlBeur} Beurteilungen werden ihnen angezeigt, da {to_KennzahlenSelbst/AnzahlBeurAusschluss} Fähigkeitsbezogene Aufgabe über die zugeh. Teilfähigkeit ausgeschlossen ist."
+               type="Information"
+               showIcon="true"
+               customIcon="sap-icon://private"
+               showCloseButton="false"
+               class="sapUiSmallMarginBottom" />
+
+            <f:GridList
+               mode="None"
+               class="sapUiSmallMarginTop">
+
+               <f:customLayout>
+                  <grid:GridBoxLayout boxMinWidth="15rem" />
+               </f:customLayout>
+
+               <f:GridListItem class="GridListItemRadius">
+                  <VBox
+                     height="100%"
+                     justifyContent="SpaceBetween">
+                     <layoutData>
+                        <FlexItemData
+                           growFactor="1"
+                           shrinkFactor="0" /> <!-- Don't shrink below minimum size. Fill space if available. -->
+                     </layoutData>
+
+                     <VBox class="sapUiSmallMargin">
+
+                        <Title
+                           text="Einsatzfähigkeit"
+                           wrapping="true"
+                           class="sapUiSmallMarginBottom" />
+                        <mc:ComparisonMicroChart
+                           scale=""
+                           minValue="0"
+                           maxValue="{to_KennzahlenSelbst/AnzahlBeur}"
+                           tooltip="Einsatzfähigkeit Selbstbeurteilung"
+                           size="Responsive"
+                           colorPalette="sapUiChartPaletteSemanticGood, sapUiChartPaletteSemanticCritical, sapUiChartPaletteSemanticBad, sapUiChartPaletteSemanticNeutral">
+                           <mc:data>
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="3"
+                                 app:kennzahlBeurteilungArt="D"
+                                 app:kennzahlMeldetyp="E"
+                                 title="unkritisch"
+                                 value="{to_KennzahlenSelbst/BeurDienstbereitUnkritisch}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="2"
+                                 app:kennzahlBeurteilungArt="D"
+                                 app:kennzahlMeldetyp="E"
+                                 title="kritisch"
+                                 value="{to_KennzahlenSelbst/BeurDienstbereitkritisch}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="1"
+                                 app:kennzahlBeurteilungArt="D"
+                                 app:kennzahlMeldetyp="E"
+                                 title="sehr kritisch"
+                                 value="{to_KennzahlenSelbst/BeurDienstbereitSehrkritisch}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="0"
+                                 app:kennzahlBeurteilungArt="D"
+                                 app:kennzahlMeldetyp="E"
+                                 title="keine Angabe"
+                                 value="{to_KennzahlenSelbst/BeurDienstbereitKeineAngabe}" />
+                           </mc:data>
+                        </mc:ComparisonMicroChart>
+                     </VBox>
+                  </VBox>
+               </f:GridListItem>
+
+
+               <f:GridListItem class="GridListItemRadius">
+                  <VBox
+                     height="100%"
+                     justifyContent="SpaceBetween">
+                     <layoutData>
+                        <FlexItemData
+                           growFactor="1"
+                           shrinkFactor="0" /> <!-- Don't shrink below minimum size. Fill space if available. -->
+                     </layoutData>
+
+                     <VBox class="sapUiSmallMargin">
+
+                        <Title
+                           text="Einsatzbereitschaft"
+                           wrapping="true"
+                           class="sapUiSmallMarginBottom" />
+                        <mc:ComparisonMicroChart
+                           scale=""
+                           minValue="0"
+                           maxValue="{to_KennzahlenSelbst/AnzahlBeur}"
+                           tooltip="Einsatzbereitschaft Selbstbeurteilung"
+                           size="Responsive"
+                           colorPalette="sapUiChartPaletteSemanticGood, sapUiChartPaletteSemanticCritical, sapUiChartPaletteSemanticBad, sapUiChartPaletteQualitativeHue1, sapUiChartPaletteSemanticNeutral">
+                           <mc:data>
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="3"
+                                 app:kennzahlBeurteilungArt="E"
+                                 app:kennzahlMeldetyp="E"
+                                 title="unkritisch"
+                                 value="{to_KennzahlenSelbst/BeurEinsatzbereitUnkritisch}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="2"
+                                 app:kennzahlBeurteilungArt="E"
+                                 app:kennzahlMeldetyp="E"
+                                 title="kritisch"
+                                 value="{to_KennzahlenSelbst/BeurEinsatzbereitkritisch}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="1"
+                                 app:kennzahlBeurteilungArt="E"
+                                 app:kennzahlMeldetyp="E"
+                                 title="sehr kritisch"
+                                 value="{to_KennzahlenSelbst/BeurEinsatzbereitSehrkritisch}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="-1"
+                                 app:kennzahlBeurteilungArt="E"
+                                 app:kennzahlMeldetyp="E"
+                                 title="nicht beurteilt"
+                                 value="{to_KennzahlenSelbst/BeurEinsatzbereitNichtBeurteil}" />
+                              <mc:ComparisonMicroChartData
+                                 press="onKennzahlPress"
+                                 app:kennzahlBeurteilungId="0"
+                                 app:kennzahlBeurteilungArt="E"
+                                 app:kennzahlMeldetyp="E"
+                                 title="keine Angabe"
+                                 value="{to_KennzahlenSelbst/BeurEinsatzbereitKeineAngabe}" />
+                           </mc:data>
+                        </mc:ComparisonMicroChart>
+                     </VBox>
+                  </VBox>
+               </f:GridListItem>
+
+
+               <f:GridListItem
+                  class="GridListItemRadius"
+                  id="gridListItemBesetzungsstandSelbstGesamt">
+
+                  <VBox
+                     class="sapUiSmallMargin"
+                     width="100%">
+
+                     <Title
+                        text="Besetzungsstand (Gesamt)"
+                        wrapping="true"
+                        class="sapUiSmallMarginBottom" />
+                     <mc:BulletMicroChart
+                        scale="%"
+                        showValueMarker="false"
+                        showTargetValue="false"
+                        press="pressBesetzungsstand"
+                        size="L"
+                        minValue="0"
+                        maxValue="100"
+                        tooltip="{
+                           parts: [
+                              { path: 'besetzungsstand_ist' },
+                              { path: 'besetzungsstand_soll' }
+                           ],
+                           formatter: '.formatter.getBesetzungTooltip'
+                        }">
+                        <mc:actual>
+                           <xc:BulletMicroChartData
+                              value="{= parseInt(${besetzungsstand})}"
+                              color="{ 
+                                 parts: [
+                                    { path: 'besetzungsstand_ist' },
+                                    { path: 'besetzungsstand_soll' }
+                                 ],
+                                 formatter: '.formatter.getBesetzungColor' }" />
+                        </mc:actual>
+                        <mc:thresholds>
+                           <xc:BulletMicroChartData
+                              value="0"
+                              color="NatoRed"
+                              tooltip="{i18n>BesetzungUngenuegendTooltip}" />
+                           <xc:BulletMicroChartData
+                              value="60"
+                              color="NatoOrange"
+                              tooltip="{i18n>BesetzungGrenzwertigTooltip}" />
+                           <xc:BulletMicroChartData
+                              value="75"
+                              color="NatoYellow"
+                              tooltip="{i18n>BesetzungZufriedenstellendTooltip}" />
+                           <xc:BulletMicroChartData
+                              value="90"
+                              color="NatoGreen"
+                              tooltip="{i18n>BesetzungAusgezeichnetTooltip}" />
+                        </mc:thresholds>
+                     </mc:BulletMicroChart>
+                     <FlexBox
+                        alignItems="Center"
+                        justifyContent="Start">
+                        <Label
+                           text="{i18n>Soll}: {path: 'besetzungsstand_soll', type: 'sap.ui.model.type.Float'}"
+                           class="sapUiSmallMarginEnd" />
+                        <Label
+                           text="{i18n>Ist}: {path: 'besetzungsstand_ist', type: 'sap.ui.model.type.Float'}"
+                           class="sapUiSmallMarginEnd" />
+                        <Label
+                           text="{ path: 'besetzungsstand', formatter: '.formatter.getBesetzungText' }"
+                           class="sapUiSmallMarginEnd" />
+                     </FlexBox>
+                  </VBox>
+
+               </f:GridListItem>
+
+               <f:GridListItem
+                  class="GridListItemRadius"
+                  id="gridListItemBesetzungsstandSelbst"
+                  visible="{= ${global>/bReserveAktiv} &amp;&amp; ${global>/bPlanungssituationReserveAktiv}}">
+
+                  <FlexBox
+                     direction="Column"
+                     alignItems="Start">
+
+                     <VBox class="sapUiSmallMarginTop sapUiSmallMarginBegin">
+
+                        <Title
+                           text="Besetzungsstand (aktive Kräfte)"
+                           wrapping="true" />
+                        <mc:BulletMicroChart
+                           scale="%"
+                           showValueMarker="true"
+                           showTargetValue="false"
+                           press="pressBesetzungsstand"
+                           width="12rem"
+                           minValue="0"
+                           maxValue="100"
+                           tooltip="{
+                           parts: [
+                              { path: 'besetzungsstand_aktiv_ist' },
+                              { path: 'besetzungsstand_aktiv_soll' }
+                           ],
+                           formatter: '.formatter.getBesetzungTooltip'
+                        }">
+                           <mc:actual>
+                              <xc:BulletMicroChartData
+                                 value="{= parseInt(${besetzungsstand})}"
+                                 color="{ 
+                                 parts: [
+                                    { path: 'besetzungsstand_aktiv_ist' },
+                                    { path: 'besetzungsstand_aktiv_soll' }
+                                 ],
+                                 formatter: '.formatter.getBesetzungColor' }" />
+                           </mc:actual>
+                           <mc:thresholds>
+                              <xc:BulletMicroChartData
+                                 value="0"
+                                 color="NatoRed"
+                                 tooltip="{i18n>BesetzungUngenuegendTooltip}" />
+                              <xc:BulletMicroChartData
+                                 value="60"
+                                 color="NatoOrange"
+                                 tooltip="{i18n>BesetzungGrenzwertigTooltip}" />
+                              <xc:BulletMicroChartData
+                                 value="75"
+                                 color="NatoYellow"
+                                 tooltip="{i18n>BesetzungZufriedenstellendTooltip}" />
+                              <xc:BulletMicroChartData
+                                 value="90"
+                                 color="NatoGreen"
+                                 tooltip="{i18n>BesetzungAusgezeichnetTooltip}" />
+                           </mc:thresholds>
+                        </mc:BulletMicroChart>
+                        <FlexBox
+                           alignItems="Center"
+                           justifyContent="Start">
+                           <Label
+                              text="{i18n>Soll}: {path: 'besetzungsstand_aktiv_soll', type: 'sap.ui.model.type.Float'}"
+                              class="sapUiSmallMarginEnd" />
+                           <Label
+                              text="{i18n>Ist}: {path: 'besetzungsstand_aktiv_ist', type: 'sap.ui.model.type.Float'}"
+                              class="sapUiSmallMarginEnd" />
+                           <Label
+                              text="{ path: 'besetzungsstand_aktiv', formatter: '.formatter.getBesetzungText' }"
+                              class="sapUiSmallMarginEnd" />
+                        </FlexBox>
+                     </VBox>
+
+
+                     <VBox class="sapUiSmallMarginTop sapUiSmallMarginBegin sapUiSmallMarginBottom">
+
+                        <Title
+                           text="Besetzungsstand (VstkgRes)"
+                           wrapping="true" />
+                        <mc:BulletMicroChart
+                           scale="%"
+                           showValueMarker="true"
+                           showTargetValue="false"
+                           press="pressBesetzungsstand"
+                           width="12rem"
+                           minValue="0"
+                           maxValue="100"
+                           tooltip="{
+                           parts: [
+                              { path: 'besetzungsstand_vstkgres_ist' },
+                              { path: 'besetzungsstand_vstkgres_soll' }
+                           ],
+                           formatter: '.formatter.getBesetzungTooltip'
+                        }">
+                           <mc:actual>
+                              <xc:BulletMicroChartData
+                                 value="{= parseInt(${besetzungsstand})}"
+                                 color="{ 
+                                 parts: [
+                                    { path: 'besetzungsstand_vstkgres_ist' },
+                                    { path: 'besetzungsstand_vstkgres_soll' }
+                                 ],
+                                 formatter: '.formatter.getBesetzungColor' }" />
+                           </mc:actual>
+                           <mc:thresholds>
+                              <xc:BulletMicroChartData
+                                 value="0"
+                                 color="NatoRed"
+                                 tooltip="{i18n>BesetzungUngenuegendTooltip}" />
+                              <xc:BulletMicroChartData
+                                 value="60"
+                                 color="NatoOrange"
+                                 tooltip="{i18n>BesetzungGrenzwertigTooltip}" />
+                              <xc:BulletMicroChartData
+                                 value="75"
+                                 color="NatoYellow"
+                                 tooltip="{i18n>BesetzungZufriedenstellendTooltip}" />
+                              <xc:BulletMicroChartData
+                                 value="90"
+                                 color="NatoGreen"
+                                 tooltip="{i18n>BesetzungAusgezeichnetTooltip}" />
+                           </mc:thresholds>
+                        </mc:BulletMicroChart>
+                        <FlexBox
+                           alignItems="Center"
+                           justifyContent="Start">
+                           <Label
+                              text="{i18n>Soll}: {path: 'besetzungsstand_vstkgres_soll', type: 'sap.ui.model.type.Float'}"
+                              class="sapUiSmallMarginEnd" />
+                           <Label
+                              text="{i18n>Ist}: {path: 'besetzungsstand_vstkgres_ist', type: 'sap.ui.model.type.Float'}"
+                              class="sapUiSmallMarginEnd" />
+                           <Label
+                              text="{ path: 'besetzungsstand_vstkgres', formatter: '.formatter.getBesetzungText' }"
+                              class="sapUiSmallMarginEnd" />
+                        </FlexBox>
+                     </VBox>
+
+
+                  </FlexBox>
+
+               </f:GridListItem>
+
+            </f:GridList>
+
+         </content>
+      </Panel>
+
+   </ScrollContainer>
+
+</core:FragmentDefinition>

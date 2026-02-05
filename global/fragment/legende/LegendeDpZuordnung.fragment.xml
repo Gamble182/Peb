@@ -1,0 +1,52 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:tnt="sap.tnt">
+   <OverflowToolbarButton
+      class="sapUiTinyMarginBegin"
+      press="onOpenFirstDependentPress"
+      icon="sap-icon://legend"
+      tooltip="Legende anzeigen"
+      visible="{= ['OneColumn'].includes( ${fcl>/layout} ) }">
+      <dependents>
+         <Popover
+            showHeader="false"
+            placement="VerticalPreferredBottom"
+            contentHeight="8rem"
+            contentWidth="80rem">
+            <VBox width="80px">
+               <HBox height="35px">
+                  <Label
+                     text="Die rechte Spalte zeigt die Anzahl der zugeordneten Dienstposten zu einem Strukturelement im Vergleich aller vorhandenen Strukturelemente des Knotens und der darunterliegenden Hierarchy."
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <HBox height="35px">
+                  <tnt:InfoLabel
+                     text="Dienstposten ohne Zuordnung | Gesamtanzahl Dienstposten des Teilbaums"
+                     renderMode="Narrow"
+                     colorScheme="3"
+                     class="sapUiSmallMargin" />
+                  <Label
+                     text="Es existieren Dienstposten ohne Zuordnung zu einem Strukturelement."
+                     width="auto"
+                     class="sapUiSmallMargin sapUiLargeMarginBottom" />
+               </HBox>
+               <HBox height="35px">
+                  <tnt:InfoLabel
+                     text="Dienstposten ohne Zuordnung | Gesamtanzahl Dienstposten des Teilbaums"
+                     renderMode="Narrow"
+                     colorScheme="8"
+                     class="sapUiSmallMargin" />
+                  <Label
+                     text="Allen Dienstposten ist ein Strukturelement zugeordnet."
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+
+            </VBox>
+         </Popover>
+      </dependents>
+   </OverflowToolbarButton>
+
+</core:FragmentDefinition>

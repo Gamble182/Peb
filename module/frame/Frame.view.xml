@@ -1,0 +1,9 @@
+<mvc:View
+       controllerName="de.bundeswehr.zbcpl_peb_fa.module.frame.Frame"
+       xmlns:mvc="sap.ui.core.mvc"
+       xmlns:core="sap.ui.core"
+       displayBlock="true">
+       <core:Fragment
+              fragmentName="de.bundeswehr.zaxxx.framework.v010.module.frame.FrameApp"
+              type="XML" />
+</mvc:View>

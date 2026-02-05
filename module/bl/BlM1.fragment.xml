@@ -1,0 +1,49 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns:n="de.bundeswehr.zaxxx.framework.v010.global.control.natorating"
+    xmlns:r="de.bundeswehr.zaxxx.framework.v010.global.control.rating"
+    xmlns:t="de.bundeswehr.zaxxx.framework.v010.global.control.trending"
+    xmlns:rt="de.bundeswehr.zaxxx.framework.v010.global.control.RatingAndTrending"
+    xmlns:iframe="de.bundeswehr.zaxxx.framework.v010.global.control.iframe"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:mc="sap.suite.ui.microchart"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:s="sap.f.semantic"
+    xmlns:f="sap.f"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:c="de.bundeswehr.zaxxx.framework.v010.global.control.page">
+
+    <c:MasterPage
+        title="Besetzungsliste"
+        editPress="onEditPress"
+        savePress="onSavePress"
+        cancelPress="onCancelPress"
+        closeVisible="true"
+        closePress="onCloseColumn"
+        editVisible="false"
+        editMode="{viewModel>/bEditing}"
+        editEnabled="false">
+
+        <c:headerContent>
+            <HBox>
+                <core:Fragment
+                    fragmentName="de.bundeswehr.zbcpl_peb_rep.global.fragment.FilterHeaderStrukturelement"
+                    type="XML" />               
+            </HBox>
+
+        </c:headerContent>
+
+        <c:content>
+            <core:Fragment
+                fragmentName="de.bundeswehr.zbcpl_peb_rep.global.fragment.bl.Besetzungsliste"
+                type="XML" />
+        </c:content>
+    </c:MasterPage>
+</core:FragmentDefinition>

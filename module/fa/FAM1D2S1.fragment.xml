@@ -1,0 +1,342 @@
+<core:FragmentDefinition
+   xmlns="sap.uxap"
+   xmlns:mvc="sap.ui.core.mvc"
+   xmlns:core="sap.ui.core"
+   xmlns:m="sap.m"
+   xmlns:f="sap.ui.layout.form"
+   xmlns:form="sap.ui.comp.smartform"
+   xmlns:smartField="sap.ui.comp.smartfield"
+   xmlns:commons="sap.suite.ui.commons"
+   xmlns:l="sap.ui.layout"
+   xmlns:c="de.bundeswehr.zaxxx.framework.v010.global.control.page"
+   xmlns:d="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+   <c:DetailPage
+      title="{to_HB/Titel}"
+      subTitle="{ path: 'Handlungsbedarf',
+               type: 'sap.ui.model.odata.type.String',
+               constraints: { 
+                  isDigitSequence : true,
+                  maxLength : 10
+               }                                                   
+            }"
+      editPress="onEditPress"
+      savePress="onSavePress"
+      cancelPress="onCancelPress"
+      releasePress="onReleasePress"
+      editVisible="{= ${global>/bAllowWrite} &amp;&amp; !${viewModel>/bEditing} }"
+      releaseVisible="{= ${global>/bAllowRelease} &amp;&amp; false }"
+      column="{fcl>/actionButtonsInfo/endColumn}"
+      editMode="{viewModel>/bEditing}"
+      editEnabled="{= !${global>/bEditing} &amp;&amp; ${viewModel>/bCheckEdit} }"
+      releaseEnabled="{= !${global>/bEditing} &amp;&amp; ${viewModel>/bCheckRelease} }"
+      messagePress="onOpenMessagePopover"
+      closePress="onCloseColumn"
+      exitFSPress="onExitFullScreen"
+      openFSPress="onFullScreen">
+
+      <c:titleCustomTextActions>
+         <m:Button
+            text="Löschen"
+            press="onDeletePress"
+            enabled="{= !${global>/bEditing} &amp;&amp; ${viewModel>/bCheckDelete} }"
+            visible="{= ${global>/bAllowWrite} &amp;&amp; !${viewModel>/bEditing} &amp;&amp; ${viewModel>/bCheckDelete}}" />
+      </c:titleCustomTextActions>
+
+      <!-- Header Content -->
+      <c:headerContent>
+
+         <core:Fragment
+            fragmentName="de.bundeswehr.zbcpl_peb_fa.global.fragment.FilterHeaderDetail"
+            type="XML" />
+
+         <m:ObjectStatus
+            inverted="true"
+            class="objectStatus"
+            text="{
+                    path: 'to_HB/Handlungsbedarfstatus',
+                    formatter: '.formatter.getMeldungStatusString',
+                    templateShareable : false
+                }"
+            state="{
+                    path: 'to_HB/Handlungsbedarfstatus',
+                    formatter: '.formatter.getMeldungStatus',
+                    templateShareable : false
+                }" />
+
+      </c:headerContent>
+
+      <!-- Content -->
+      <c:content>
+
+         <m:VBox>
+
+            <m:Label
+               text="{/#ZBCPL_CR_HBD_HANDBEDType/Strukturelement/@sap:label}:"
+               class="sapUiSmallMarginTop" />
+            <smartField:SmartField
+               value="{to_HB/Strukturelement_Text} ({to_HB/Strukturelement})"
+               editable="true" />
+
+            <!-- Handlungsbedarfstatus: via Weiterleitungsstatus -->
+            <m:Label
+               text="{/#ZBCPL_CR_HBW_WLTGType/Handlungsbedarfstatus/@sap:label}:"
+               required="{= ${viewModel>/bEditing} }"
+               class="sapUiSmallMarginTop" />
+
+            <!-- Weiterleitung: Status (alle) als Micro Process Flow (Lesemodus) -->
+            <commons:MicroProcessFlow visible="{= !${viewModel>/bEditing} }">
+               <commons:content>
+                  <commons:MicroProcessFlowItem
+                     visible="{= ${to_HBWlgTrns/IstTeilHBWlg9} === 'X'}"
+                     state="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus9' }, { path: 'to_HBWlgTrns/WlgMeldeSts9' }, { path: 'to_HBWlgTrns/WlgStrElm9' }, { path: 'Strukturelement' }],
+                           formatter: '.formatter.getWeiterleitungProcessState',
+                           templateShareable : false
+                        }"
+                     icon="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus9' }, { path: 'to_HBWlgTrns/WlgMeldeSts9' }, { path: 'to_HBWlgTrns/WlgStrElm9' }, { path: 'Strukturelement' }, { path: 'to_HB/Strukturelement' }],
+                          formatter: '.formatter.getWeiterleitungProcessIcon'
+                        }"
+                     title="{ parts: [{ path: 'to_HBWlgTrns/WlgRolle9' }, { path: 'to_HBWlgTrns/WlgStrElm9_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                     showIntermediary="{= (${to_HBWlgTrns/WlgMeldeSts9} === '30') &amp;&amp; (${to_HBWlgTrns/WlgStatus9} === '30') }"
+                     showSeparator="{= (${to_HBWlgTrns/IstTeilHBWlg9} === 'X') &amp;&amp; ( (${to_HBWlgTrns/WlgMeldeSts9} !== '30') || (${to_HBWlgTrns/WlgStatus9} !== '30') ) }" />
+                  <commons:MicroProcessFlowItem
+                     visible="{= ${to_HBWlgTrns/IstTeilHBWlg8} === 'X'}"
+                     state="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus8' }, { path: 'to_HBWlgTrns/WlgMeldeSts8' }, { path: 'to_HBWlgTrns/WlgStrElm8' }, { path: 'Strukturelement' }],
+                              formatter: '.formatter.getWeiterleitungProcessState',
+                              templateShareable : false
+                           }"
+                     icon="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus8' }, { path: 'to_HBWlgTrns/WlgMeldeSts8' }, { path: 'to_HBWlgTrns/WlgStrElm8' }, { path: 'Strukturelement' }, { path: 'to_HB/Strukturelement' }],
+                           formatter: '.formatter.getWeiterleitungProcessIcon'
+                        }"
+                     title="{ parts: [{ path: 'to_HBWlgTrns/WlgRolle8' }, { path: 'to_HBWlgTrns/WlgStrElm8_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                     showIntermediary="{= (${to_HBWlgTrns/WlgMeldeSts8} === '30') &amp;&amp; (${to_HBWlgTrns/WlgStatus8} === '30') }"
+                     showSeparator="{= (${to_HBWlgTrns/IstTeilHBWlg8} === 'X') &amp;&amp; ( (${to_HBWlgTrns/WlgMeldeSts8} !== '30') || (${to_HBWlgTrns/WlgStatus8} !== '30') ) }" />
+                  <commons:MicroProcessFlowItem
+                     visible="{= ${to_HBWlgTrns/IstTeilHBWlg7} === 'X'}"
+                     state="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus7' }, { path: 'to_HBWlgTrns/WlgMeldeSts7' }, { path: 'to_HBWlgTrns/WlgStrElm7' }, { path: 'Strukturelement' }],
+                              formatter: '.formatter.getWeiterleitungProcessState',
+                              templateShareable : false
+                           }"
+                     icon="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus7' }, { path: 'to_HBWlgTrns/WlgMeldeSts7' }, { path: 'to_HBWlgTrns/WlgStrElm7' }, { path: 'Strukturelement' }, { path: 'to_HB/Strukturelement' }],
+                           formatter: '.formatter.getWeiterleitungProcessIcon'
+                        }"
+                     title="{ parts: [{ path: 'to_HBWlgTrns/WlgRolle7' }, { path: 'to_HBWlgTrns/WlgStrElm7_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                     showIntermediary="{= (${to_HBWlgTrns/WlgMeldeSts7} === '30') &amp;&amp; (${to_HBWlgTrns/WlgStatus7} === '30') }"
+                     showSeparator="{= (${to_HBWlgTrns/IstTeilHBWlg7} === 'X') &amp;&amp; ( (${to_HBWlgTrns/WlgMeldeSts7} !== '30') || (${to_HBWlgTrns/WlgStatus7} !== '30') ) }" />
+                  <commons:MicroProcessFlowItem
+                     visible="{= ${to_HBWlgTrns/IstTeilHBWlg6} === 'X'}"
+                     state="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus6' }, { path: 'to_HBWlgTrns/WlgMeldeSts6' }, { path: 'to_HBWlgTrns/WlgStrElm6' }, { path: 'Strukturelement' }],
+                              formatter: '.formatter.getWeiterleitungProcessState',
+                              templateShareable : false
+                           }"
+                     icon="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus6' }, { path: 'to_HBWlgTrns/WlgMeldeSts6' }, { path: 'to_HBWlgTrns/WlgStrElm6' }, { path: 'Strukturelement' }, { path: 'to_HB/Strukturelement' }],
+                           formatter: '.formatter.getWeiterleitungProcessIcon'
+                        }"
+                     title="{ parts: [{ path: 'to_HBWlgTrns/WlgRolle6' }, { path: 'to_HBWlgTrns/WlgStrElm6_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                     showIntermediary="{= (${to_HBWlgTrns/WlgMeldeSts6} === '30') &amp;&amp; (${to_HBWlgTrns/WlgStatus6} === '30') }"
+                     showSeparator="{= (${to_HBWlgTrns/IstTeilHBWlg6} === 'X') &amp;&amp; ( (${to_HBWlgTrns/WlgMeldeSts6} !== '30') || (${to_HBWlgTrns/WlgStatus6} !== '30') ) }" />
+                  <commons:MicroProcessFlowItem
+                     visible="{= ${to_HBWlgTrns/IstTeilHBWlg5} === 'X'}"
+                     state="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus5' }, { path: 'to_HBWlgTrns/WlgMeldeSts5' }, { path: 'to_HBWlgTrns/WlgStrElm5' }, { path: 'Strukturelement' }],
+                              formatter: '.formatter.getWeiterleitungProcessState',
+                              templateShareable : false
+                           }"
+                     icon="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus5' }, { path: 'to_HBWlgTrns/WlgMeldeSts5' }, { path: 'to_HBWlgTrns/WlgStrElm5' }, { path: 'Strukturelement' }, { path: 'to_HB/Strukturelement' }],
+                           formatter: '.formatter.getWeiterleitungProcessIcon'
+                        }"
+                     title="{ parts: [{ path: 'to_HBWlgTrns/WlgRolle5' }, { path: 'to_HBWlgTrns/WlgStrElm5_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                     showIntermediary="{= (${to_HBWlgTrns/WlgMeldeSts5} === '30') &amp;&amp; (${to_HBWlgTrns/WlgStatus5} === '30') }"
+                     showSeparator="{= (${to_HBWlgTrns/IstTeilHBWlg5} === 'X') &amp;&amp; ( (${to_HBWlgTrns/WlgMeldeSts5} !== '30') || (${to_HBWlgTrns/WlgStatus5} !== '30') ) }" />
+                  <commons:MicroProcessFlowItem
+                     visible="{= ${to_HBWlgTrns/IstTeilHBWlg4} === 'X'}"
+                     state="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus4' }, { path: 'to_HBWlgTrns/WlgMeldeSts4' }, { path: 'to_HBWlgTrns/WlgStrElm4' }, { path: 'Strukturelement' }],
+                              formatter: '.formatter.getWeiterleitungProcessState',
+                              templateShareable : false
+                           }"
+                     icon="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus4' }, { path: 'to_HBWlgTrns/WlgMeldeSts4' }, { path: 'to_HBWlgTrns/WlgStrElm4' }, { path: 'Strukturelement' }, { path: 'to_HB/Strukturelement' }],
+                           formatter: '.formatter.getWeiterleitungProcessIcon'
+                        }"
+                     title="{ parts: [{ path: 'to_HBWlgTrns/WlgRolle4' }, { path: 'to_HBWlgTrns/WlgStrElm4_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                     showIntermediary="{= (${to_HBWlgTrns/WlgMeldeSts4} === '30') &amp;&amp; (${to_HBWlgTrns/WlgStatus4} === '30') }"
+                     showSeparator="{= (${to_HBWlgTrns/IstTeilHBWlg4} === 'X') &amp;&amp; ( (${to_HBWlgTrns/WlgMeldeSts4} !== '30') || (${to_HBWlgTrns/WlgStatus4} !== '30') ) }" />
+
+                  <commons:MicroProcessFlowItem
+                     visible="{= ${to_HBWlgTrns/IstTeilHBWlg3} === 'X'}"
+                     state="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus3' }, { path: 'to_HBWlgTrns/WlgMeldeSts3' }, { path: 'to_HBWlgTrns/WlgStrElm3' }, { path: 'Strukturelement' }],
+                              formatter: '.formatter.getWeiterleitungProcessState',
+                              templateShareable : false
+                           }"
+                     icon="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus3' }, { path: 'to_HBWlgTrns/WlgMeldeSts3' }, { path: 'to_HBWlgTrns/WlgStrElm3' }, { path: 'Strukturelement' }, { path: 'to_HB/Strukturelement' }],
+                             formatter: '.formatter.getWeiterleitungProcessIcon'
+                           }"
+                     title="{ parts: [{ path: 'to_HBWlgTrns/WlgRolle3' }, { path: 'to_HBWlgTrns/WlgStrElm3_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                     showIntermediary="{= (${to_HBWlgTrns/WlgMeldeSts3} === '30') &amp;&amp; (${to_HBWlgTrns/WlgStatus3} === '30') }"
+                     showSeparator="{= (${to_HBWlgTrns/IstTeilHBWlg3} === 'X') &amp;&amp; ( (${to_HBWlgTrns/WlgMeldeSts3} !== '30') || (${to_HBWlgTrns/WlgStatus3} !== '30') ) }" />
+
+                  <commons:MicroProcessFlowItem
+                     visible="{= ${to_HBWlgTrns/IstTeilHBWlg2} === 'X'}"
+                     state="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus2' }, { path: 'to_HBWlgTrns/WlgMeldeSts2' }, { path: 'to_HBWlgTrns/WlgStrElm2' }, { path: 'Strukturelement' }],
+                              formatter: '.formatter.getWeiterleitungProcessState',
+                              templateShareable : false
+                           }"
+                     icon="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus2' }, { path: 'to_HBWlgTrns/WlgMeldeSts2' }, { path: 'to_HBWlgTrns/WlgStrElm2' }, { path: 'Strukturelement' }, { path: 'to_HB/Strukturelement' }],
+                             formatter: '.formatter.getWeiterleitungProcessIcon'
+                           }"
+                     title="{ parts: [{value: 'PEB_KONSO'}, { path: 'to_HBWlgTrns/WlgStrElm2_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                     showIntermediary="{= (${to_HBWlgTrns/WlgMeldeSts2} === '30') &amp;&amp; (${to_HBWlgTrns/WlgStatus2} === '30') }"
+                     showSeparator="{= (${to_HBWlgTrns/IstTeilHBWlg2} === 'X') &amp;&amp; ( (${to_HBWlgTrns/WlgMeldeSts2} !== '30') || (${to_HBWlgTrns/WlgStatus2} !== '30') ) }" />
+
+                  <commons:MicroProcessFlowItem
+                     visible="{= ${to_HBWlgTrns/IstTeilHBWlg1} === 'X'}"
+                     state="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus1' }, { path: 'to_HBWlgTrns/WlgMeldeSts1' }, { path: 'to_HBWlgTrns/WlgStrElm1' }, { path: 'Strukturelement' }],
+                              formatter: '.formatter.getWeiterleitungProcessState',
+                              templateShareable : false
+                           }"
+                     icon="{ parts: [{ path: 'to_HBWlgTrns/WlgStatus1' }, { path: 'to_HBWlgTrns/WlgMeldeSts1' }, { path: 'to_HBWlgTrns/WlgStrElm1' }, { path: 'Strukturelement' }, { path: 'to_HB/Strukturelement' }],
+                             formatter: '.formatter.getWeiterleitungProcessIcon'
+                           }"
+                     title="{ parts: [{value: 'PEB_FASUP'}, { path: 'to_HBWlgTrns/WlgStrElm1_Text' }], formatter: '.formatter.getWeiterleitungTitel' }"
+                     showIntermediary="{= (${to_HBWlgTrns/WlgMeldeSts1} === '30') &amp;&amp; (${to_HBWlgTrns/WlgStatus1} === '30') }"
+                     showSeparator="{= (${to_HBWlgTrns/IstTeilHBWlg1} === 'X') &amp;&amp; ( (${to_HBWlgTrns/WlgMeldeSts1} !== '30') || (${to_HBWlgTrns/WlgStatus1} !== '30') ) }" />
+
+
+               </commons:content>
+            </commons:MicroProcessFlow>
+
+            <!-- Weiterleitung: Status (eigene) (Bearbeitenmodus) -->
+            <m:RadioButtonGroup
+               id="rbgWlgStatus"
+               columns="3"
+               select="onRadioButtonWlgStatus"
+               selectedIndex="{viewModel>/rgbWlgStatusSelectedIdx}"
+               visible="{= ${viewModel>/bEditing} }"
+               editable="{= ${viewModel>/bEditing} }">
+               <m:RadioButton
+                  text="offen"
+                  selected="{= ${Handlungsbedarfstatus} === '10' }" />
+               <m:RadioButton
+                  visible="{= !${global>/bRoleFachsupport} }"
+                  text="weiterleiten"
+                  selected="{= ${Handlungsbedarfstatus} === '20' }" />
+               <m:RadioButton
+                  text="geschlossen"
+                  selected="{= ${Handlungsbedarfstatus} === '30' }" />
+            </m:RadioButtonGroup>
+
+            <!-- Weiterleitung: Anmerkung (eigene) (Bearbeitenmodus) -->
+            <m:Label
+               text="{/#ZBCPL_CR_HBW_WLTGType/Anmerkung/@sap:label}:"
+               required="{= (${viewModel>/bEditing})  }"
+               visible="{= (${viewModel>/bEditing})  }"
+               class="sapUiSmallMarginTop" />
+            <m:TextArea
+               valueStateText="Der Weiterleitungskommentar kann nur bis zu 500 Zeichen beinhalten und darf nicht leer sein."
+               value="{path: 'Anmerkung', type: 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 500} }"
+               maxLength="500"
+               showExceededText="true"
+               visible="{= ${viewModel>/bEditing} }"
+               editable="{= ${viewModel>/bEditing} }"
+               width="100%"
+               growing="true"
+               growingMaxLines="10"
+               valueLiveUpdate="false"
+               liveChange="handleLiveChange" />            
+
+            <!-- Handlunmgsbedarf: Attribute -->
+            <m:Label
+               text="{/#ZBCPL_CR_HBD_HANDBEDType/Titel/@sap:label}:"
+               required="{= (${viewModel>/bEditing}) &amp;&amp; (${Strukturelement} === ${to_HB/Strukturelement}) }"
+               class="sapUiSmallMarginTop" />
+            <smartField:SmartField
+               id="SmartFieldTitel"
+               value="{to_HB/Titel}"
+               editable="{= (${viewModel>/bEditing}) &amp;&amp; (${Strukturelement} === ${to_HB/Strukturelement}) }"
+               mandatory="true" />
+
+            <m:Label
+               text="{/#ZBCPL_CR_HBD_HANDBEDType/Beschreibung/@sap:label}:"
+               required="{= (${viewModel>/bEditing}) &amp;&amp; (${Strukturelement} === ${to_HB/Strukturelement}) }"
+               class="sapUiSmallMarginTop" />
+            <m:TextArea
+               id="TextAreaBeschreibung"
+               valueStateText="Die Beschreibung des Handlungsbedarfs kann nur bis zu 500 Zeichen beinhalten und darf nicht leer sein."
+               value="{path: 'to_HB/Beschreibung', type: 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 500 } }"
+               maxLength="500"
+               showExceededText="true"
+               required="{= (${viewModel>/bEditing}) &amp;&amp; (${Strukturelement} === ${to_HB/Strukturelement}) }"
+               visible="{= ${viewModel>/bEditing} }"
+               editable="{= (${viewModel>/bEditing}) &amp;&amp; (${Strukturelement} === ${to_HB/Strukturelement}) }"
+               width="100%"
+               growing="true"
+               growingMaxLines="10"
+               valueLiveUpdate="false"
+               liveChange="handleLiveChange" />
+            <m:Text
+               text="{path: 'to_HB/Beschreibung' }"
+               visible="{= !${viewModel>/bEditing} }"
+               width="100%" />
+
+            <m:Label
+               text="{/#ZBCPL_CR_HBD_HANDBEDType/FaehigkeitsbezAufgabe/@sap:label}:"
+               required="{= (${viewModel>/bEditing}) &amp;&amp; (${Strukturelement} === ${to_HB/Strukturelement}) }"
+               class="sapUiSmallMarginTop" />
+            <m:HBox>
+               <smartField:SmartField
+                  id="SmartFieldFaehigkeitsbezAufgabe"
+                  value="{to_HB/FaehigkeitsbezAufgabe}"
+                  editable="true"
+                  mandatory="true"
+                  visible="{= (${viewModel>/bEditing}) &amp;&amp; (${Strukturelement} === ${to_HB/Strukturelement}) }" />
+               <smartField:SmartField
+                  value="{to_HB/FaehigkeitsbezAufgabe_Text} ({to_HB/FaehigkeitsbezAufgabe})"
+                  editable="false"
+                  visible="{= !${viewModel>/bEditing} || (${Strukturelement} !== ${to_HB/Strukturelement}) }" />
+            </m:HBox>
+
+            <m:Label
+               text="{/#ZBCPL_CR_HBD_HANDBEDType/Handlungsfeldunterkategorie/@sap:label}:"
+               required="{= (${viewModel>/bEditing}) &amp;&amp; (${Strukturelement} === ${to_HB/Strukturelement}) }"
+               class="sapUiSmallMarginTop" />
+            <m:HBox>
+               <smartField:SmartField
+                  id="SmartFieldHandlungsfeldunterkategorie"
+                  value="{to_HB/Handlungsfeldunterkategorie}"
+                  editable="true"
+                  mandatory="true"
+                  visible="{= (${viewModel>/bEditing}) &amp;&amp; (${Strukturelement} === ${to_HB/Strukturelement}) }" />
+               <smartField:SmartField
+                  value="{to_HB/Handlungsfeldunterkategorie_Text} ({to_HB/Handlungsfeldunterkategorie})"
+                  editable="false"
+                  visible="{= !${viewModel>/bEditing} || (${Strukturelement} !== ${to_HB/Strukturelement}) }" />
+            </m:HBox>
+
+            <!-- Weiterleitung: Anmerkungen alle als FeedList (Lesemodus) -->
+            <!-- icon="{= ${Handlungsbedarfstatus} === '20' ? 'sap-icon://sys-enter-2' : 'sap-icon://sys-cancel-2' }" -->
+            <m:List
+               headerText="Weiterleitungen"
+               items="{ path: 'to_HBWlgLst',
+                        sorter: {
+                           path: 'GeaendertAm',
+                           descending: true,
+                           group: false
+                        }
+                     }"
+               class="sapUiSmallMarginTop"
+               visible="{= !${viewModel>/bEditing}}">
+               <m:FeedListItem
+                  sender="{Strukturelement_Text}"
+                  showIcon="false"
+                  info="{ path: 'Handlungsbedarfstatus',
+                          formatter: '.formatter.getHBedarfStatusString',
+                          templateShareable : false
+                     }"
+                  timestamp="{ parts: [{ path: 'GeaendertAm' }], formatter: '.formatter.getConvertedDateShortForm', templateShareable : false }"
+                  text="{Anmerkung}"
+                  visible="{= ${Meldestatus} === '30' || (${Strukturelement} === ${global>/sStrukturelementId}) || (${Strukturelement} === '30052859') }" />
+            </m:List>
+
+         </m:VBox>
+      </c:content>
+   </c:DetailPage>
+
+</core:FragmentDefinition>

@@ -1,0 +1,14 @@
+<mvc:View
+	controllerName="de.bundeswehr.zaxxx.framework.v010.global.Base"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns="sap.m"
+	xmlns:f="sap.f">
+	<MessagePage
+		title="Keine Berechtigung"
+		text="Sie verfügen nicht über ausreichende Berechtigungen zur Nutzung dieser Anwendung."
+		icon="sap-icon://shield"
+		description="Der Aufruf dieser Seite ist für Sie nicht zulässig."
+		navButtonPress="onNavBack" />
+</mvc:View>

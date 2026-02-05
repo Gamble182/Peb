@@ -1,0 +1,112 @@
+<core:FragmentDefinition
+   xmlns="sap.uxap"
+   xmlns:mvc="sap.ui.core.mvc"
+   xmlns:core="sap.ui.core"
+   xmlns:m="sap.m"
+   xmlns:f="sap.ui.layout.form"
+   xmlns:form="sap.ui.comp.smartform"
+   xmlns:smartField="sap.ui.comp.smartfield"
+   xmlns:l="sap.ui.layout"
+   xmlns:c="de.bundeswehr.zaxxx.framework.v010.global.control.page"
+   xmlns:d="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+   <c:DetailPage
+      title="Handlungsbedarf erstellen"
+      editPress="onEditPress"
+      savePress="onSavePress"
+      cancelPress="onCancelPress"
+      releasePress="onReleasePress"
+      editVisible="false"
+      releaseVisible="false"
+      column="{fcl>/actionButtonsInfo/endColumn}"
+      editMode="{viewModel>/bEditing}"
+      editEnabled="false"
+      releaseEnabled="false"
+      messagePress="onOpenMessagePopover"
+      closePress="onCloseColumn"
+      exitFSPress="onExitFullScreen"
+      openFSPress="onFullScreen">
+
+      <!-- Header Content -->
+      <c:headerContent>
+
+         <core:Fragment
+            fragmentName="de.bundeswehr.zbcpl_peb_fa.global.fragment.FilterHeaderDetail"
+            type="XML" />
+
+      </c:headerContent>
+
+      <!-- Content -->
+      <c:content>
+
+         <m:VBox>
+
+            <m:Label
+               text="{/#ZBCPL_CR_HBD_HANDBEDType/Titel/@sap:label}:"
+               required="{= ${viewModel>/bEditing} }"
+               class="sapUiSmallMarginTop" />
+            <smartField:SmartField
+               id="SmartFieldTitel"
+               value="{Titel}"
+               editable="{= (${viewModel>/bEditing})  }"
+               mandatory="true" />
+
+            <m:Label
+               text="{/#ZBCPL_CR_HBD_HANDBEDType/Beschreibung/@sap:label}:"
+               required="{= ${viewModel>/bEditing} }"
+               class="sapUiSmallMarginTop" />
+            <m:TextArea
+               id="TextAreaBeschreibung"
+               value="{path: 'Beschreibung', type: 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 500 } }"
+               showExceededText="true"
+               required="true"
+               visible="true"
+               editable="{= ${viewModel>/bEditing} }"
+               maxLength="500"
+               width="100%"
+               growing="true"
+               growingMaxLines="10"
+               valueLiveUpdate="false"
+               liveChange="handleLiveChange" />
+
+            <m:Label
+               text="{/#ZBCPL_CR_HBD_HANDBEDType/FaehigkeitsbezAufgabe/@sap:label}:"
+               required="{= ${viewModel>/bEditing} }"
+               class="sapUiSmallMarginTop" />
+            <m:HBox>
+               <smartField:SmartField
+                  id="SmartFieldFaehigkeitsbezAufgabe"
+                  value="{FaehigkeitsbezAufgabe}"
+                  editable="true"
+                  mandatory="true"
+                  visible="{= ${viewModel>/bEditing} }" />
+               <smartField:SmartField
+                  value="{FaehigkeitsbezAufgabe_Text} ({FaehigkeitsbezAufgabe})"
+                  editable="false"
+                  visible="{= !${viewModel>/bEditing} }" />
+            </m:HBox>
+
+            <m:Label
+               text="{/#ZBCPL_CR_HBD_HANDBEDType/HandlungsfeldUnterkategorie/@sap:label}:"
+               required="{= ${viewModel>/bEditing} }"
+               class="sapUiSmallMarginTop" />
+            <m:HBox>
+               <smartField:SmartField
+                  id="SmartFieldHandlungsfeldUnterkategorie"
+                  value="{HandlungsfeldUnterkategorie}"
+                  editable="true"
+                  mandatory="true"
+                  visible="{= ${viewModel>/bEditing} }" />
+               <smartField:SmartField
+                  value="{HandlungsfeldUnterkategorie_Text} ({HandlungsfeldUnterkategorie})"
+                  editable="false"
+                  visible="{= !${viewModel>/bEditing} }" />
+            </m:HBox>
+
+         </m:VBox>
+
+      </c:content>
+
+   </c:DetailPage>
+
+</core:FragmentDefinition>

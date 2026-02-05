@@ -1,0 +1,8 @@
+<mvc:View
+       controllerName="de.bundeswehr.zaxxx.framework.v010.module.frame.Dev"
+       xmlns:mvc="sap.ui.core.mvc"
+       xmlns:core="sap.ui.core">
+       <core:Fragment
+              fragmentName="de.bundeswehr.zaxxx.framework.v010.module.frame.DevPage"
+              type="XML" />
+</mvc:View>

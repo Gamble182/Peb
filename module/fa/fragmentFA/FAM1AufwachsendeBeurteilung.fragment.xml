@@ -1,0 +1,174 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:mc="sap.suite.ui.microchart"
+    xmlns:rt="de.bundeswehr.zaxxx.framework.v010.global.control.ratingAndTrending"
+    xmlns:mvc="sap.ui.core.mvc">
+
+    <!-- onRouteMatch in DashFAM1D3.controller -->
+
+    <smartTable:SmartTable
+        id="smartTableErstbeurteilung"
+        persistencyKey="DashFAErstbeurM1"
+        header="Fähigkeitsbezogene Aufgaben"
+        tableType="ResponsiveTable"
+        showFullScreenButton="false"
+        showTablePersonalisation="false"
+        demandPopin="{= ${fcl>/layout} !== 'ThreeColumnsEndExpanded' }"
+        showRowCount="true"
+        enableAutoBinding="false"
+        useExportToExcel="false"
+        useVariantManagement="false">
+
+        <Table
+            growing="true"
+            growingThreshold="{global>/iListGrowing}"
+            growingScrollToLoad="true"
+            mode="SingleSelectMaster"
+            itemPress=".onListItemPress($event,{layout: 'TwoColumnsMidExpanded'})"
+            width="auto"
+            sticky="HeaderToolbar,InfoToolbar,ColumnHeaders">
+            <columns>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Rolle", "columnIndex":"1", "leadingProperty": "Rolle,HierarchyLevel,IstKeinAusschluss", "sortProperty": "HierarchyLevel"}' />
+                    </customData>
+                    <Text text="Rolle" />
+                </Column>
+
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Strukturelement", "columnIndex":"2", "leadingProperty": "Strukturelement,StrukturelementText", "sortProperty": "StrukturelementText"}' />
+                    </customData>
+                    <Text text="{/#ZBCPL_CR_FA_FAUFBEURType/Strukturelement/@sap:label}" />
+                </Column>
+
+                <Column>
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "FaehBezAufg", "columnIndex":"3", "leadingProperty": "FaehBezAufg,FaehBezAufgText", "sortProperty": "FaehBezAufgText"}' />
+                    </customData>
+                    <Text text="{= (${fcl>/layout} !== 'ThreeColumnsEndExpanded') ? 'Fähigkeitsbezogene Aufgabe' : 'FähigkbezAufg' }" />
+                </Column>
+
+                <Column visible="{= ${fcl>/columnsVisibility/endColumn} !== true }">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Teilfaehigkeit", "columnIndex":"4", "leadingProperty": "Teilfaehigkeit,TeilfaehigkeitText", "sortProperty": "TeilfaehigkeitText"}' />
+                    </customData>
+                    <Text text="{/#ZBCPL_C_FAUFType/Teilfaehigkeit/@sap:label}" />
+                </Column>
+
+                <Column
+                    hAlign="Center"
+                    width="{= (${fcl>/layout} !== 'ThreeColumnsEndExpanded') ? '14rem' : '6rem' }">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "BeurDienstbereit", "columnIndex":"5", "leadingProperty": "BeurDienstbereit,TrendDienstbereit", "sortProperty": "BeurDienstbereit"}' />
+                    </customData>
+                    <Text text="{= (${fcl>/layout} !== 'ThreeColumnsEndExpanded') ? 'Einsatzfähigkeit (2 Jahre)' : 'Einsatzfähigkeit' }" />
+                </Column>
+
+                <Column
+                    hAlign="Center"
+                    width="{= (${fcl>/layout} !== 'ThreeColumnsEndExpanded') ? '14rem' : '6rem' }">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "BeurEinsatzbereit", "columnIndex":"6", "leadingProperty": "NichtBeurEinsatzbereit,BeurEinsatzbereit,TrendEinsatzbereit", "sortProperty": "BeurEinsatzbereit"}' />
+                    </customData>
+                    <Text text="{= (${fcl>/layout} !== 'ThreeColumnsEndExpanded') ? 'Einsatzbereitschaft (2 Jahre)' : 'Einsatzbereitschaft' }" />
+                </Column>
+
+            </columns>
+            <items>
+                <ColumnListItem type="{= ${viewModel>/bEditing} ? 'Active' : 'Navigation' }">
+                    <cells>
+                        <Text text="{ parts: [{path: 'Rolle'}, {path: 'HierarchyLevel'}], formatter: '.formatter.getRolename'}" />
+
+                        <ObjectIdentifier
+                            class="sapUiMicroMargin"
+                            title="{StrukturelementText}"
+                            text="{Strukturelement}"
+                            tooltip="{StrukturelementText}" />
+
+                        <ObjectIdentifier
+                            class="sapUiMicroMargin"
+                            title="{FaehBezAufgText}"
+                            text="{FaehBezAufg}"
+                            tooltip="{FaehBezAufgText}" />
+
+                        <ObjectIdentifier
+                            class="sapUiMicroMargin"
+                            title="{= ${Teilfaehigkeit} === '00000' ? '' :  ${TeilfaehigkeitText} }"
+                            text="{= ${Teilfaehigkeit} === '00000' ? 'Ohne Teilfähigkeit' :  ${Teilfaehigkeit} }"
+                            tooltip="{= ${Teilfaehigkeit} === '00000' ? 'Ohne Teilfähigkeit' :  ${TeilfaehigkeitText} } ({Teilfaehigkeit})" />
+
+                        <FlexBox
+                            width="100%"
+                            alignItems="Center"
+                            justifyContent="Center">
+                            <rt:RatingAndTrending
+                                visible="{= ${IstKeinAusschluss} }"
+                                valueRating1="{BeurDienstbereit}"
+                                valueTrending1="{TrendDienstbereit}"
+                                ratingIconSize="1.2rem"
+                                trendingIconSize="1.2rem" />
+                            <HBox
+                                renderType="Bare"
+                                class="sapUiTinyMargin"
+                                visible="{= !${IstKeinAusschluss} }">
+                                <core:Icon
+                                    src="sap-icon://private"
+                                    color="#1C4C98"
+                                    tooltip="Keine Berechtigung. Fähigkeitsbezogene Aufgabe über die zugeh. Teilfähigkeit ausgeschlossen." />
+                            </HBox>
+                        </FlexBox>
+
+                        <FlexBox
+                            width="100%"
+                            alignItems="Center"
+                            justifyContent="Center">
+                            <HBox
+                                justifyContent="Center"
+                                visible="{= ${IstKeinAusschluss} }">
+                                <rt:RatingAndTrending
+                                    valueRating1="{BeurEinsatzbereit}"
+                                    valueTrending1="{TrendEinsatzbereit}"
+                                    ratingIconSize="1.2rem"
+                                    trendingIconSize="1.2rem"
+                                    visible="{= ${NichtBeurEinsatzbereit} !== 'X' }" />
+
+                                <core:Icon
+                                    src="sap-icon://decline"
+                                    tooltip="nicht beurteilt"
+                                    color="rgb(67, 140, 213)"
+                                    size="1.2rem"
+                                    visible="{= ${NichtBeurEinsatzbereit} === 'X' }" />
+                            </HBox>
+                            <HBox
+                                renderType="Bare"
+                                class="sapUiTinyMargin"
+                                visible="{= !${IstKeinAusschluss} }">
+                                <core:Icon
+                                    src="sap-icon://private"
+                                    color="#1C4C98"
+                                    tooltip="Keine Berechtigung. Fähigkeitsbezogene Aufgabe über die zugeh. Teilfähigkeit ausgeschlossen." />
+                            </HBox>
+                        </FlexBox>
+
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
+
+</core:FragmentDefinition>       

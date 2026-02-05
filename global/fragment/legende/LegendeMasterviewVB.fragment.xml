@@ -1,0 +1,144 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:table="sap.ui.table"
+   xmlns:grid="sap.ui.layout.cssgrid"
+   xmlns:core="sap.ui.core">
+   <OverflowToolbarButton
+      class="sapUiTinyMarginBegin"
+      press="onOpenFirstDependentPress"
+      icon="sap-icon://legend"
+      type="Transparent"
+      tooltip="Legende zu Meldestatus anzeigen">
+      <dependents>
+         <Popover
+            showHeader="false"
+            placement="VerticalPreferredBottom"
+            contentHeight="{viewModel>/iLegendeContentHeight}"
+            contentWidth="520px">
+            <Panel class="PanelNoBottom sapUiTinyMarginTop">
+               <headerToolbar>
+                  <OverflowToolbar>
+                     <Title text="Hinweise zu Kennzahlen in der Haupt- und Detailansicht" />
+                  </OverflowToolbar>
+               </headerToolbar>
+               <VBox
+                  justifyContent="Start"
+                  class="sapUiTinyMarginBegin sapUiTinyMarginEnd">
+                  <Text
+                     text="Alle dargestellten Kennzahen bis auf Personalkategorien (zus. Personal) beinhalten keine DPäK."
+                     class="sapUiTinyMarginBottom" />
+                  <Text
+                     text="In beiden Ansichten werden bei der Kennzahlenermittlung nur DP berücksichtigt, die keiner Reservekennung zugeordnet sind und keinen Sperrgründen unterliegen."
+                     class="sapUiTinyMarginBottom" />
+                  <Text text="Es ist zu beachten, dass im Unterschied dazu in der Besetzungsliste DP unabhängig von Reservekennung und Sperrgründen angezeigt werden." />
+               </VBox>
+            </Panel>
+            <Panel class="PanelNoBottom">
+               <headerToolbar>
+                  <OverflowToolbar>
+                     <Title text="Farblegende zum Meldestatus" />
+                  </OverflowToolbar>
+               </headerToolbar>
+
+               <VBox
+                  class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
+                  alignContent="Stretch">
+                  <Text
+                     text="{= 'Durch die farbliche Markierung am linken Zeilenrand wrid für ' + (${global>/bShowKdoBehAsHierarchy} ? 'jede Kommandobehörde und ' : '') + 'jeden Verwendungsbereich der aktuelle Bearbeitungszustand angegeben.'}"
+                     class="sapUiSmallMarginBottom" />
+
+                  <table:Table
+                     rows="{viewModel>/aLegendeDaten}"
+                     enableColumnReordering="false"
+                     enableSelectAll="false"
+                     selectionMode="None"
+                     editable="false"
+                     width="100%"
+                     visibleRowCount="{viewModel>/iLegendeRowCount}"
+                     rowHeight="60px">
+                     <table:columns>
+                        <table:Column width="100%">
+                           <Label text="Bedeutung der Meldestatusfarbe zum Verwendungsbereich" />
+                           <table:template>
+                              <ObjectIdentifier
+                                 text="{viewModel>info}"
+                                 title="{viewModel>text}" />
+                           </table:template>
+                        </table:Column>
+                     </table:columns>
+                     <table:rowSettingsTemplate>
+                        <table:RowSettings
+                           highlightText="{viewModel>text}"
+                           highlight="{viewModel>rowSettingColor}" />
+
+                     </table:rowSettingsTemplate>
+                  </table:Table>
+
+                  <VBox
+                     visible="{= !${global>/bRoleErstbeurteilungVB} &amp;&amp; !${global>/bRoleAdminOrgBereich}}"
+                     alignItems="Start"
+                     alignContent="Start"
+                     width="100%">
+                     <Text
+                        text="Zusätzlich können in der Hierarchydarstellung in Spalte 'KdoBeh / Verwendungsbereich' folgende Icons angezeigt werden:"
+                        class="sapUiSmallMarginBottom sapUiMediumMarginTop" />
+
+                     <HBox
+                        alignItems="Center"
+                        justifyContent="Start">
+                        <HBox
+                           justifyContent="Start"
+                           width="5.5rem">
+                           <core:Icon
+                              src="sap-icon://customer-briefing"
+                              class="sapUiSmallMarginBegin sapUiSmallMarginEnd"
+                              color="{global>/aSemanticColors/Information}"
+                              tooltip="Mit Fähigkeitsverantwortung"
+                              size="1em" />
+                        </HBox>
+                        <ObjectIdentifier
+                           title="Mit Fähigkeitsverantwortung"
+                           text="Wird angezeigt, falls ein OrgBer die Fähigkeitsverantwortung für diesen Verwendungsbereich besitzt" />
+                     </HBox>
+                     <HBox
+                        alignItems="Center"
+                        justifyContent="Start"
+                        class="sapUiSmallMarginTop sapUiSmallMarginBottom">
+                        <core:Icon
+                           src="sap-icon://workflow-tasks"
+                           class="sapUiSmallMarginBegin sapUiSmallMarginEnd"
+                           tooltip="Anzahl Verwendungsbereiche in Bearbeitung"
+                           size="1em" />
+                        <ObjectNumber
+                           number="3"
+                           tooltip="Anzahl Verwendungsbereiche in Bearbeitung"
+                           state="Warning" />
+                        <ObjectIdentifier
+                           title="Anzahl Verwendungsbereiche in Bearbeitung"
+                           class="sapUiSmallMarginBegin"
+                           text="{= 'Wird angezeigt, falls mindesteins ein Verwendungsbereich derzeit in Bearbeitung durch ' + (!${global>/bRoleKommentierungBAPersBw} ? 'OrgBer und/oder ' : '') + 'BAPersBw ist' }" />
+                     </HBox>
+                     <HBox
+                        alignItems="Center"
+                        justifyContent="Start">
+                        <core:Icon
+                           src="sap-icon://pending"
+                           class="sapUiSmallMarginBegin sapUiSmallMarginEnd"
+                           tooltip="Anzahl nicht bearbeiteter Verwendungsbereiche"
+                           size="1em" />
+                        <ObjectNumber
+                           number="5"
+                           tooltip="Anzahl nicht bearbeiteter Verwendungsbereiche"
+                           state="Error" />
+                        <ObjectIdentifier
+                           title="Anzahl nicht bearbeiteter Verwendungsbereiche"
+                           class="sapUiSmallMarginBegin"
+                           text="{= 'Wird angezeigt, falls mindesteins ein Verwendungsbereich derzeit noch nicht bearbeitet wird durch ' + (!${global>/bRoleKommentierungBAPersBw} ? 'OrgBer und/oder ' : '') + 'BAPersBw'}" />
+                     </HBox>
+                  </VBox>
+               </VBox>
+            </Panel>
+         </Popover>
+      </dependents>
+   </OverflowToolbarButton>
+</core:FragmentDefinition>

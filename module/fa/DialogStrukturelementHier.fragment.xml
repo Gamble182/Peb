@@ -1,0 +1,162 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:sf="sap.ui.comp.smartform"
+    xmlns:core="sap.ui.core"
+    xmlns:smartmultiedit="sap.ui.comp.smartmultiedit"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:table="sap.ui.table"
+    xmlns:smartMultiInput="sap.ui.comp.smartmultiinput"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:l="sap.ui.layout">
+    <Dialog
+        title="Hierarchyauswahl"
+        class="sapUiContentPadding"
+        stretchOnPhone="true"
+        id="dialogStrukturelementHier"
+        contentWidth="100rem"
+        contentHeight="60rem"
+        horizontalScrolling="false"
+        verticalScrolling="true"
+        beforeOpen="onBeforeOpenDialog">
+
+        <content>
+            <FlexBox
+                direction="Column"
+                alignItems="Start">
+                <VBox>
+                    <layoutData>
+                        <FlexItemData
+                            minHeight="50rem"
+                            growFactor="3" />
+                    </layoutData>
+                    <smartTable:SmartTable
+                        header="Strukturelement Hierarchy"
+                        id="DialogStrukturelementHierSmartTable"
+                        entitySet="ZBCPL_C_OH_ORGHIERDIALOG"
+                        tableType="TreeTable"
+                        useExportToExcel="false"
+                        useVariantManagement="false"
+                        useTablePersonalisation="false"
+                        showRowCount="false"
+                        enableAutoBinding="false">
+
+                        <table:TreeTable
+                            id="DialogStrukturelementHierTreeTable"
+                            rootLevel="1"
+                            selectionBehavior="Row"
+                            collapseRecursive="true"
+                            minAutoRowCount="1"
+                            fixedRowCount="0"
+                            fixedBottomRowCount="0"
+                            enableBusyIndicator="true"
+                            busyIndicatorDelay="0"
+                            fixedColumnCount="1"
+                            selectionMode="MultiToggle"
+                            rowHeight="53px"
+                            cellClick="onCellClick"
+                            width="auto"
+                            visibleRowCountMode="Fixed"
+                            rowActionCount="{= ( ${viewModel>/bIsDisplayWarningEbeneTeilaktivitaet} || ${viewModel>/bIsDisplayWarningEbeneTeilaktivitaetUndUnterTeilaktivitaet} ) ? 2 : 1 }"
+                            rowSelectionChange="onDialogStrukturelementHierRowSelectionChange">
+                            <table:extension />
+                            <table:columns>
+                                <table:Column
+                                    width="80rem"
+                                    hAlign="Begin">
+                                    <table:customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "Strukturelement", "columnIndex":"1", "leadingProperty": "Strukturelement,Strukturelement_Text,StrukturelementParent_Text", "sortProperty": ""}' />
+                                    </table:customData>
+
+                                    <Label text="Strukturelement" />
+                                    <table:template>
+                                        <VBox>
+                                            <ObjectIdentifier
+                                                class="sapUiMicroMargin"
+                                                title="{Strukturelement_Text}"
+                                                text="{Strukturelement}"
+                                                tooltip="{Strukturelement_Text}" />
+                                        </VBox>
+                                    </table:template>
+                                </table:Column>
+
+
+                                <table:Column
+                                    width="15rem"
+                                    hAlign="Begin">
+                                    <table:customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "Meldestatus", "columnIndex":"2", "leadingProperty": "Meldestatus", "sortProperty": ""}' />
+                                    </table:customData>
+
+                                    <Label text="Meldestatus" />
+                                    <table:template>
+                                        <VBox>
+                                            <ObjectStatus
+                                                text="{
+                                                  path: 'Meldestatus',
+                                                  formatter: '.formatter.getMeldungStatusString',
+                                                  templateShareable : false
+                                               }"
+                                                inverted="true"
+                                                class="objectStatusMeldestatus"
+                                                state="{
+                                                   path: 'Meldestatus',
+                                                   formatter: '.formatter.getMeldungStatus',
+                                                   templateShareable : false
+                                               }" />
+                                        </VBox>
+                                    </table:template>
+                                </table:Column>
+
+
+                            </table:columns>
+
+                        </table:TreeTable>
+                    </smartTable:SmartTable>
+                </VBox>
+                <VBox>
+                    <layoutData>
+                        <FlexItemData
+                            minHeight="10rem"
+                            growFactor="1" />
+                    </layoutData>
+                    <Panel
+                        width="auto"
+                        class="sapUiResponsiveMargin"
+                        accessibleRole="Region"
+                        expanded="true"
+                        expandable="true"
+                        headerText="Ausgewählte Elemente">
+                        <l:VerticalLayout>
+                            <HBox>
+                                <MultiInput
+                                    id="DialogStrukturelementHierSelectedElements"
+                                    editable="false"
+                                    width="80rem"
+                                    showValueHelp="false" />
+                                <Button
+                                    icon="sap-icon://sys-cancel"
+                                    type="Transparent"
+                                    press="onDialogStrukturelementButtonDeleteSelectedElements"
+                                    ariaLabelledBy="actionButtonLabel" />
+                            </HBox>
+                        </l:VerticalLayout>
+
+                    </Panel>
+                </VBox>
+            </FlexBox>
+        </content>
+        <buttons>
+            <Button
+                text="Ok"
+                press="onDialogStrukturelementHierOkButton"
+                type="Emphasized" />
+            <Button
+                text="Abbrechen"
+                press="onDialogStrukturelementHierCancelButton" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,325 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Popover
+        title="Legende"
+        contentWidth="1000px"
+        contentHeight="960px"
+        placement="Bottom">
+        <VBox width="100%">
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#ffffff"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtIntroText"
+                    text="{viewModel>/aLegTexte/0/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#ffffff"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtOrgSollTitel"
+                        text="{viewModel>/aLegTexte/1/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtOrgSollText"
+                    text="{viewModel>/aLegTexte/1/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#ffffff"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtBesetztDPTitel"
+                        text="{viewModel>/aLegTexte/2/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtBesetztDPText"
+                    text="{viewModel>/aLegTexte/2/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#ffffff"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtBesetztVZAETitel"
+                        text="{viewModel>/aLegTexte/3/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtBesetztVZAEText"
+                    text="{viewModel>/aLegTexte/3/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#ffffff"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtDPSollTitel"
+                        text="{viewModel>/aLegTexte/4/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtDPSollText"
+                    text="{viewModel>/aLegTexte/4/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#ffffff"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtPersonalIstTitel"
+                        text="{viewModel>/aLegTexte/5/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtPersonalIstText"
+                    text="{viewModel>/aLegTexte/5/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#ffffff"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtPersonalIstKompTitel"
+                        text="{viewModel>/aLegTexte/6/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtPersonalIstKompText"
+                    text="{viewModel>/aLegTexte/6/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#ffffff"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtPersonalTeilzeitTitel"
+                        text="{viewModel>/aLegTexte/7/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtPersonalTeilzeitText"
+                    text="{viewModel>/aLegTexte/7/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#808080"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtnbTitel"
+                        text="{viewModel>/aLegTexte/8/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtnbText"
+                    text="{viewModel>/aLegTexte/8/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#f66364"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtnEinsTitel"
+                        text="{viewModel>/aLegTexte/9/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtnEinsText"
+                    text="{viewModel>/aLegTexte/9/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#fabd64"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtDstBerTitel"
+                        text="{viewModel>/aLegTexte/10/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtDstBerText"
+                    text="{viewModel>/aLegTexte/10/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#a1dbb1"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtEinsFaehTitel"
+                        text="{viewModel>/aLegTexte/11/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtEinsFaehText"
+                    text="{viewModel>/aLegTexte/11/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#3fa45b"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtEinsBerTitel"
+                        text="{viewModel>/aLegTexte/12/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtEinsBerText"
+                    text="{viewModel>/aLegTexte/12/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#427CAC"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtimEinsTitel"
+                        text="{viewModel>/aLegTexte/13/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin"
+                        tooltip="" />
+                </HBox>
+                <Text
+                    id="txtimEinsText"
+                    text="{viewModel>/aLegTexte/13/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+            <FlexBox
+                alignItems="Start"
+                justifyContent="Start"
+                width="100%">
+                <HBox>
+                    <core:Icon
+                        src="sap-icon://color-fill"
+                        color="#e4e5e6"
+                        class="sapUiTinyMargin" />
+                    <Text
+                        id="txtunbewertetTitel"
+                        text="{viewModel>/aLegTexte/14/Titel}"
+                        width="8rem"
+                        class="sapUiTinyMargin" />
+                </HBox>
+                <Text
+                    id="txtunbewertetText"
+                    text="{viewModel>/aLegTexte/14/Beschreibung}"
+                    class="sapUiTinyMargin" />
+            </FlexBox>
+
+        </VBox>
+    </Popover>
+</core:FragmentDefinition>

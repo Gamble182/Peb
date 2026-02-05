@@ -1,0 +1,499 @@
+<core:FragmentDefinition
+    height="100%"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns="sap.m"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:c="de.bundeswehr.zaxxx.framework.v010.global.control.page">
+    <smartTable:SmartTable
+        id="smtBesetzungsliste"
+        smartFilterId="smartFilterBarBLXXX"
+        persistencyKey="PersEBBesetzungsliste"
+        showTablePersonalisation="true"
+        useTablePersonalisation="true"
+        initiallyVisibleFields=""
+        useVariantManagement="true"
+        header="Besetzungsliste"
+        entitySet="ZBCPL_C_REP_BESETZUNGSLISTESet"
+        tableType="ResponsiveTable"
+        showFullScreenButton="false"
+        demandPopin="true"
+        showRowCount="true"
+        enableAutoBinding="false"
+        useExportToExcel="true"
+        beforeExport="onBeforeExport"
+        ignoredFields="Planungssituation,p_Planungssituation,p_Rolle,Kalendermonat,Quartal,IstSelbstbeurteilung,Dienstposten_Text,FaehBezAufg_Text,UmfangszugehOrgBereich_Text,Strukturelement_Text,Bereichsart_Text,StruElemStandort_Text,Laufbahnmil_Text,Laufbahnziv_Text,Laufbahngruppe_Text,PersonalbearbStelle_Text,Statusgruppe_Text,Dienstgradgruppe_Text,DienstgradVon_Text,DienstgradBis_Text,UebergeordDienststelle_Text,Dienstarbeitsverhaeltnis_Text,Geschlecht_Text,Dienstgradzusatz_Text,DPTyp_Text,Jobfamilie_Text,PSKmil_Text,StruElemVerband_Text,StruElemBataillon_Text,StruElemEinheit_Text,Sicherheitsbescheid_Text,Sprachkenntnis_Text,Kompetenzbereich_Text,Dienststellung_Text"
+        width="auto"
+        beforeRebindTable=".onBeforeRebindTableBesetzungsliste">
+        <Table
+            growing="true"
+            growingThreshold="250"
+            growingScrollToLoad="true"
+            mode="None"
+            width="auto"
+            sticky="HeaderToolbar,InfoToolbar,ColumnHeaders">
+            <headerToolbar>
+                <Toolbar>
+                    <ToolbarSpacer />
+                    <SearchField
+                        id="searchFieldTableBesetzungsliste"
+                        width="auto"
+                        search=".onSearchFilterBesetzungsliste" />
+                </Toolbar>
+            </headerToolbar>
+            <columns>
+                <Column>
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Strukturelement", "columnIndex":"0", "leadingProperty": "Strukturelement", "additionalProperty": "Strukturelement_Text", "sortProperty": "Strukturelement_Text","filterProperty": "Strukturelement", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Strukturelement/@sap:label}" />
+                </Column>
+                <Column>
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Dienstposten", "columnIndex":"1", "leadingProperty": "Dienstposten", "additionalProperty": "Dienstposten_Text", "sortProperty": "Dienstposten_Text", "filterProperty": "Dienstposten", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Dienstposten/@sap:label}" />
+                </Column>
+                <Column>
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Laufbahnmil", "columnIndex":"2", "leadingProperty": "Laufbahnmil", "additionalProperty": "Laufbahnmil_Text", "sortProperty": "Laufbahnmil_Text", "filterProperty": "Laufbahnmil", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Laufbahnmil/@sap:label}" />
+                </Column>
+                <Column>
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Laufbahnziv", "columnIndex":"3", "leadingProperty": "Laufbahnziv", "additionalProperty": "Laufbahnziv_Text", "sortProperty": "Laufbahnziv_Text", "filterProperty": "Laufbahnziv", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Laufbahnziv/@sap:label}" />
+                </Column>
+                <Column>
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Laufbahngruppe", "columnIndex":"4", "leadingProperty": "Laufbahngruppe", "additionalProperty": "Laufbahngruppe_Text" ,"sortProperty": "Laufbahngruppe_Text", "filterProperty": "Laufbahngruppe", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Laufbahngruppe/@sap:label}" />
+                </Column>
+                <Column>
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "PersonalbearbStelle", "columnIndex":"5", "leadingProperty": "PersonalbearbStelle", "additionalProperty": "PersonalbearbStelle_Text", "sortProperty": "PersonalbearbStelle_Text","filterProperty": "PersonalbearbStelle", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/PersonalbearbStelle/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Approbation", "columnIndex":"6", "leadingProperty": "Approbation", "sortProperty": "Approbation", "filterProperty": "Approbation", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Approbation/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "ArtPersonalbearbStelle", "columnIndex":"7", "leadingProperty": "ArtPersonalbearbStelle", "sortProperty": "ArtPersonalbearbStelle", "filterProperty": "ArtPersonalbearbStelle"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/ArtPersonalbearbStelle/@sap:label}" />
+                </Column>
+                <Column>
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "FaehBezAufg", "columnIndex":"8", "leadingProperty": "FaehBezAufg", "additionalProperty": "FaehBezAufg_Text", "sortProperty": "FaehBezAufg_Text", "filterProperty": "FaehBezAufg", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/FaehBezAufg/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "BesoldungsgruppeVon", "columnIndex":"9", "leadingProperty": "BesoldungsgruppeVon", "sortProperty": "BesoldungsgruppeVon", "filterProperty": "BesoldungsgruppeVon", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/BesoldungsgruppeVon/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "BesoldungsgruppeBis", "columnIndex":"10", "leadingProperty": "BesoldungsgruppeBis", "sortProperty": "BesoldungsgruppeBis", "filterProperty": "BesoldungsgruppeBis", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/BesoldungsgruppeBis/@sap:label}" />
+                </Column>
+                <Column
+                    minScreenWidth="2380px"
+                    visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "GesperrtAb", "columnIndex":"11", "leadingProperty": "GesperrtAb", "sortProperty": "GesperrtAb", "filterProperty": "GesperrtAb", "type": "date"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/GesperrtAb/@sap:label}" />
+                </Column>
+                <Column
+                    minScreenWidth="2380px"
+                    visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Sperrgrund", "columnIndex":"12", "leadingProperty": "Sperrgrund", "sortProperty": "Sperrgrund", "filterProperty": "Sperrgrund", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Sperrgrund/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "GueltigAb", "columnIndex":"13", "leadingProperty": "GueltigAb", "sortProperty": "GueltigAb","filterProperty": "GueltigAb", "type": "date"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/GueltigAb/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "GueltigBis", "columnIndex":"14", "leadingProperty": "GueltigBis", "sortProperty": "GueltigBis","filterProperty": "GueltigBis", "type": "date"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/GueltigBis/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Regenerationstyp", "columnIndex":"15", "leadingProperty": "Regenerationstyp", "sortProperty": "Regenerationstyp","filterProperty": "Regenerationstyp", "type": "date"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Regenerationstyp/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Regenerationsquelle", "columnIndex":"16", "leadingProperty": "Regenerationsquelle", "sortProperty": "Regenerationsquelle","filterProperty": "Regenerationsquelle", "type": "date"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Regenerationsquelle/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Regenerationsdatum", "columnIndex":"17", "leadingProperty": "Regenerationsdatum", "sortProperty": "Regenerationsdatum","filterProperty": "Regenerationsdatum", "type": "date"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Regenerationsdatum/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Diensteinsatz", "columnIndex":"18", "leadingProperty": "Diensteinsatz", "sortProperty": "Diensteinsatz","filterProperty": "Diensteinsatz", "type": "date"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Diensteinsatz/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Dienstzeitende", "columnIndex":"19", "leadingProperty": "Dienstzeitende", "sortProperty": "Dienstzeitende","filterProperty": "Dienstzeitende", "type": "date"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Dienstzeitende/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "UebergeordDienststelle", "columnIndex":"20", "leadingProperty": "UebergeordDienststelle", "additionalProperty": "UebergeordDienststelle_Text", "sortProperty": "UebergeordDienststelle_Text","filterProperty": "UebergeordDienststelle", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/UebergeordDienststelle/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Dienstarbeitsverhaeltnis", "columnIndex":"21", "leadingProperty": "Dienstarbeitsverhaeltnis", "additionalProperty": "Dienstarbeitsverhaeltnis_Text", "sortProperty": "Dienstarbeitsverhaeltnis_Text", "filterProperty": "Dienstarbeitsverhaeltnis", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Dienstarbeitsverhaeltnis/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Geschlecht", "columnIndex":"22", "leadingProperty": "Geschlecht", "additionalProperty": "Geschlecht_Text", "sortProperty": "Geschlecht_Text", "filterProperty": "Geschlecht", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Geschlecht/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Personenalter", "columnIndex":"23", "leadingProperty": "Personenalter", "sortProperty": "Personenalter","filterProperty": "Personenalter", "type": "numeric"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Personenalter/@sap:label}" />
+                </Column>                
+                <Column
+                    visible="false"
+                    hAlign="Center">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "IstTeilzeit", "columnIndex":"25", "leadingProperty": "IstTeilzeit", "sortProperty": "IstTeilzeit","filterProperty": "IstTeilzeit", "type": "boolean"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/IstTeilzeit/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "DPTyp", "columnIndex":"26", "leadingProperty": "DPTyp", "additionalProperty": "DPTyp_Text", "sortProperty": "DPTyp_Text", "filterProperty": "DPTyp", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/DPTyp/@sap:label}" />
+                </Column>
+                <Column
+                    visible="false"
+                    hAlign="Center">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "IstGeneralAdmiralStab", "columnIndex":"27", "leadingProperty": "IstGeneralAdmiralStab", "sortProperty": "IstGeneralAdmiralStab","filterProperty": "IstGeneralAdmiralStab", "type": "boolean"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/IstGeneralAdmiralStab/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Statusgruppe", "columnIndex":"28", "leadingProperty": "Statusgruppe", "additionalProperty": "Statusgruppe_Text", "sortProperty": "Statusgruppe_Text", "filterProperty": "Statusgruppe", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Statusgruppe/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Uniformtraegerbereich", "columnIndex":"29", "leadingProperty": "Uniformtraegerbereich", "sortProperty": "Uniformtraegerbereich","filterProperty": "Uniformtraegerbereich", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Uniformtraegerbereich/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Bereichsart", "columnIndex":"30", "leadingProperty": "Bereichsart", "additionalProperty": "Bereichsart_Text", "sortProperty": "Bereichsart_Text", "filterProperty": "Bereichsart", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Bereichsart/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "StruElemStandort", "columnIndex":"31", "leadingProperty": "StruElemStandort", "additionalProperty": "StruElemStandort_Text", "sortProperty": "StruElemStandort_Text", "filterProperty": "StruElemStandort", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/StruElemStandort/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "IstDPaeK", "columnIndex":"32", "leadingProperty": "IstDPaeK", "sortProperty": "IstDPaeK", "filterProperty": "IstDPaeK", "type": "boolean" }' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/IstDPaeK/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Reservekennung", "columnIndex":"33", "leadingProperty": "Reservekennung", "sortProperty": "Reservekennung","filterProperty": "Reservekennung", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Reservekennung/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Dienstgradzusatz", "columnIndex":"34", "leadingProperty": "Dienstgradzusatz", "additionalProperty": "Dienstgradzusatz_Text", "sortProperty": "Dienstgradzusatz_Text", "filterProperty": "Dienstgradzusatz", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Dienstgradzusatz/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "DienstgradVon", "columnIndex":"35", "leadingProperty": "DienstgradVon", "additionalProperty": "DienstgradVon_Text", "sortProperty": "DienstgradVon_Text","filterProperty": "DienstgradVon", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/DienstgradVon/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "DienstgradBis", "columnIndex":"36", "leadingProperty": "DienstgradBis", "additionalProperty": "DienstgradBis_Text", "sortProperty": "DienstgradBis_Text", "filterProperty": "DienstgradBis", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/DienstgradBis/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Jobfamilie", "columnIndex":"37", "leadingProperty": "Jobfamilie", "additionalProperty": "Jobfamilie_Text", "sortProperty": "Jobfamilie_Text", "filterProperty": "Jobfamilie", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Jobfamilie/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "PSKmil", "columnIndex":"38", "leadingProperty": "PSKmil", "additionalProperty": "PSKmil_Text", "sortProperty": "PSKmil_Text", "filterProperty": "PSKmil", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/PSKmil/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "StruElemVerband", "columnIndex":"39", "leadingProperty": "StruElemVerband", "additionalProperty": "StruElemVerband_Text", "sortProperty": "StruElemVerband_Text", "filterProperty": "StruElemVerband", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/StruElemVerband/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "StruElemBataillon", "columnIndex":"40", "leadingProperty": "StruElemBataillon", "additionalProperty": "StruElemBataillon_Text", "sortProperty": "StruElemBataillon_Text", "filterProperty": "StruElemBataillon", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/StruElemBataillon/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "StruElemEinheit", "columnIndex":"41", "leadingProperty": "StruElemEinheit", "additionalProperty": "StruElemEinheit_Text", "sortProperty": "StruElemEinheit_Text", "filterProperty": "StruElemEinheit", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/StruElemEinheit/@sap:label}" />
+                </Column>                
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Sicherheitsbescheid", "columnIndex":"43", "leadingProperty": "Sicherheitsbescheid", "additionalProperty": "Sicherheitsbescheid_Text", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Sicherheitsbescheid/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Sprachkenntnis", "columnIndex":"44", "leadingProperty": "Sprachkenntnis", "additionalProperty": "Sprachkenntnis_Text",  "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Sprachkenntnis/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Kompetenzbereich", "columnIndex":"45", "leadingProperty": "Kompetenzbereich", "additionalProperty": "Kompetenzbereich_Text", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Kompetenzbereich/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "Dienststellung", "columnIndex":"46", "leadingProperty": "Dienststellung", "additionalProperty": "Dienststellung_Text", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/Dienststellung/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "UmfangszugehOrgBereich", "columnIndex":"47", "leadingProperty": "UmfangszugehOrgBereich", "additionalProperty": "UmfangszugehOrgBereich_Text", "sortProperty": "UmfangszugehOrgBereich_Text", "filterProperty": "UmfangszugehOrgBereich", "type": "string"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/UmfangszugehOrgBereich/@sap:label}" />
+                </Column>
+                <Column visible="false">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "BFDAnspruch", "columnIndex":"48", "leadingProperty": "BFDAnspruch", "sortProperty": "BFDAnspruch", "filterProperty": "BFDAnspruch", "type": "date"}' />
+                    </customData>
+                    <Label text="{/#ZBCPL_C_REP_BESETZUNGSLISTEType/BFDAnspruch/@sap:label}" />
+                </Column>                
+            </columns>
+            <items>
+                <ColumnListItem type="Inactive">
+                    <cells>
+                        <ObjectIdentifier
+                            title="{Strukturelement_Text}"
+                            text="{Strukturelement}" />
+                        <ObjectIdentifier
+                            title="{Dienstposten_Text}"
+                            text="{Dienstposten}" />
+                        <Text text="{= ${Laufbahnmil} === '' ? '' :  ${Laufbahnmil_Text} + ' (' + ${Laufbahnmil} + ')'}" />
+                        <Text text="{= ${Laufbahnziv} === '' ? '' :  ${Laufbahnziv_Text} + ' (' + ${Laufbahnziv} + ')'}" />
+                        <Text text="{= ${Laufbahngruppe} === '' ? '' :  ${Laufbahngruppe_Text} + ' (' + ${Laufbahngruppe} + ')'}" />
+                        <Text text="{= ${PersonalbearbStelle} === '' ? '' :  ${PersonalbearbStelle_Text} + ' (' + ${PersonalbearbStelle} + ')'}" />
+                        <Text text="{Approbation}" />
+                        <Text text="{ArtPersonalbearbStelle}" />
+                        <Text text="{= ${FaehBezAufg} === '0000000000' ? '' :  ${FaehBezAufg_Text} + ' (' + ${FaehBezAufg} + ')'}" />
+                        <Text text="{BesoldungsgruppeVon}" />
+                        <Text text="{BesoldungsgruppeBis}" />
+                        <Text text="{ path: 'GesperrtAb', type: 'sap.ui.model.type.Date', formatOptions: { UTC: true, pattern: 'dd.MM.yyyy' } }" />
+                        <Text text="{Sperrgrund}" />
+                        <Text text="{ path: 'GueltigAb', type: 'sap.ui.model.type.Date', formatOptions: { UTC: true, pattern: 'dd.MM.yyyy' } }" />
+                        <Text text="{ path: 'GueltigBis', type: 'sap.ui.model.type.Date', formatOptions: { UTC: true, pattern: 'dd.MM.yyyy' } }" />
+                        <Text text="{ path: 'Regenerationstyp', type: 'sap.ui.model.type.Date', formatOptions: { UTC: true, pattern: 'dd.MM.yyyy' } }" />
+                        <Text text="{ path: 'Regenerationsquelle', type: 'sap.ui.model.type.Date', formatOptions: { UTC: true, pattern: 'dd.MM.yyyy' } }" />
+                        <Text text="{ path: 'Regenerationsdatum', type: 'sap.ui.model.type.Date', formatOptions: { UTC: true, pattern: 'dd.MM.yyyy' } }" />
+                        <Text text="{ path: 'Diensteinsatz', type: 'sap.ui.model.type.Date', formatOptions: { UTC: true, pattern: 'dd.MM.yyyy' } }" />
+                        <Text text="{ path: 'Dienstzeitende', type: 'sap.ui.model.type.Date', formatOptions: { UTC: true, pattern: 'dd.MM.yyyy' } }" />
+                        <Text text="{= ${UebergeordDienststelle} === '0000000000' ? '' :  ${UebergeordDienststelle_Text} + ' (' + ${UebergeordDienststelle} + ')'}" />
+                        <Text text="{= ${Dienstarbeitsverhaeltnis} === '' ? '' :  ${Dienstarbeitsverhaeltnis_Text} + ' (' + ${Dienstarbeitsverhaeltnis} + ')'}" />
+                        <Text text="{= ${Geschlecht} === '' ? '' :  ${Geschlecht_Text} + ' (' + ${Geschlecht} + ')'}" />
+                        <Text text="{Personenalter}" />
+                        
+                        <Checkbox
+                            displayOnly="true"
+                            selected="{IstTeilzeit}" />
+                        <Text text="{DPTyp_Text} ({DPTyp})" />
+                        <Checkbox
+                            displayOnly="true"
+                            selected="{IstGeneralAdmiralStab}" />
+                        <Text text="{= ${Statusgruppe} === '' ? '' :  ${Statusgruppe_Text} + ' (' + ${Statusgruppe} + ')'}" />
+                        <Text text="{Uniformtraegerbereich}" />
+                        <Text text="{= ${Bereichsart} === '' ? '' :  ${Bereichsart_Text} + ' (' + ${Bereichsart} + ')'}" />
+                        <Text text="{= ${StruElemStandort} === '00000000' ? '' :  ${StruElemStandort_Text} + ' (' + ${StruElemStandort} + ')'}" />
+                        <Checkbox
+                            displayOnly="true"
+                            selected="{IstDPaeK}" />
+                        <Text text="{Reservekennung}" />
+                        <Text text="{= ${Dienstgradzusatz} === '00' ? '' :  ${Dienstgradzusatz_Text} + ' (' + ${Dienstgradzusatz} + ')'}" />
+                        <Text text="{= ${DienstgradVon} === '' ? '' :  ${DienstgradVon_Text} + ' (' + ${DienstgradVon} + ')'}" />
+                        <Text text="{= ${DienstgradBis} === '' ? '' :  ${DienstgradBis_Text} + ' (' + ${DienstgradBis} + ')'}" />
+                        <Text text="{= ${Jobfamilie} === '' ? '' :  ${Jobfamilie_Text} + ' (' + ${Jobfamilie} + ')'}" />
+                        <Text text="{= ${PSKmil} === '00000000' ? '' :  ${PSKmil_Text} + ' (' + ${PSKmil} + ')'}" />
+                        <Text text="{= ${StruElemVerband} === '00000000' ? '' :  ${StruElemVerband_Text} + ' (' + ${StruElemVerband} + ')'}" />
+                        <Text text="{= ${StruElemBataillon} === '00000000' ? '' :  ${StruElemBataillon_Text} + ' (' + ${StruElemBataillon} + ')'}" />
+                        <Text text="{= ${StruElemEinheit} === '00000000' ? '' :  ${StruElemEinheit_Text} + ' (' + ${StruElemEinheit} + ')'}" />                        
+                        <Text text="{ parts: [{path: 'Sicherheitsbescheid_Text'}, {path: 'Sicherheitsbescheid'}], formatter: '.formatter.getTextAndIdPairs' }" />
+                        <Text text="{ parts: [{path: 'Sprachkenntnis_Text'}, {path: 'Sprachkenntnis'}], formatter: '.formatter.getTextAndIdPairs' }" />
+                        <Text text="{ parts: [{path: 'Kompetenzbereich_Text'}, {path: 'Kompetenzbereich'}], formatter: '.formatter.getTextAndIdPairs' }" />
+                        <Text text="{ parts: [{path: 'Dienststellung_Text'}, {path: 'Dienststellung'}], formatter: '.formatter.getTextAndIdPairs' }" />
+                        <Text text="{= ${UmfangszugehOrgBereich} === '' ? '' :  ${UmfangszugehOrgBereich_Text} + ' (' + ${UmfangszugehOrgBereich} + ')'}" />
+                        <Text text="{BFDAnspruch}" />                        
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
+
+</core:FragmentDefinition>

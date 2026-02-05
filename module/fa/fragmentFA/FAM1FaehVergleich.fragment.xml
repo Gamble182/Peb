@@ -1,0 +1,186 @@
+<core:FragmentDefinition
+   xmlns:mvc="sap.ui.core.mvc"
+   xmlns:core="sap.ui.core"
+   xmlns="sap.m"
+   xmlns:uiTable="sap.ui.table"
+   xmlns:form="sap.ui.layout.form"
+   xmlns:l="sap.ui.layout"
+   xmlns:s="sap.f.semantic"
+   xmlns:f="sap.ui.comp.Filterbar"
+   xmlns:smartTable="sap.ui.comp.smarttable"
+   xmlns:smartField="sap.ui.comp.smartfield"
+   xmlns:smartform="sap.ui.comp.smartform"
+   xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+   xmlns:c="de.bundeswehr.zaxxx.framework.v010.global.control.page"
+   xmlns:d="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+   xmlns:rt="de.bundeswehr.zaxxx.framework.v010.global.control.ratingAndTrending"
+   height="100%">
+
+   <FlexBox
+      height="100%"
+      class="sapUiNoMargin"
+      alignItems="Start"
+      justifyContent="Center">
+
+      <BusyIndicator
+         visible="{= ${viewModel>/bShowBusyIndicator} }"
+         text="... Vergleich Fähigkeitsbezogene Aufgaben"
+         size="2em"
+         class="sapUiLargeMarginTop" />
+
+      <smartTable:SmartTable
+         visible="{= !${viewModel>/bShowBusyIndicator} }"
+         id="FaVergleichGridSmartTable"
+         header=""
+         entitySet="ZBCPL_C_FA_FAUFVGL"
+         requestAtLeastFields="Planungssituation, Strukturelement, Strukturelement_Text, FA, FA_Text,BeurDienstbereit,BeurDienstDelta,BeurEinsatzbereit,BeurEinsatzDelta,TrendDienstbereit,TrendEinsatzbereit,AnmerkungDienstbereit,AnmerkungEinsatzbereit"
+         tableType="ResponsiveTable"
+         showFullScreenButton="true"
+         showTablePersonalisation="false"
+         showRowCount="false"
+         enableAutoBinding="false"
+         useExportToExcel="false"
+         useVariantManagement="false"
+         ignoredFields=""
+         initiallyVisibleFields=""
+         class="sapFSemanticPageAlignContent"
+         width="100%"
+         height="100%"
+         beforeRebindTable="onFaVergleichGridBeforeRebindTable">
+         <smartTable:customToolbar>
+            <OverflowToolbar
+               design="Transparent"
+               style="Clear">
+               <ToolbarSpacer />
+
+               <Label
+                  text="Strukturelement:"
+                  labelFor="multiInputStrElem"
+                  class="sapUiNoContentPadding" />
+               <MultiInput
+                  id="multiInputStrElem"
+                  width="35%"
+                  showSuggestion="true"
+                  valueHelpRequest="handleValueHelpMultiInputStrElem"
+                  suggestionRows="{ path: 'orgHierDialog>/' }">
+                  <suggestionColumns>
+                     <Column
+                        hAlign="Begin"
+                        popinDisplay="Inline"
+                        demandPopin="true"
+                        width="5rem">
+                        <Label text="ID" />
+                     </Column>
+                     <Column
+                        hAlign="Begin"
+                        popinDisplay="Inline"
+                        demandPopin="true">
+                        <Label text="Strukturelement" />
+                     </Column>
+                     <!--
+                  <Column
+                     hAlign="Center"
+                     popinDisplay="Inline"
+                     demandPopin="false"
+                     minScreenWidth="Tablet">
+                     <Label text="Rolle" />
+                  </Column>
+               -->
+                     <Column
+                        hAlign="Center"
+                        popinDisplay="Inline"
+                        demandPopin="true"
+                        minScreenWidth="Tablet"
+                        width="8rem">
+                        <Label text="Meldestatus" />
+                     </Column>
+                  </suggestionColumns>
+                  <suggestionRows>
+                     <ColumnListItem>
+                        <cells>
+                           <Label text="{orgHierDialog>Strukturelement}" />
+                           <Label text="{orgHierDialog>Strukturelement_Text}" />
+                           <!--                        <Label text="{orgHierDialog>Rolle}" /> -->
+                           <ObjectStatus
+                              text="{
+                              path: 'orgHierDialog>Meldestatus',
+                              formatter: '.formatter.getMeldungStatusString',
+                              templateShareable : false
+                           }"
+                              inverted="false"
+                              class="objectStatusMeldestatus"
+                              state="{
+                              path: 'orgHierDialog>Meldestatus',
+                              formatter: '.formatter.getMeldungStatus',
+                              templateShareable : false
+                           }" />
+                        </cells>
+                     </ColumnListItem>
+                  </suggestionRows>
+               </MultiInput>
+
+
+               <Label
+                  text="FähigkbezAufg:"
+                  labelFor="multicomboFA"
+                  class="sapUiNoContentPadding" />
+
+               <MultiComboBox
+                  id="multicomboFA"
+                  width="25%"
+                  showSecondaryValues="true"
+                  items="{
+                  path: 'FaehBezAufgList>/',
+                  sorter: { path: 'FaehBezAufg_Text' }
+               }">
+                  <core:ListItem
+                     key="{FaehBezAufgList>FaehBezAufg}"
+                     text="{FaehBezAufgList>FaehBezAufg_Text}"
+                     additionalText="{FaehBezAufgList>FaehBezAufg}" />
+               </MultiComboBox>
+
+               <SegmentedButton
+                  selectedKey="Einsatzfähigkeit"
+                  id="segmentedButton"
+                  selectionChange="onDienstEinsatzbereitschaft">
+                  <items>
+                     <SegmentedButtonItem
+                        text="Einsatzfähigkeit"
+                        key="Einsatzfähigkeit" />
+                     <SegmentedButtonItem text="Einsatzbereitschaft" />
+                  </items>
+               </SegmentedButton>
+
+               <Button
+                  icon="sap-icon://clear-filter"
+                  type="Transparent"
+                  press="onClearFilterFaehVergleich"
+                  tooltip="Filtereinstellungen zurücksetzen"
+                  class="sapUiSmallMarginEnd" />
+
+               <core:Fragment
+                  fragmentName="de.bundeswehr.zbcpl_peb_fa.global.fragment.legende.LegendeVergleichFa"
+                  type="XML" />
+
+            </OverflowToolbar>
+         </smartTable:customToolbar>
+         <uiTable:Table
+            cellClick="onFaehVergleichCellClick"
+            rowHeight="60rem"
+            visibleRowCountMode="Auto"
+            width="auto"
+            selectionMode="None"
+            fixedRowCount="0"
+            fixedColumnCount="1"
+            enableColumnReordering="false">
+            <uiTable:layoutData>
+               <FlexItemData growFactor="1" />
+            </uiTable:layoutData>
+
+         </uiTable:Table>
+
+      </smartTable:SmartTable>
+
+   </FlexBox>
+
+</core:FragmentDefinition>

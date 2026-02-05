@@ -1,0 +1,96 @@
+<core:FragmentDefinition
+   xmlns="sap.uxap"
+   xmlns:mvc="sap.ui.core.mvc"
+   xmlns:core="sap.ui.core"
+   xmlns:m="sap.m"
+   xmlns:f="sap.ui.layout.form"
+   xmlns:form="sap.ui.comp.smartform"
+   xmlns:mc="sap.suite.ui.microchart"
+   xmlns:r="de.bundeswehr.zaxxx.framework.v010.global.control.rating"
+   xmlns:n="de.bundeswehr.zaxxx.framework.v010.global.control.natorating"
+   xmlns:t="de.bundeswehr.zaxxx.framework.v010.global.control.trending"
+   xmlns:l="sap.ui.layout"
+   xmlns:c="de.bundeswehr.zaxxx.framework.v010.global.control.page">
+
+   <!-- Beurteilung Detail | Entitaet: ZBCPL_CR_FA_FAUFBEUR od. ZBCPL_C_FA_FAUFBEURHIER -->
+
+   <c:DetailObjectPage
+      title="{StrukturelementText} ({Strukturelement})"
+      subTitle="{FaehBezAufgText} ({ path: 'FaehBezAufg',
+                  type: 'sap.ui.model.odata.type.String',
+                  constraints: { 
+                     isDigitSequence : true,
+                     maxLength : 10
+                  }                                                   
+               })"
+      messagePress="onOpenMessagePopover"
+      editPress="onEditPress"
+      savePress="onSavePress"
+      cancelPress="onCancelPress"
+      editVisible="{= ${global>/bAllowWrite} &amp;&amp; !${global>/bPlanungssituationOpen} }"
+      releaseVisible="false"
+      column="{fcl>/actionButtonsInfo/midColumn}"
+      editMode="{viewModel>/bEditing}"
+      editEnabled="{= !${global>/bEditing} &amp;&amp; ${viewModel>/bCheckEdit} }"
+      releaseEnabled="false"
+      closePress="onCloseColumn"
+      exitFSPress="onExitFullScreen"
+      openFSPress="onFullScreen">
+
+      <c:titleCustomTextActions>
+         <m:Button
+            text="Freigabebereit"
+            press="onReleaseReadyPress"
+            enabled="{= !${global>/bEditing} &amp;&amp; ${viewModel>/bCheckEdit} &amp;&amp; ${viewModel>/bCheckReleaseReady}  }"
+            visible="{= ${global>/bAllowWrite} &amp;&amp; !${global>/bPlanungssituationOpen} }" />
+      </c:titleCustomTextActions>
+
+      <!-- Header Content -->
+      <c:headerContent>
+
+         <m:VBox>
+
+            <core:Fragment
+               fragmentName="de.bundeswehr.zbcpl_peb_fa.global.fragment.FilterHeaderStrukturelementDetail"
+               type="XML" />
+
+            <m:FlexBox
+               alignItems="Center"
+               justifyContent="Start">
+               <m:FlexBox
+                  direction="Column"
+                  alignItems="Start"
+                  justifyContent="SpaceBetween"
+                  class="sapUiSmallMarginEnd">
+                  <m:Text text="{= ${Meldetyp} === 'E' ? 'Selbstbeurteilung' : 'Aufwachsende Beurteilung' }" />
+               </m:FlexBox>
+               <m:ObjectStatus
+                  inverted="true"
+                  class="objectStatus"
+                  text="{
+                           path: 'Bearbeitungsstatus',
+                           formatter: '.formatter.getBearbeitungStatusText',
+                           templateShareable : false
+                       }"
+                  state="{
+                           path: 'Bearbeitungsstatus',
+                           formatter: '.formatter.getBearbeitungStatusState',
+                           templateShareable : false
+                       }" />
+            </m:FlexBox>
+
+         </m:VBox>
+
+      </c:headerContent>
+
+      <!-- Content -->
+      <c:sections>
+
+         <core:Fragment
+            fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1BeurteilungDetail"
+            type="XML" />
+
+      </c:sections>
+   </c:DetailObjectPage>
+
+</core:FragmentDefinition>

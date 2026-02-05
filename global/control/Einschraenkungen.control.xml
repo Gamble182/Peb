@@ -1,0 +1,185 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <FlexBox
+        alignItems="{$this>alignItems}"
+        renderType="Bare"
+        direction="Column"
+        justifyContent="Center"
+        visible="{$this>visible}">
+
+        <FlexBox
+            alignItems="Center"
+            renderType="Bare"
+            justifyContent="Center"
+            visible="{= !${$this>editing} &amp;&amp; !${$this>einschrPers} &amp;&amp; !${$this>einschrAusb} &amp;&amp; !${$this>einschrMat} &amp;&amp; !${$this>einschrInfra} &amp;&amp; !${$this>einschrSons} }">
+            <Label
+                text="keine"
+                class="sapUiTinyMarginEnd" />
+        </FlexBox>
+
+        <FlexBox
+            direction="{$this>direction}"
+            alignItems="Center"
+            justifyContent="Center"
+            visible="{= !${$this>editing} &amp;&amp; ( ${$this>einschrPers} || ${$this>einschrAusb} || ${$this>einschrMat} || ${$this>einschrInfra} || ${$this>einschrSons} ) }">
+
+            <FlexBox
+                direction="Column"
+                alignItems="Center"
+                renderType="Bare"
+                justifyContent="Center"
+                class="sapUiTinyMarginEnd sapUiSmallMarginBottom">
+                <core:Icon
+                    src="{global>/aEinschraenkungIcons/Pers/Icon}"
+                    tooltip="{global>/aEinschraenkungIcons/Pers/Tooltip}"
+                    color="{
+                            path: '$this>einschrPers',
+                            formatter: '.formatter.iconColor'
+                        }"
+                    size="{$this>iconSize}"
+                    height="{$this>iconHeight}" />
+                <ObjectNumber
+                    visible="{$this>displayNumber}"
+                    emphasized="{= ${$this>einschrPers} }"
+                    state="{= ${$this>einschrPers} ? 'Information' : 'None'}"
+                    number="{= ${$this>einschrPers} ? ${$this>numEinschrPers} : ''}" />
+            </FlexBox>
+            <FlexBox
+                direction="Column"
+                alignItems="Center"
+                renderType="Bare"
+                justifyContent="Center"
+                class="sapUiTinyMarginEnd sapUiSmallMarginBottom">
+                <core:Icon
+                    src="{global>/aEinschraenkungIcons/Ausb/Icon}"
+                    tooltip="{global>/aEinschraenkungIcons/Ausb/Tooltip}"
+                    color="{
+                            path: '$this>einschrAusb',
+                            formatter: '.formatter.iconColor'
+                        }"
+                    size="{$this>iconSize}"
+                    height="{$this>iconHeight}" />
+                <ObjectNumber
+                    visible="{$this>displayNumber}"
+                    emphasized="{= ${$this>einschrAusb} }"
+                    state="{= ${$this>einschrAusb} ? 'Information' : 'None'}"
+                    number="{= ${$this>einschrAusb} ? ${$this>numEinschrAusb} : ''}" />
+            </FlexBox>
+            <FlexBox
+                direction="Column"
+                alignItems="Center"
+                renderType="Bare"
+                justifyContent="Center"
+                class="sapUiTinyMarginEnd sapUiSmallMarginBottom">
+                <core:Icon
+                    src="{global>/aEinschraenkungIcons/Mat/Icon}"
+                    tooltip="{global>/aEinschraenkungIcons/Mat/Tooltip}"
+                    color="{
+                            path: '$this>einschrMat',
+                            formatter: '.formatter.iconColor'
+                        }"
+                    size="{$this>iconSize}"
+                    height="{$this>iconHeight}" />
+                <ObjectNumber
+                    visible="{$this>displayNumber}"
+                    emphasized="{= ${$this>einschrMat} }"
+                    state="{= ${$this>einschrMat} ? 'Information' : 'None'}"
+                    number="{= ${$this>einschrMat} ? ${$this>numEinschrMat} : ''}" />
+            </FlexBox>
+            <FlexBox
+                direction="Column"
+                alignItems="Center"
+                renderType="Bare"
+                justifyContent="Center"
+                class="sapUiTinyMarginEnd sapUiSmallMarginBottom">
+                <core:Icon
+                    src="{global>/aEinschraenkungIcons/Infra/Icon}"
+                    tooltip="{global>/aEinschraenkungIcons/Infra/Tooltip}"
+                    color="{
+                            path: '$this>einschrInfra',
+                            formatter: '.formatter.iconColor'
+                        }"
+                    size="{$this>iconSize}"
+                    height="{$this>iconHeight}" />
+                <ObjectNumber
+                    visible="{$this>displayNumber}"
+                    emphasized="{= ${$this>einschrInfra} }"
+                    state="{= ${$this>einschrInfra} ? 'Information' : 'None'}"
+                    number="{= ${$this>einschrInfra} ? ${$this>numEinschrInfra} : ''}" />
+            </FlexBox>
+            <FlexBox
+                direction="Column"
+                alignItems="Center"
+                renderType="Bare"
+                justifyContent="Center"
+                class="sapUiTinyMarginEnd sapUiSmallMarginBottom">
+                <core:Icon
+                    src="{global>/aEinschraenkungIcons/Sons/Icon}"
+                    tooltip="{global>/aEinschraenkungIcons/Sons/Tooltip}"
+                    color="{
+                            path: '$this>einschrSons',
+                            formatter: '.formatter.iconColor'
+                        }"
+                    size="{$this>iconSize}"
+                    height="{$this>iconHeight}" />
+                <ObjectNumber
+                    visible="{$this>displayNumber}"
+                    emphasized="{= ${$this>einschrSons} }"
+                    state="{= ${$this>einschrSons} ? 'Information' : 'None'}"
+                    number="{= ${$this>einschrSons} ? ${$this>numEinschrSons} : ''}" />
+            </FlexBox>
+        </FlexBox>
+
+
+        <FlexBox
+            direction="{$this>direction}"
+            alignItems="Center"
+            justifyContent="Center"
+            visible="{= ${$this>editing} }">
+            <ToggleButton
+                visible="{= ${$this>editing} }"
+                icon="{global>/aEinschraenkungIcons/Pers/Icon}"
+                tooltip="{global>/aEinschraenkungIcons/Pers/Tooltip}"
+                pressed="{$this>einschrPers}"
+                enabled="{$this>editing}"
+                press="onPress"
+                class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+            <ToggleButton
+                visible="{= ${$this>editing} }"
+                icon="{global>/aEinschraenkungIcons/Ausb/Icon}"
+                tooltip="{global>/aEinschraenkungIcons/Ausb/Tooltip}"
+                pressed="{$this>einschrAusb}"
+                enabled="{$this>editing}"
+                press="onPress"
+                class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+            <ToggleButton
+                visible="{= ${$this>editing} }"
+                icon="{global>/aEinschraenkungIcons/Mat/Icon}"
+                tooltip="{global>/aEinschraenkungIcons/Mat/Tooltip}"
+                pressed="{$this>einschrMat}"
+                enabled="{$this>editing}"
+                press="onPress"
+                class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+
+            <ToggleButton
+                visible="{= ${$this>editing} }"
+                icon="{global>/aEinschraenkungIcons/Infra/Icon}"
+                tooltip="{global>/aEinschraenkungIcons/Infra/Tooltip}"
+                pressed="{$this>einschrInfra}"
+                enabled="{$this>editing}"
+                press="onPress"
+                class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+            <ToggleButton
+                visible="{= ${$this>editing} }"
+                icon="{global>/aEinschraenkungIcons/Sons/Icon}"
+                tooltip="{global>/aEinschraenkungIcons/Sons/Tooltip}"
+                pressed="{$this>einschrSons}"
+                enabled="{$this>editing}"
+                press="onPress"
+                class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+        </FlexBox>
+    </FlexBox>
+
+</core:FragmentDefinition>    

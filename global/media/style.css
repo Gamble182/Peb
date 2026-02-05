@@ -1,0 +1,341 @@
+span[data-textNatoColor="natoColorBlack"] {
+	color: inherit;
+}
+
+span[data-textNatoColor="natoColorGreen"] {
+	color: rgb(146, 208, 80) !important;
+	filter: brightness(85%) !important;
+}
+
+span[data-textNatoColor="natoColorYellow"] {
+	color: rgb(255, 255, 0) !important;
+	filter: brightness(85%) !important;
+}
+
+span[data-textNatoColor="natoColorOrange"] {
+	color: rgb(255, 192, 0) !important;
+	filter: brightness(85%) !important;
+}
+
+span[data-textNatoColor="natoColorRed"] {
+	color: rgb(255, 0, 0) !important;
+	filter: brightness(85%) !important;
+}
+
+input[type=number] {
+	text-align: right;
+}
+
+div.transparentHeader thead tr {
+	background: transparent !important;
+}
+
+div.transparentHeader * th {
+	background: transparent !important;
+}
+
+div.columnTableEqual div {
+	width: 100%;
+}
+
+div.columnTableBorder * td {
+	border-right: 1px dashed lightgray;
+	border-left: 1px dashed lightgray;
+}
+
+div.tableTotalLastColumn table tbody tr td:nth-last-child(2) {
+	background: #A9C6DE !important;
+}
+
+div.tableTotalLastColumn table tbody tr td:nth-last-child(2) span {
+	font-weight: bold !important;
+}
+
+tr[data-emptyrow="emptyRow_true"] span {
+	color: lightgrey !important;
+}
+
+tr[data-isnotactiverow="isNotActiveRow_true"] span.sapMText {
+	color: lightgrey !important;
+}
+
+tr[data-totalrow="totalRow_true"] {
+	background: #A9C6DE !important;
+	color: white !important;
+}
+
+tr[data-totalrow="totalRow_true"] span {
+	font-weight: bold !important;
+}
+
+tr[data-boldrow="boldRow_true"] {
+	background: #FAFAFA !important;
+}
+
+tr[data-inforow="infoRow_true"] {
+	background: cornsilk !important;
+}
+
+.boldHeaderText {
+	font-weight: bold !important;
+	font-size: 1rem !important;
+}
+
+span[data-hierarchyindent="indentLevel_1"] {
+	margin-left: 30px;
+}
+
+span[data-hierarchyindent="indentLevel_2"] {
+	margin-left: 50px;
+}
+
+span[data-hierarchyindent="indentLevel_3"] {
+	margin-left: 80px;
+}
+
+.GridListItemRadius {
+	/*   box-shadow: 1px 1px 2px #808888 !important; */
+	background-color: white !important;
+	border-radius: 15px !important;
+	margin-bottom: 5px !important;
+	margin-left: 5px !important;
+	margin-right: 5px !important;
+}
+
+tr[data-calculatedrow="rowCalculated_true"] {
+	background: aliceblue !important;
+}
+
+tr[data-calculatedrow="rowCalculated_true"] span {
+	font-weight: bold !important;
+}
+
+.numberInput div input {
+	text-align: right
+}
+
+.rotate90Deg {
+	transform: rotate(45deg) !important;
+
+}
+
+#__container0-wrapper.sapSuiteUiCommonsChartContainerWrapper {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+
+.centerChart {
+	margin: 0 auto;
+}
+
+.hideIcon {
+	color: transparent;
+}
+
+.buttonDashboard {
+	width: 35%;
+	min-width: 8rem;
+}
+
+.buttonDashboard>span {
+	border-style: dotted
+}
+
+.objectStatusMeldestatus .sapMObjStatusText {
+	width: 125px;
+	text-align: center;
+	display: inline-block;
+}
+
+.objectStatusMeldestatusVB .sapMObjStatusText {
+	width: 17rem;
+	text-align: center;
+	display: inline-block;
+}
+
+.objectStatus .sapMObjStatusText {
+	width: 95px;
+	text-align: center;
+	display: inline-block;
+}
+
+.objectStatusVertical .sapMObjStatusText {
+	height: 95px;
+	text-align: center;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+tr[data-rowSelected="true"] {
+	background: #e5f0fa !important;
+}
+
+.objectStatus[data-HierarchyLevel="1"] .sapMObjStatusText,
+.objectStatus[data-HierarchyLevel="1"] .sapMObjStatusIcon {
+	background-color: #3F5161;
+}
+
+.objectStatus[data-HierarchyLevel="2"] .sapMObjStatusText,
+.objectStatus[data-HierarchyLevel="2"] .sapMObjStatusIcon {
+	background-color: #427CAC;
+}
+
+.objectStatus[data-HierarchyLevel="3"] .sapMObjStatusText,
+.objectStatus[data-HierarchyLevel="3"] .sapMObjStatusIcon {
+	background-color: #91C8F6;
+}
+
+.greenIconButton>.sapMBtnInner>.sapUiIcon {
+	color: #2b7c2b;
+}
+
+.redIconButton>.sapMBtnInner>.sapUiIcon {
+	color: #bb0000;
+}
+
+.yellowIconButton>.sapMBtnInner>.sapUiIcon {
+	color: #e78c07;
+}
+
+.grayIconButton>.sapMBtnInner>.sapUiIcon {
+	color: #a1aab1;
+}
+
+
+.SideContentMarginTop {
+	margin-top: -2rem;
+}
+
+
+
+/*View HB F4-Hilfe/Fähigkeitsbezogene Aufgabe - Ausblenden von StrukturelementStamm */
+div[id*="-valueHelpDialog-smartFilterBar-filterItemControlA_-StrukturelementStamm"],
+label[id*="-valueHelpDialog-smartFilterBar-filterItem-ZBCPL_C_FA_FAUFHANDBED_VH-StrukturelementStamm"] {
+	display: none !important;
+}
+
+/*View HB F4-Hilfe/Unterkategorie - Ausblenden von KategorieUnterkategorie u. Planungssituation */
+div[id*="-valueHelpDialog-smartFilterBar-filterItemControlA_-KategorieUnterkategorie"],
+label[id*="-valueHelpDialog-smartFilterBar-filterItem-ZBCPL_I_HFUKAT_VH-KategorieUnterkategorie"] {
+	display: none !important;
+}
+
+label[id*="-valueHelpDialog-smartFilterBar-filterItem-ZBCPL_I_HFUKAT_VH-Planungssituation"] {
+	display: none !important;
+}
+
+/* View Zuord DP D1 SmartFilter - Ausblenden der Organisationsbereich */
+.hideSmartFilterOrganisationsbereichChild7 .sapUiAFLayoutItem:nth-child(7),
+/* View Konsolidierer - Ausblenden der Organisationsbereich */
+/* .hideOrganisationsbereichAsChild3 .sapUiAFLayoutItem:nth-child(3), */
+/* View Zuord DP D1 F4-Hilfe/Fähigkeitsbezogene Aufgabe - Ausblenden der Organisationsbereich */
+.hideOrganisationsbereichDialogMultiSelect .sapUiAFLayoutItem:nth-child(2),
+
+/* View Zuord DP D1 EditField F4-Hilfe/Fähigkeitsbezogene Aufgabe - Ausblenden der Organisationsbereich */
+div[id*="-valueHelpDialog-smartFilterBar-filterItemControlA_-Organisationsbereich"],
+label[id*="-valueHelpDialog-smartFilterBar-filterItem-ZBCPL_FA_I_T-Organisationsbereich"],
+
+/* KdoStrukturlement*/
+div[id*="-valueHelpDialog-smartFilterBar-filterItemControlA_-KdoStrukturelement"],
+label[id*="-valueHelpDialog-smartFilterBar-filterItem-ZBCPL_FA_I_T-KdoStrukturelement"],
+div[id*="-valueHelpDialog-smartFilterBar-filterItemControlA_-OrgBer_Text"],
+label[id*="-valueHelpDialog-smartFilterBar-filterItem-ZBCPL_FA_I_T-OrgBer_Text"],
+/*Auswahl Teilfähigkeit in Maske Admin Fähigkeitsbezogene Aufgabe*/
+div[id*="-valueHelpDialog-smartFilterBar-filterItemControlA_-Organisationsbereich"],
+label[id*="-valueHelpDialog-smartFilterBar-filterItem-ZBCPL_I_TF_T-Organisationsbereich"],
+div[id*="-valueHelpDialog-smartFilterBar-filterItemControlA_-Name"],
+label[id*="-valueHelpDialog-smartFilterBar-filterItem-ZBCPL_I_TF_T-Name"],
+/*Auswahl RSV in Maske Admin Fähigkeitsbezogene Aufgabe*/
+label[id*="-valueHelpDialog-smartFilterBar-filterItem-ZBCPL_I_RSV_VH-Organisationsbereich"],
+label[id*="-smartFilterBar-filterItem-ZBCPL_I_RSV_VH-OrganisationsbereichText"] {
+	display: none !important;
+}
+
+/*SmartFilter für Besetzungsliste: Ausblenden der Planungssituation und des Strukturelements*/
+/*Ausblenden der Parameter der CDS View, welche durch die CDS in den Smartfilter propagiert werden*/
+/* div[id*="-smartFilterBarBL"] .sapUiAFLayout.sapUiAFLayoutOneLine>div:nth-child(1),
+div[id*="-smartFilterBarBL"] .sapUiAFLayout.sapUiAFLayoutOneLine>div:nth-child(2),
+div[id*="-smartFilterBarBL"] .sapUiAFLayout.sapUiAFLayoutOneLine>div:nth-child(3),
+div[id*="-smartFilterBarBL"] .sapUiAFLayout.sapUiAFLayoutOneLine>div:nth-child(4) {
+	max-width: 0 !important;
+} */
+
+div[id*="-smartFilterBarBL"] .sapUiAFLayout>div:nth-child(1),
+div[id*="-smartFilterBarBL"] .sapUiAFLayout>div:nth-child(2),
+div[id*="-smartFilterBarBL"] .sapUiAFLayout>div:nth-child(3),
+div[id*="-smartFilterBarBL"] .sapUiAFLayout>div:nth-child(4) {
+	max-width: 0 !important;
+}
+
+/*Besetzungsliste Filterauswahl um 1 Auswahl reduzieren*/
+div[id*="-smartFilterBarBL-form--Grid"]>div:nth-child(1) {
+	display: none !important;
+}
+
+/*Auswahl RSV in Maske Admin Fähigkeitsbezogene Aufgabe*/
+label[id*="-valueHelpDialog-smartFilterBar-filterItem-ZBCPL_I_TF_T-Beschreibung"],
+div[id="__field5-input-valueHelpDialog-smartFilterBar-filterItemControlA_-Beschreibung"] {
+	margin-top: 18px !important;
+}
+
+.PanelNoBottom .sapMPanelContent:not(.sapMPanelBGTransparent),
+.PanelNoBottom .sapMPanelWrappingDiv {
+	border-bottom: none !important;
+}
+
+.grayBackground {
+	background-color: darkgray !important;
+}
+
+.redBackground {
+	background-color: #f99494 !important;
+}
+
+.blueBackground {
+	background-color: #b2d4f5 !important;
+}
+
+.greenBackground {
+	background-color: #8fd1bb !important;
+}
+
+.darkgreenBackground {
+	background-color: #3fb68e !important;
+}
+
+.noPadding.noPadding .sapUiTableCellInner {
+	padding: 0 !important;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+.TableRowNoBottom .sapUiTableTr>td {
+	border-bottom-color: #fbf9f9 !important;
+	border-bottom-width: 1;
+}
+
+.TableRowNoBottom .sapUiTableRowActionCell {
+	border-bottom-width: 1;
+	border-bottom-color: #fbf9f9 !important;
+}
+
+@media print {
+	@page {
+		size: A4;
+		margin: 3mm 3mm 10mm 3mm;
+	}
+
+	.pagebreakAfter {
+		clear: both;
+		page-break-after: always;
+	}
+
+	.sapPrintAfterBreakMargin {
+		margin-top: 6rem !important;
+	}
+}
+
+p.textAreaPrint {
+	margin: 0;
+}

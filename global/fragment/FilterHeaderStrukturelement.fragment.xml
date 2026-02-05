@@ -1,0 +1,126 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:flex="sap.m.FlexBox"
+>
+    <FlexBox
+        direction="Column"
+        alignItems="Start"
+        class="sapUiNoMarginTop sapUiNoMarginBottom"
+    >
+        <fb:FilterBar
+            id="DigLageFilterBar"
+            search="onSearchFilterHeaderStrukturelement"
+            clear="onClearFilterHeaderStrukturelement"
+            filterContainerWidth="15rem"
+            useToolbar="false"
+            showFilterConfiguration="false"
+            showClearOnFB="false"
+            showRestoreButton="false"
+            showGoOnFB="false"
+            showGoButton="false"
+            class="sapUiTinyMarginBottom"
+            visible="{= ${fcl>/layout} === 'OneColumn' }"
+        >
+            <fb:filterGroupItems Height="100px">
+                <fb:FilterGroupItem
+                    groupName="__$INTERNAL$"
+                    name="A"
+                    label="Planungssituation"
+                    labelTooltip="Planungssituation"
+                    partOfCurrentVariant="true"
+                    visible="{= !${global>/bRoleSbMil} &amp;&amp; !${global>/bRoleSbZiv} &amp;&amp; !${global>/actionRoleId}.startsWith('OplKz') &amp;&amp; !${global>/actionRoleId}.startsWith('AdminZugriffssteuerung') }"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                        <ComboBox
+                            enabled="{= ${global>/bEditing} === false}"
+                            id="idFilterHeaderPlanungssituation"
+                            showSecondaryValues="true"
+                            filterSecondaryValues="true"                            
+                            selectedKey="{global>/sPlanungssituationSelectedKey}"
+                            change="onSearchFilterHeaderStrukturelement"
+                            items="{
+                            path: '/ZBCPL_CR_ZYKLUS_PS',
+                            sorter: {
+                                path: 'Planungssituation',
+                                descending: true,
+                                group: false
+                            }
+                        }"
+                        >
+                            <core:ListItem
+                                key="{Planungssituation}"
+                                text="{ path: 'Beurteilungsstichtag', type: 'sap.ui.model.type.Date'} ({ path: 'Zyklusstatus', formatter: '.formatter.getMeldungStatusString', templateShareable : false })"
+                                additionalText="{Titel} ({Planungssituation})"
+                            />
+                        </ComboBox>
+                    </fb:control>
+                </fb:FilterGroupItem>
+
+                <fb:FilterGroupItem
+                    groupName="__$INTERNAL$"
+                    name="B"
+                    label="Berechtigtes Strukturelement"
+                    labelTooltip="Berechtigtes Strukturelement"
+                    partOfCurrentVariant="true"
+                    visible="{= ${global>/sStrukturelementId} !== '-1' &amp;&amp; !${global>/bRoleMinisteriumBMVg} &amp;&amp; !${global>/bRoleAdminBMVg} &amp;&amp; !${global>/bRoleFachsupport} }"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                        <ComboBox
+                            enabled="{= ${global>/bEditing} === false}"
+                            id="idFilterHeaderStrukturelement"
+                            showSecondaryValues="true"
+                            filterSecondaryValues="true"
+                            selectedKey="{global>/sStrukturelementSelectedKey}"
+                            change="onSearchFilterHeaderStrukturelement"
+                            items="{
+                            path: 'global>/itemsStrukturelement',
+                            sorter: {
+                                path: 'StrukturelementText',
+                                descending: false,
+                                group: false
+                            }
+                        }"
+                        >
+                            <core:ListItem
+                                key="{global>Benutzer} {global>Rolle} {global>Strukturelement}"
+                                text="{= ${global>StrukturelementText}  === '' ? ${global>Strukturelement} : ${global>StrukturelementText} }"
+                                additionalText="{global>Strukturelement}"
+                            />
+                        </ComboBox>
+                    </fb:control>
+                </fb:FilterGroupItem>
+            </fb:filterGroupItems>
+        </fb:FilterBar>
+
+        <VBox
+            visible="{= ${fcl>/layout} !== 'OneColumn' }"
+            class="sapUiNoMarginTop sapUiNoMarginBottom"
+        >
+            <core:Fragment
+                fragmentName="de.bundeswehr.zbcpl_peb_fa.global.fragment.FilterHeaderStrukturelementReadonly"
+                type="XML"
+            />
+        </VBox>
+
+        <ObjectAttribute
+            id="ObjectAttributeHeaderStandDatenlage"
+            title="Stand Datenlage"
+            text="{  path: 'global>/dPlanungssituationDatenstichtag',
+                type: 'sap.ui.model.type.Date',
+                formatOptions: {
+                pattern: 'dd.MM.yyyy',
+                source: {
+						pattern: 'yyyyMMdd'
+					}
+                }
+            }"
+            class="sapUiNoMarginTop sapUiNoMarginBottom"
+        />
+    </FlexBox>
+</core:FragmentDefinition>

@@ -1,0 +1,61 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:mvc="sap.ui.core.mvc"
+>
+    <fb:FilterBar
+        id="DigLageFilterBar"
+        search="onSearchFilterHeader"
+        clear="onClearFilterHeader"
+        useToolbar="false"
+        showFilterConfiguration="false"
+        showClearOnFB="false"
+        showRestoreButton="false"
+        showGoOnFB="false"
+        showGoButton="false"
+        visible="{= ${fcl>/layout} === 'OneColumn' }"
+    >
+        <fb:filterGroupItems Height="100px">
+            <fb:FilterGroupItem
+                groupName="__$INTERNAL$"
+                name="A"
+                label="Planungssituation"
+                labelTooltip="Planungssituation"
+                partOfCurrentVariant="true"
+                visibleInFilterBar="true"
+            >
+                <fb:control>
+                    <ComboBox
+                        enabled="{= ${global>/bEditing} === false}"
+                        id="idFilterHeaderPlanungssituation"
+                        showSecondaryValues="true"
+                        selectedKey="{global>/sPlanungssituationSelectedKey}"
+                        change="onSearchFilterHeader"
+                        items="{
+                            path: '/ZBCPL_CR_ZYKLUS_PS',
+                            sorter: {
+                                path: 'Planungssituation',
+                                descending: true,
+                                group: false
+                            }
+                        }"
+                    >
+                        <core:ListItem
+                            key="{Planungssituation}"
+                            text="{ path: 'Beurteilungsstichtag', type: 'sap.ui.model.type.Date'} ({ path: 'Zyklusstatus', formatter: '.formatter.getMeldungStatusString', templateShareable : false })"
+                            additionalText="{Planungssituation}"
+                        />
+                    </ComboBox>
+                </fb:control>
+            </fb:FilterGroupItem>
+        </fb:filterGroupItems>
+    </fb:FilterBar>
+
+    <VBox visible="{= ${fcl>/layout} !== 'OneColumn' }">
+        <core:Fragment
+            fragmentName="de.bundeswehr.zbcpl_peb_fa.global.fragment.FilterHeaderReadonly"
+            type="XML"
+        />
+    </VBox>
+</core:FragmentDefinition>

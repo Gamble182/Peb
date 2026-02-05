@@ -1,0 +1,232 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:smartTable="sap.ui.comp.smarttable"
+   xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+   <HBox>
+      <Button
+         text="{global>/sStrukturelementText}"
+         press=".onSelectOrgElemOpenDialog"
+         visible="{= ${fcl>/layout} === 'OneColumn' }"
+         class="sapUiSmallMarginEnd"
+         tooltip="Gewähltes OrgElem: {global>/sStrukturelementText} | {global>/sOrgElemStandortText} | {global>/sOrgElemBundeslandText}">
+         <dependents>
+            <Dialog
+               contentHeight="{= ${device>/resize/height} > 750 ? '90%' : '700px'}"
+               xmlns="sap.m"
+               title="Auswahl OrgElem">
+
+               <smartTable:SmartTable
+                  id="C_AUTH_USERBOESmartTableId"
+                  smartFilterId="selectOrgElemSmartFilterBarId"
+                  header="OrgElem"
+                  entitySet="ZBCPL_C_AUTH_USERBOE"
+                  tableType="ResponsiveTable"
+                  showFullScreenButton="false"
+                  showTablePersonalisation="false"
+                  demandPopin="true"
+                  showRowCount="true"
+                  enableAutoBinding="true"
+                  useExportToExcel="false"
+                  useVariantManagement="false"
+                  initiallyVisibleFields="Rollename,OrgElem"
+                  requestAtLeastFields="Benutzer,OrgElem,OrgElemText,NodeID,Rolle"
+                  beforeRebindTable="onSelectOrgElemBeforeRebindTable">
+                  <smartTable:customToolbar>
+                     <OverflowToolbar design="Transparent">
+                        <!-- <OverflowToolbarButton icon="sap-icon://group-2" tooltip="Gruppieren" text="Gruppieren" enabled="true" press="onGroup" />
+                        <OverflowToolbarButton icon="sap-icon://filter-fields" tooltip="Spalten" text="Spalten" enabled="true" press="onColumns" /> -->
+                        <ToolbarSpacer width="20px" />
+                        <ToolbarSpacer width="20px" />
+                     </OverflowToolbar>
+                  </smartTable:customToolbar>
+                  <Table
+                     growing="true"
+                     growingThreshold="50"
+                     growingScrollToLoad="true"
+                     mode="SingleSelectMaster"
+                     itemPress=".onSelectOrgelemListItemPress"
+                     width="auto"
+                     class="sapFSemanticPageAlignContent"
+                     sticky="HeaderToolbar,InfoToolbar,ColumnHeaders">
+                     <items>
+                        <ColumnListItem type="Active" />
+                     </items>
+                  </Table>
+               </smartTable:SmartTable>
+               <buttons>
+                  <Button
+                     text="Abbrechen"
+                     press=".onSelectOrgElemCancelDialog" />
+               </buttons>
+            </Dialog>
+         </dependents>
+      </Button>
+
+
+      <Button
+         text="{global>/sPlanungssituationBeurteilungsstichtag}"
+         press=".onSelectPlanungssituationOpenDialog"
+         visible="{= ${fcl>/layout} === 'OneColumn' }"
+         tooltip="Aktueller Beurteilungsstichtag: {global>/sPlanungssituationBeurteilungsstichtag}">
+
+         <dependents>
+            <Dialog
+               contentHeight="{= ${device>/resize/height} > 550 ? '65%' : '500px'}"
+               xmlns="sap.m"
+               title="Auswahl Planungssituation">
+
+               <smartTable:SmartTable
+                  id="selectPlanungssituationSmartTableId"
+                  smartFilterId="selectPlanungssituationSmartFilterBarId"
+                  header="Planungssituation"
+                  entitySet="ZBCPL_C_IF_Planungssituation"
+                  tableType="ResponsiveTable"
+                  showFullScreenButton="false"
+                  showTablePersonalisation="false"
+                  demandPopin="true"
+                  showRowCount="true"
+                  enableAutoBinding="true"
+                  useExportToExcel="false"
+                  useVariantManagement="false"
+                  initiallyVisibleFields=""
+                  requestAtLeastFields="ZeithorizontRessourcensicht,ZeithorizontLeistungssicht"
+                  beforeRebindTable="onSelectPlanungssituationBeforeRebindTable">
+                  <Table
+                     growing="true"
+                     growingThreshold="50"
+                     growingScrollToLoad="true"
+                     mode="SingleSelectMaster"
+                     itemPress=".onSelectPlanungssituationListItemPress"
+                     width="auto"
+                     class="sapFSemanticPageAlignContent"
+                     sticky="HeaderToolbar,InfoToolbar,ColumnHeaders">
+
+                     <columns>
+                        <Column
+                           width="5rem"
+                           hAlign="End">
+                           <customData>
+                              <core:CustomData
+                                 key="p13nData"
+                                 value='\{"columnKey": "Planungssituation", "columnIndex":"0", "leadingProperty": "Planungssituation", "sortProperty": "Planungssituation"}' />
+                           </customData>
+                           <Label text="{/#ZBCPL_C_IF_Planungssituation/Planungssituation/@sap:label}" />
+                        </Column>
+
+                        <Column hAlign="End">
+                           <customData>
+                              <core:CustomData
+                                 key="p13nData"
+                                 value='\{"columnKey": "Beurteilungsstichtag", "columnIndex":"1", "leadingProperty": "Beurteilungsstichtag", "sortProperty": "Beurteilungsstichtag"}' />
+                           </customData>
+                           <Label text="{/#ZBCPL_C_IF_Planungssituation/Beurteilungsstichtag/@sap:label}" />
+                        </Column>
+
+                        <Column hAlign="End">
+                           <customData>
+                              <core:CustomData
+                                 key="p13nData"
+                                 value='\{"columnKey": "Planungssituationstatus", "columnIndex":"2", "leadingProperty": "Planungssituationstatus,Planungssituationstatus_Text", "sortProperty": "Planungssituationstatus"}' />
+                           </customData>
+                           <Label text="{/#ZBCPL_C_IF_Planungssituation/Planungssituationstatus/@sap:label}" />
+                        </Column>
+
+                        <Column hAlign="End">
+                           <customData>
+                              <core:CustomData
+                                 key="p13nData"
+                                 value='\{"columnKey": "GueltigVon", "columnIndex":"3", "leadingProperty": "GueltigVon", "sortProperty": "GueltigVon"}' />
+                           </customData>
+                           <Label text="{/#ZBCPL_C_IF_Planungssituation/GueltigVon/@sap:label}" />
+                        </Column>
+
+                        <Column hAlign="End">
+                           <customData>
+                              <core:CustomData
+                                 key="p13nData"
+                                 value='\{"columnKey": "GueltigBis", "columnIndex":"4", "leadingProperty": "GueltigBis", "sortProperty": "GueltigBis"}' />
+                           </customData>
+                           <Label text="{/#ZBCPL_C_IF_Planungssituation/GueltigBis/@sap:label}" />
+                        </Column>
+
+                        <Column hAlign="End">
+                           <customData>
+                              <core:CustomData
+                                 key="p13nData"
+                                 value='\{"columnKey": "ErbringbareKapaDP", "columnIndex":"5", "leadingProperty": "ErbringbareKapaDP", "sortProperty": "ErbringbareKapaDP"}' />
+                           </customData>
+                           <Label
+                              text="{/#ZBCPL_C_IF_Planungssituation/ErbringbareKapaDP/@sap:label}"
+                              wrapping="true" />
+                        </Column>
+                     </columns>
+
+                     <items>
+                        <ColumnListItem type="Active">
+                           <cells>
+                              <ObjectIdentifier text="{  path: 'Planungssituation',
+                                                         type: 'sap.ui.model.odata.type.String',
+                                                         constraints: { 
+                                                            isDigitSequence : true,
+                                                            maxLength : 10
+                                                         }                                                   
+                                                      }" />
+                              <Text text="{  path: 'Beurteilungsstichtag',
+                                             type: 'sap.ui.model.type.Date',
+                                             formatOptions: {
+                                                pattern: 'dd.MM.yyyy'
+                                             }
+                                          }" />
+
+                              <ObjectStatus
+                                 text="{Planungssituationstatus_Text}"
+                                 inverted="true"
+                                 class="objectStatus"
+                                 state="{
+                                             path: 'Planungssituationstatus',
+                                             formatter: '.getMeldungStatus',
+                                             templateShareable : false
+                                          }" />
+
+
+                              <Text text="{  path: 'GueltigVon',
+                                             type: 'sap.ui.model.type.Date',
+                                             formatOptions: {
+                                                pattern: 'dd.MM.yyyy'
+                                             }
+                                          }" />
+                              <Text text="{  path: 'GueltigBis',
+                                          type: 'sap.ui.model.type.Date',
+                                          formatOptions: {
+                                             pattern: 'dd.MM.yyyy'
+                                          }
+                                       }" />
+
+                              <Text text="{ path: 'ErbringbareKapaDP',
+                                             type: 'sap.ui.model.odata.type.Decimal',
+                                             formatOptions: {
+                                                minIntegerDigits: 1,
+                                                decimals: 2,
+                                                roundingMode: 'HALF_CEILING',
+                                                groupingEnabled: true
+                                             }
+                                          }" />
+
+                           </cells>
+                        </ColumnListItem>
+                     </items>
+
+                  </Table>
+               </smartTable:SmartTable>
+
+               <buttons>
+                  <Button
+                     text="Abbrechen"
+                     press=".onSelectPlanungssituationCancelDialog" />
+               </buttons>
+            </Dialog>
+         </dependents>
+      </Button>
+   </HBox>
+</core:FragmentDefinition>

@@ -1,0 +1,56 @@
+<core:FragmentDefinition
+   height="100%"
+   xmlns:mvc="sap.ui.core.mvc"
+   xmlns:core="sap.ui.core"
+   xmlns="sap.m"
+   xmlns:c="de.bundeswehr.zaxxx.framework.v010.global.control.page">
+
+   <!-- Beurteilungen der Vorebene Subdetail -->
+
+   <c:DetailObjectPage
+      title="{Strukturelement_Text} ({Strukturelement})"
+      subTitle="{FaehBezAufg_Text} ({ path: 'FaehBezAufg',
+                  type: 'sap.ui.model.odata.type.String',
+                  constraints: { 
+                     isDigitSequence : true,
+                     maxLength : 10
+                  }                                                   
+               })"
+      editVisible="false"
+      releaseVisible="false"
+      column="{fcl>/actionButtonsInfo/endColumn}"
+      editMode="{viewModel>/bEditing}"
+      editEnabled="false"
+      releaseEnabled="false"
+      messagePress="onOpenMessagePopover"
+      closePress="onCloseColumn"
+      exitFSPress="onExitFullScreen"
+      openFSPress="onFullScreen">
+
+      <!-- Header Content -->
+      <c:headerContent>
+
+         <VBox>
+
+            <core:Fragment
+               fragmentName="de.bundeswehr.zbcpl_peb_fa.global.fragment.FilterHeaderStrukturelementDetail"
+               type="XML" />
+
+            <Text text="{= ${Meldetyp} === 'E' ? 'Selbstbeurteilung' : 'Aufwachsende Beurteilung' }" />
+
+         </VBox>
+
+      </c:headerContent>
+
+      <!-- Content -->
+      <c:sections>
+
+         <core:Fragment
+            fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1VergleichNachDienststellenDetail"
+            type="XML" />
+
+      </c:sections>
+
+   </c:DetailObjectPage>
+
+</core:FragmentDefinition>

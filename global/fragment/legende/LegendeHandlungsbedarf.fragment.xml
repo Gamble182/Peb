@@ -1,0 +1,190 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:commons="sap.suite.ui.commons"
+   xmlns:tnt="sap.tnt"
+   xmlns:RaT="de.bundeswehr.zaxxx.framework.v010.global.control.ratingAndTrending">
+   <OverflowToolbarButton
+      class="sapUiTinyMarginBegin"
+      press="onOpenFirstDependentPress"
+      icon="sap-icon://legend"
+      tooltip="Legende zu Handlungsbedarf anzeigen"
+      visible="{= ['MidColumnFullScreen', 'TwoColumnsMidExpanded', 'ThreeColumnsMidExpanded'].includes( ${fcl>/layout} ) }">
+      <dependents>
+         <Popover
+            showHeader="false"
+            placement="VerticalPreferredBottom"
+            contentHeight="20rem"
+            contentWidth="60rem">
+            <VBox width="80px">
+
+               <HBox height="35px">
+                  <Label
+                     text="Bei den Handlungsbedarfen wird zwischen dem Status des Handlungsbedarfs"
+                     valign="sap.ui.core.VerticalAlign.Middle"
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <FlexBox
+                  height="25px"
+                  alignItems="Center"
+                  justifyContent="Start">
+                  <ObjectStatus
+                     inverted="true"
+                     class="objectStatus"
+                     text="{
+                          value: 'Offen',
+                          formatter: '.formatter.getMeldungStatusString',
+                          templateShareable : false
+                      }"
+                     state="{
+                          value: '10',
+                          formatter: '.formatter.getMeldungStatus',
+                          templateShareable : false
+                      }" />
+                  <Label
+                     text="{= 'Initialwert' }"
+                     valign="sap.ui.core.VerticalAlign.Bottom"
+                     width="auto"
+                     class="sapUiSmallMarginBegin" />
+               </FlexBox>
+               <FlexBox
+                  height="25px"
+                  alignItems="Center"
+                  justifyContent="Start">
+                  <ObjectStatus
+                     inverted="true"
+                     class="objectStatus"
+                     text="{
+                       value: 'In Bearbeitung',
+                       formatter: '.formatter.getMeldungStatusString',
+                       templateShareable : false
+                   }"
+                     state="{
+                       value: '20',
+                       formatter: '.formatter.getMeldungStatus',
+                       templateShareable : false
+                   }" />
+                  <Label
+                     text="nach 'Weiterleiten' eines Handlungsbedarfs"
+                     valign="sap.ui.core.VerticalAlign.Middle"
+                     width="auto"
+                     class="sapUiSmallMarginBegin" />
+               </FlexBox>
+               <FlexBox
+                  height="25px"
+                  alignItems="Center"
+                  justifyContent="Start">
+                  <ObjectStatus
+                     inverted="true"
+                     class="objectStatus"
+                     text="{
+                       value: 'Erledigt',
+                       formatter: '.formatter.getMeldungStatusString',
+                       templateShareable : false
+                   }"
+                     state="{
+                       value: '30',
+                       formatter: '.formatter.getMeldungStatus',
+                       templateShareable : false
+                   }" />
+                  <Label
+                     text="nach 'Schließen' eines Handlungsbedarfs"
+                     valign="sap.ui.core.VerticalAlign.Middle"
+                     width="auto"
+                     class="sapUiSmallMarginBegin" />
+               </FlexBox>
+
+               <HBox height="35px">
+                  <Label
+                     text="und dem Weiterleitungsstatus auf den einzelnen Strukturebenen"
+                     valign="sap.ui.core.VerticalAlign.Middle"
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <FlexBox
+                  height="25px"
+                  alignItems="Center"
+                  justifyContent="Start"
+                  class="sapUiSmallMarginBegin">
+                  <commons:MicroProcessFlow>
+                     <commons:content>
+                        <commons:MicroProcessFlowItem
+                           state="Warning"
+                           icon="sap-icon://to-be-reviewed"
+                           title="Weiterleitung: offen"
+                           class="sapUiSmallMarginBegin"
+                           showIntermediary="false"
+                           showSeparator="false" />
+                     </commons:content>
+                  </commons:MicroProcessFlow>
+                  <Label
+                     text="offen - Freigabe nicht möglich"
+                     width="auto"
+                     class="sapUiSmallMarginBegin" />
+               </FlexBox>
+               <FlexBox
+                  height="25px"
+                  alignItems="Center"
+                  justifyContent="Start"
+                  class="sapUiSmallMarginBegin">
+                  <commons:MicroProcessFlow>
+                     <commons:content>
+                        <commons:MicroProcessFlowItem
+                           state="Information"
+                           icon="sap-icon://action"
+                           title="weiterleiten (bei Freigabe von Erstbeurteilung oder Kommentierung)"
+                           class="sapUiSmallMarginBegin"
+                           showIntermediary="false"
+                           showSeparator="false" />
+                     </commons:content>
+                  </commons:MicroProcessFlow>
+                  <Label
+                     text="weiterleiten - Setzt den Status des Handlungsbedarfs auf 'In Bearbeitung' bei Freigabe."
+                     width="auto"
+                     class="sapUiSmallMarginBegin" />
+               </FlexBox>
+               <FlexBox
+                  height="25px"
+                  alignItems="Center"
+                  justifyContent="Start"
+                  class="sapUiSmallMarginBegin">
+                  <commons:MicroProcessFlow>
+                     <commons:content>
+                        <commons:MicroProcessFlowItem
+                           state="Success"
+                           icon="sap-icon://complete"
+                           title="nicht weiterleiten (bei Freigabe von Erstbeurteilung oder Kommentierung)"
+                           class="sapUiSmallMarginBegin"
+                           showIntermediary="false"
+                           showSeparator="false" />
+                     </commons:content>
+                  </commons:MicroProcessFlow>
+                  <Label
+                     text="geschlossen - Setzt den Status des Handlungsbedarfs auf 'Erledigt' bei Freigabe."
+                     width="auto"
+                     class="sapUiSmallMarginBegin" />
+               </FlexBox>
+
+               <HBox height="25px">
+                  <Label
+                     text="unterschieden. Die Weiterleitung wird grafisch (Micro Process Flow) dargestellt."
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <HBox height="75px">
+                  <Label
+                     text="Mit dem Weiterleitungsstatus wird auf jeder Strukturebene über die Weiterleitung oder Nicht-Weiterleitung und damit 
+                     über den Status eines Handlungsbedarfs entschieden. Allerdings wird der Status des Handlungsbedarfs erst bei der Freigabe 
+                     einer Erstbeurteilung oder Kommentierung aktualisiert."
+                     valign="sap.ui.core.VerticalAlign.Top"
+                     wrapping="true"
+                     width="800px"
+                     class="sapUiSmallMargin" />
+               </HBox>
+            </VBox>
+         </Popover>
+      </dependents>
+   </OverflowToolbarButton>
+
+</core:FragmentDefinition>

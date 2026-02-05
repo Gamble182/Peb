@@ -1,0 +1,43 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:mc="sap.suite.ui.microchart"
+    xmlns:rt="de.bundeswehr.zaxxx.framework.v010.global.control.ratingAndTrending"
+    xmlns:mvc="sap.ui.core.mvc">
+
+    <ScrollContainer
+        horizontal="false"
+        vertical="true"
+        height="100%"
+        width="100%">
+
+        <core:Fragment
+            fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1KommentarAufwBeurteilung"
+            type="XML" />
+
+        <smartTable:SmartTable
+            id="smartTableOtherbeurteilung"
+            persistencyKey="DashFAOtherbeurM1"
+            header="Fähigkeitsbezogene Aufgaben"
+            entitySet="ZBCPL_CR_FA_FAUFBEUR"
+            tableType="ResponsiveTable"
+            showFullScreenButton="false"
+            showTablePersonalisation="false"
+            demandPopin="{= ${fcl>/columnsVisibility/midColumn} !== true }"
+            showRowCount="true"
+            enableAutoBinding="false"
+            useExportToExcel="false"
+            useVariantManagement="false"
+            initiallyVisibleFields=""
+            beforeRebindTable="onBeforeRebindTableOtherbeurteilung">
+
+            <core:Fragment
+                fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1BeurteilungMasterTable"
+                type="XML" />
+
+        </smartTable:SmartTable>
+
+    </ScrollContainer>
+
+</core:FragmentDefinition>       

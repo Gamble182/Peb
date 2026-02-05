@@ -1,0 +1,1213 @@
+{
+	"_version": "1.37.0",
+	"sap.app": {
+		"id": "de.bundeswehr.zbcpl_peb_fa",
+		"type": "application",
+		"i18n": {
+			"bundleUrl": "global/i18n/i18n.properties",
+			"supportedLocales": [
+				""
+			],
+			"fallbackLocale": ""
+		},
+		"applicationVersion": {
+			"version": "2.1.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"resources": "resources.json",
+		"sourceTemplate": {
+			"id": "@sap/generator-fiori:basic",
+			"version": "1.12.3",
+			"toolsId": "3e8bba07-4364-4448-9ea3-6d851d5f46d4"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/sap/opu/odata/sap/ZBCPL_MAIN_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			},
+			"diglageService": {
+				"uri": "/sap/opu/odata/sap/ZBCDL_SRV_01",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			},
+			"reportingService": {
+				"uri": "/sap/opu/odata/sap/ZBCPL_SRV",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "../../zaxxx_std_ui010/global/media/bw-favicon.svg",
+			"favIcon": "../../zaxxx_std_ui010/global/media/bw-favicon.svg",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "../../zaxxx_std_ui010/global/media/bw-favicon.svg",
+			"tablet@2": "../../zaxxx_std_ui010/global/media/bw-favicon.svg"
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": false
+		},
+		"fullWidth": true
+	},
+	"sap.ui5": {
+		"flexEnabled": true,
+		"rootView": {
+			"viewName": "de.bundeswehr.zbcpl_peb_fa.module.frame.Frame",
+			"type": "XML",
+			"id": "app",
+			"async": true
+		},
+		"fullWidth": true,
+		"resources": {
+			"css": [
+				{
+					"uri": "global/media/style.css"
+				}
+			]
+		},
+		"dependencies": {
+			"minUI5Version": "1.96.0",
+			"libs": {
+				"sap.m": {},
+				"sap.ui.core": {},
+				"sap.f": {},
+				"sap.suite.ui.generic.template": {},
+				"sap.ui.comp": {},
+				"sap.ui.generic.app": {},
+				"sap.ui.table": {},
+				"sap.ushell": {},
+				"sap.tnt": {},
+				"sap.uxap": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "de.bundeswehr.zbcpl_peb_fa.global.i18n.i18n",
+					"supportedLocales": [
+						""
+					],
+					"fallbackLocale": ""
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true,
+				"settings": {
+					"preliminaryContext": false,
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "InlineRepeat",
+					"metadataUrlParams": {
+						"sap-language": "de"
+					},
+					"serviceUrlParams": {
+						"sap-language": "de"
+					}
+				}
+			},
+			"report": {
+				"dataSource": "reportingService",
+				"preload": true,
+				"settings": {
+					"preliminaryContext": false,
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "InlineRepeat",
+					"metadataUrlParams": {
+						"sap-language": "de"
+					},
+					"serviceUrlParams": {
+						"sap-language": "de"
+					}
+				}
+			}
+		},
+		"routing": {
+			"config": {
+				"routerClass": "de.bundeswehr.zaxxx.framework.v010.global.object.Router",
+				"type": "View",
+				"viewType": "XML",
+				"async": true,
+				"controlId": "fcl",
+				"transition": "show",
+				"bypassed": {
+					"target": [
+						"NotFound"
+					]
+				}
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "Home",
+					"target": [
+						"Home"
+					],
+					"targetTitle": "Home",
+					"group": "",
+					"subTitle": "{{appTitle}}",
+					"icon": "home",
+					"action": "Home"
+				},
+				{
+					"pattern": "DevPage",
+					"name": "Dev",
+					"target": [
+						"Dev"
+					],
+					"targetTitle": "Dev"
+				},
+				{
+					"pattern": "NotAuthorized",
+					"name": "NotAuthorized",
+					"target": [
+						"NotAuthorized"
+					]
+				},
+				{
+					"pattern": "DashboardErstbeurteilungFA/:layout:",
+					"name": "DashFAErstbeurM1",
+					"target": [
+						"DashFAErstbeurM1"
+					],
+					"group": "Fähigkeitsbezogene Aufgabe",
+					"targetTitle": "DashFAErstbeurM1",
+					"action": "DashFAErstbeurM1"
+				},
+				{
+					"pattern": "DashboardErstbeurteilungFA/DETAIL/Beurteilung/{DID}/:layout:",
+					"name": "DashFAErstbeurM1D1",
+					"target": [
+						"DashFAErstbeurM1",
+						"DashFAErstbeurM1D1"
+					],
+					"targetTitle": "DashFAErstbeurM1D1"
+				},
+				{
+					"pattern": "DashboardErstbeurteilungFA/DETAIL/Handlungsbedarf/{DID}/:layout:",
+					"name": "DashFAErstbeurM1D2",
+					"target": [
+						"DashFAErstbeurM1",
+						"DashFAErstbeurM1D2"
+					],
+					"targetTitle": "DashFAErstbeurM1D2"
+				},
+				{
+					"pattern": "DashboardErstbeurteilungFA/SUBDETAIL/Handlungsbedarf/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAErstbeurM1D2S1",
+					"target": [
+						"DashFAErstbeurM1",
+						"DashFAErstbeurM1D2",
+						"DashFAErstbeurM1D2S1"
+					],
+					"targetTitle": "DashFAErstbeurM1D2S1"
+				},
+				{
+					"pattern": "DashboardErstbeurteilungFA/SUBDETAIL/HandlungsbedarfAdd/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAErstbeurM1D2S2",
+					"target": [
+						"DashFAErstbeurM1",
+						"DashFAErstbeurM1D2",
+						"DashFAErstbeurM1D2S2"
+					],
+					"targetTitle": "DashFAErstbeurM1D2S2"
+				},
+				{
+					"pattern": "DashboardErstbeurteilungFA/DETAIL/Besetzungslist/{DID}/:layout:",
+					"name": "DashFAErstbeurM1D4",
+					"target": [
+						"DashFAErstbeurM1",
+						"DashFAErstbeurM1D4"
+					],
+					"targetTitle": "DashFAErstbeurM1D4"
+				},
+				{
+					"pattern": "DashboardKommentierung/:layout:",
+					"name": "DashFAKommM1",
+					"target": [
+						"DashFAKommM1"
+					],
+					"group": "Fähigkeitsbezogene Aufgabe",
+					"targetTitle": "DashFAKommM1",
+					"action": "DashFAKommM1"
+				},
+				{
+					"pattern": "DashboardKommentierung/DETAIL/Beurteilung/{DID}/:layout:",
+					"name": "DashFAKommM1D1",
+					"target": [
+						"DashFAKommM1",
+						"DashFAKommM1D1"
+					],
+					"targetTitle": "DashFAKommM1D1"
+				},
+				{
+					"pattern": "DashboardKommentierung/SUBDETAIL/BeurteilungenVorebene/{DID}/{SID}/:layout:",
+					"name": "DashFAKommM1D1S1",
+					"target": [
+						"DashFAKommM1",
+						"DashFAKommM1D1",
+						"DashFAKommM1D1S1"
+					],
+					"targetTitle": "DashFAKommM1D1S1"
+				},
+				{
+					"pattern": "DashboardKommentierung/DETAIL/Handlungsbedarf/{DID}/:layout:",
+					"name": "DashFAKommM1D2",
+					"target": [
+						"DashFAKommM1",
+						"DashFAKommM1D2"
+					],
+					"targetTitle": "DashFAKommM1D2"
+				},
+				{
+					"pattern": "DashboardKommentierung/SUBDETAIL/Handlungsbedarf/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAKommM1D2S1",
+					"target": [
+						"DashFAKommM1",
+						"DashFAKommM1D2",
+						"DashFAKommM1D2S1"
+					],
+					"targetTitle": "KommentiDashFAKommM1D2S1"
+				},
+				{
+					"pattern": "DashboardKommentierung/SUBDETAIL/HandlungsbedarfAdd/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAKommM1D2S2",
+					"target": [
+						"DashFAKommM1",
+						"DashFAKommM1D2",
+						"DashFAKommM1D2S2"
+					],
+					"targetTitle": "DashFAKommM1D2S2"
+				},
+				{
+					"pattern": "DashboardKommentierung/DETAIL/AufwachsendeBewertung/{DID}/:expand:/:layout:",
+					"name": "DashFAKommM1D3",
+					"target": [
+						"DashFAKommM1",
+						"DashFAKommM1D3"
+					],
+					"targetTitle": "DashFAKommM1D3"
+				},
+				{
+					"pattern": "DashboardKommentierung/SUBDETAIL/AufwachsendeBewertung/{DID}/{SID}/:layout:",
+					"name": "DashFAKommM1D3S1",
+					"target": [
+						"DashFAKommM1",
+						"DashFAKommM1D3",
+						"DashFAKommM1D3S1"
+					],
+					"targetTitle": "DashFAKommM1D3S1"
+				},
+				{
+					"pattern": "DashboardKommentierung/DETAIL/Besetzungslist/{DID}/:layout:",
+					"name": "DashFAKommM1D4",
+					"target": [
+						"DashFAKommM1",
+						"DashFAKommM1D4"
+					],
+					"targetTitle": "DashFAKommM1D4"
+				},
+				{
+					"pattern": "DashboardKonsolidierung/:layout:",
+					"name": "DashFAKonsM1",
+					"target": [
+						"DashFAKonsM1"
+					],
+					"group": "Fähigkeitsbezogene Aufgabe",
+					"targetTitle": "DashFAKonsM1",
+					"action": "DashFAKonsM1"
+				},
+				{
+					"pattern": "DashboardKonsolidierung/DETAIL/Beurteilung/{DID}/:layout:",
+					"name": "DashFAKonsM1D1",
+					"target": [
+						"DashFAKonsM1",
+						"DashFAKonsM1D1"
+					],
+					"targetTitle": "DashFAKonsM1D1"
+				},
+				{
+					"pattern": "DashboardKonsolidierung/SUBDETAIL/BeurteilungenVorebene/{DID}/{SID}/:layout:",
+					"name": "DashFAKonsM1D1S1",
+					"target": [
+						"DashFAKonsM1",
+						"DashFAKonsM1D1",
+						"DashFAKonsM1D1S1"
+					],
+					"targetTitle": "DashFAKonsM1D1S1"
+				},
+				{
+					"pattern": "DashboardKonsolidierung/DETAIL/Handlungsbedarf/{DID}/:layout:",
+					"name": "DashFAKonsM1D2",
+					"target": [
+						"DashFAKonsM1",
+						"DashFAKonsM1D2"
+					],
+					"targetTitle": "DashFAKonsM1D2"
+				},
+				{
+					"pattern": "DashboardKonsolidierung/SUBDETAIL/Handlungsbedarf/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAKonsM1D2S1",
+					"target": [
+						"DashFAKonsM1",
+						"DashFAKonsM1D2",
+						"DashFAKonsM1D2S1"
+					],
+					"targetTitle": "DashFAKonsM1D2S1"
+				},
+				{
+					"pattern": "DashboardKonsolidierung/SUBDETAIL/HandlungsbedarfAdd/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAKonsM1D2S2",
+					"target": [
+						"DashFAKonsM1",
+						"DashFAKonsM1D2",
+						"DashFAKonsM1D2S2"
+					],
+					"targetTitle": "DashFAKonsM1D2S2"
+				},
+				{
+					"pattern": "DashboardKonsolidierung/DETAIL/AufwachsendeBewertung/{DID}/:expand:/:layout:",
+					"name": "DashFAKonsM1D3",
+					"target": [
+						"DashFAKonsM1",
+						"DashFAKonsM1D3"
+					],
+					"targetTitle": "DashFAKonsM1D3"
+				},
+				{
+					"pattern": "DashboardKonsolidierung/SUBDETAIL/AufwachsendeBewertung/{DID}/{SID}/:layout:",
+					"name": "DashFAKonsM1D3S1",
+					"target": [
+						"DashFAKonsM1",
+						"DashFAKonsM1D3",
+						"DashFAKonsM1D3S1"
+					],
+					"targetTitle": "DashFAKonsM1D3S1"
+				},
+				{
+					"pattern": "DashboardKonsolidierung/DETAIL/Besetzungslist/{DID}/:layout:",
+					"name": "DashFAKonsM1D4",
+					"target": [
+						"DashFAKonsM1",
+						"DashFAKonsM1D4"
+					],
+					"targetTitle": "DashFAKonsM1D4"
+				},
+				{
+					"pattern": "DashboardFZStBMVgFA/:layout:",
+					"name": "DashFAFachsupM1",
+					"target": [
+						"DashFAFachsupM1"
+					],
+					"group": "Fähigkeitsbezogene Aufgabe",
+					"targetTitle": "DashFAFachsupM1",
+					"action": "DashFAFachsupM1"
+				},
+				{
+					"pattern": "DashboardFZStBMVgFA/DETAIL/Beurteilung/{DID}/:layout:",
+					"name": "DashFAFachsupM1D1",
+					"target": [
+						"DashFAFachsupM1",
+						"DashFAFachsupM1D1"
+					],
+					"group": "Fähigkeitsbezogene Aufgabe",
+					"targetTitle": "DashFAFachsupM1D1"
+				},
+				{
+					"pattern": "DashboardFZStBMVgFA/SUBDETAIL/BeurteilungenVorebene/{DID}/{SID}/:layout:",
+					"name": "DashFAFachsupM1D1S1",
+					"target": [
+						"DashFAFachsupM1",
+						"DashFAFachsupM1D1",
+						"DashFAFachsupM1D1S1"
+					],
+					"targetTitle": "DashFAFachsupM1D1S1"
+				},
+				{
+					"pattern": "DashboardFZStBMVgFA/DETAIL/Handlungsbedarf/{DID}/:layout:",
+					"name": "DashFAFachsupM1D2",
+					"target": [
+						"DashFAFachsupM1",
+						"DashFAFachsupM1D2"
+					],
+					"group": "Fähigkeitsbezogene Aufgabe",
+					"targetTitle": "DashFAFachsupM1D2"
+				},
+				{
+					"pattern": "DashboardFZStBMVgFA/SUBDETAIL/Handlungsbedarf/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAFachsupM1D2S1",
+					"target": [
+						"DashFAFachsupM1",
+						"DashFAFachsupM1D2",
+						"DashFAFachsupM1D2S1"
+					],
+					"targetTitle": "DashFAFachsupM1D2S1"
+				},
+				{
+					"pattern": "DashboardFZStBMVgFA/SUBDETAIL/HandlungsbedarfAdd/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAachsupM1D2S2",
+					"target": [
+						"DashFAFachsupM1",
+						"DashFAFachsupM1D2",
+						"DashFAFachsupM1D2S2"
+					],
+					"targetTitle": "DashFAFachsupM1D2S2"
+				},
+				{
+					"pattern": "DashboardFZStBMVgFA/DETAIL/AufwachsendeBewertung/{DID}/:expand:/:layout:",
+					"name": "DashFAFachsupM1D3",
+					"target": [
+						"DashFAFachsupM1",
+						"DashFAFachsupM1D3"
+					],
+					"targetTitle": "DashFAFachsupM1D3"
+				},
+				{
+					"pattern": "DashboardFZStBMVgFA/SUBDETAIL/AufwachsendeBewertung/{DID}/{SID}/:layout:",
+					"name": "DashFAFachsupM1D3S1",
+					"target": [
+						"DashFAFachsupM1",
+						"DashFAFachsupM1D3",
+						"DashFAFachsupM1D3S1"
+					],
+					"targetTitle": "DashFAFachsupM1D3S1"
+				},
+				{
+					"pattern": "DashboardFZStBMVgFA/DETAIL/Besetzungslist/{DID}/:layout:",
+					"name": "DashFAFachsupM1D4",
+					"target": [
+						"DashFAFachsupM1",
+						"DashFAFachsupM1D4"
+					],
+					"group": "Fähigkeitsbezogene Aufgabe",
+					"targetTitle": "DashFAFachsupM1D4"
+				},
+				{
+					"pattern": "DashboardMinisteriumBMVgFA/:layout:",
+					"name": "DashFAMinBMVgM1",
+					"target": [
+						"DashFAMinBMVgM1"
+					],
+					"group": "Fähigkeitsbezogene Aufgabe",
+					"targetTitle": "DashFAMinBMVgM1",
+					"action": "DashFAMinBMVgM1"
+				},
+				{
+					"pattern": "DashboardMinisteriumBMVgFA/DETAIL/Beurteilung/{DID}/:layout:",
+					"name": "DashFAMinBMVgM1D1",
+					"target": [
+						"DashFAMinBMVgM1",
+						"DashFAMinBMVgM1D1"
+					],
+					"targetTitle": "DashFAMinBMVgM1D1"
+				},
+				{
+					"pattern": "DashboardMinisteriumBMVgFA/SUBDETAIL/BeurteilungenVorebene/{DID}/{SID}/:layout:",
+					"name": "DashFAMinBMVgM1D1S1",
+					"target": [
+						"DashFAMinBMVgM1",
+						"DashFAMinBMVgM1D1",
+						"DashFAMinBMVgM1D1S1"
+					],
+					"targetTitle": "DashFAMinBMVgM1D1S1"
+				},
+				{
+					"pattern": "DashboardMinisteriumBMVgFA/DETAIL/Handlungsbedarf/{DID}/:layout:",
+					"name": "DashFAMinBMVgM1D2",
+					"target": [
+						"DashFAMinBMVgM1",
+						"DashFAMinBMVgM1D2"
+					],
+					"targetTitle": "DashFAMinBMVgM1D2"
+				},
+				{
+					"pattern": "DashboardMinisteriumBMVgFA/SUBDETAIL/Handlungsbedarf/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAMinBMVgM1D2S1",
+					"target": [
+						"DashFAMinBMVgM1",
+						"DashFAMinBMVgM1D2",
+						"DashFAMinBMVgM1D2S1"
+					],
+					"targetTitle": "DashFAMinBMVgM1D2S1"
+				},
+				{
+					"pattern": "DashboardMinisteriumBMVgFA/SUBDETAIL/HandlungsbedarfAdd/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAMinBMVgM1D2S2",
+					"target": [
+						"DashFAMinBMVgM1",
+						"DashFAMinBMVgM1D2",
+						"DashFAMinBMVgM1D2S2"
+					],
+					"targetTitle": "DashFAMinBMVgM1D2S2"
+				},
+				{
+					"pattern": "DashboardMinisteriumBMVgFA/DETAIL/AufwachsendeBewertung/{DID}/:expand:/:layout:",
+					"name": "DashFAMinBMVgM1D3",
+					"target": [
+						"DashFAMinBMVgM1",
+						"DashFAMinBMVgM1D3"
+					],
+					"targetTitle": "DashFAMinBMVgM1D3"
+				},
+				{
+					"pattern": "DashboardMinisteriumBMVgFA/SUBDETAIL/AufwachsendeBewertung/{DID}/{SID}/:layout:",
+					"name": "DashFAMinBMVgM1D3S1",
+					"target": [
+						"DashFAMinBMVgM1",
+						"DashFAMinBMVgM1D3",
+						"DashFAMinBMVgM1D3S1"
+					],
+					"targetTitle": "DashFAMinBMVgM1D3S1"
+				},
+				{
+					"pattern": "DashboardMinisteriumBMVgFA/DETAIL/Besetzungslist/{DID}/:layout:",
+					"name": "DashFAMinBMVgM1D4",
+					"target": [
+						"DashFAMinBMVgM1",
+						"DashFAMinBMVgM1D4"
+					],
+					"targetTitle": "DashFAMinBMVgM1D4"
+				},
+				{
+					"pattern": "DashboardAdminOrgBerFA/:layout:",
+					"name": "DashFAAdminOrgBerM1",
+					"target": [
+						"DashFAAdminOrgBerM1"
+					],
+					"group": "Fähigkeitsbezogene Aufgabe",
+					"targetTitle": "DashFAAdminOrgBerM1",
+					"action": "DashFAAdminOrgBerM1"
+				},
+				{
+					"pattern": "DashboardAdminOrgBerFA/DETAIL/Beurteilung/{DID}/:layout:",
+					"name": "DashFAAdminOrgBerM1D1",
+					"target": [
+						"DashFAAdminOrgBerM1",
+						"DashFAAdminOrgBerM1D1"
+					],
+					"targetTitle": "DashFAAdminOrgBerM1D1"
+				},
+				{
+					"pattern": "DashboardAdminOrgBerFA/SUBDETAIL/BeurteilungenVorebene/{DID}/{SID}/:layout:",
+					"name": "DashFAAdminOrgBerM1D1S1",
+					"target": [
+						"DashFAAdminOrgBerM1",
+						"DashFAAdminOrgBerM1D1",
+						"DashFAAdminOrgBerM1D1S1"
+					],
+					"targetTitle": "DashFAAdminOrgBerM1D1S1"
+				},
+				{
+					"pattern": "DashboardAdminOrgBerFA/DETAIL/Handlungsbedarf/{DID}/:layout:",
+					"name": "DashFAAdminOrgBerM1D2",
+					"target": [
+						"DashFAAdminOrgBerM1",
+						"DashFAAdminOrgBerM1D2"
+					],
+					"targetTitle": "DashFAAdminOrgBerM1D2"
+				},
+				{
+					"pattern": "DashboardAdminOrgBerFA/SUBDETAIL/Handlungsbedarf/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAAdminOrgBerM1D2S1",
+					"target": [
+						"DashFAAdminOrgBerM1",
+						"DashFAAdminOrgBerM1D2",
+						"DashFAAdminOrgBerM1D2S1"
+					],
+					"targetTitle": "DashFAAdminOrgBerM1D2S1"
+				},
+				{
+					"pattern": "DashboardAdminOrgBerFA/SUBDETAIL/HandlungsbedarfAdd/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAAdminOrgBerM1D2S2",
+					"target": [
+						"DashFAAdminOrgBerM1",
+						"DashFAAdminOrgBerM1D2",
+						"DashFAAdminOrgBerM1D2S2"
+					],
+					"targetTitle": "DashFAAdminOrgBerM1D2S2"
+				},
+				{
+					"pattern": "DashboardAdminOrgBerFA/DETAIL/AufwachsendeBewertung/{DID}/:expand:/:layout:",
+					"name": "DashFAAdminOrgBerM1D3",
+					"target": [
+						"DashFAAdminOrgBerM1",
+						"DashFAAdminOrgBerM1D3"
+					],
+					"targetTitle": "DashFAAdminOrgBerM1D3"
+				},
+				{
+					"pattern": "DashboardAdminOrgBerFA/SUBDETAIL/AufwachsendeBewertung/{DID}/{SID}/:layout:",
+					"name": "DashFAAdminOrgBerM1D3S1",
+					"target": [
+						"DashFAAdminOrgBerM1",
+						"DashFAAdminOrgBerM1D3",
+						"DashFAAdminOrgBerM1D3S1"
+					],
+					"targetTitle": "DashFAAdminOrgBerM1D3S1"
+				},
+				{
+					"pattern": "DashboardAdminOrgBerFA/DETAIL/Besetzungslist/{DID}/:layout:",
+					"name": "DashFAAdminOrgBerM1D4",
+					"target": [
+						"DashFAAdminOrgBerM1",
+						"DashFAAdminOrgBerM1D4"
+					],
+					"targetTitle": "DashFAAdminOrgBerM1D4"
+				},
+				{
+					"pattern": "DashboardAdminBMVgFA/:layout:",
+					"name": "DashFAAdminBMVgM1",
+					"target": [
+						"DashFAAdminBMVgM1"
+					],
+					"group": "Fähigkeitsbezogene Aufgabe",
+					"targetTitle": "DashFAAdminBMVgM1",
+					"action": "DashFAAdminBMVgM1"
+				},
+				{
+					"pattern": "DashboardAdminBMVgFA/DETAIL/Beurteilung/{DID}/:layout:",
+					"name": "DashFAAdminBMVgM1D1",
+					"target": [
+						"DashFAAdminBMVgM1",
+						"DashFAAdminBMVgM1D1"
+					],
+					"targetTitle": "DashFAAdminBMVgM1D1"
+				},
+				{
+					"pattern": "DashboardAdminBMVgFA/SUBDETAIL/BeurteilungenVorebene/{DID}/{SID}/:layout:",
+					"name": "DashFAAdminBMVgM1D1S1",
+					"target": [
+						"DashFAAdminBMVgM1",
+						"DashFAAdminBMVgM1D1",
+						"DashFAAdminBMVgM1D1S1"
+					],
+					"targetTitle": "DashFAAdminBMVgM1D1S1"
+				},
+				{
+					"pattern": "DashboardAdminBMVgFA/DETAIL/Handlungsbedarf/{DID}/:layout:",
+					"name": "DashFAAdminBMVgM1D2",
+					"target": [
+						"DashFAAdminBMVgM1",
+						"DashFAAdminBMVgM1D2"
+					],
+					"targetTitle": "DashFAAdminBMVgM1D2"
+				},
+				{
+					"pattern": "DashboardAdminBMVgFA/SUBDETAIL/Handlungsbedarf/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAAdminBMVgM1D2S1",
+					"target": [
+						"DashFAAdminBMVgM1",
+						"DashFAAdminBMVgM1D2",
+						"DashFAAdminBMVgM1D2S1"
+					],
+					"targetTitle": "DashFAAdminBMVgM1D2S1"
+				},
+				{
+					"pattern": "DashboardAdminBMVgFA/SUBDETAIL/HandlungsbedarfAdd/{DID}/{SID}/:expand:/:layout:",
+					"name": "DashFAAdminBMVgM1D2S2",
+					"target": [
+						"DashFAAdminBMVgM1",
+						"DashFAAdminBMVgM1D2",
+						"DashFAAdminBMVgM1D2S2"
+					],
+					"targetTitle": "DashFAAdminBMVgM1D2S2"
+				},
+				{
+					"pattern": "DashboardAdminBMVgFA/DETAIL/AufwachsendeBewertung/{DID}/:expand:/:layout:",
+					"name": "DashFAAdminBMVgM1D3",
+					"target": [
+						"DashFAAdminBMVgM1",
+						"DashFAAdminBMVgM1D3"
+					],
+					"targetTitle": "DashFAAdminBMVgM1D3"
+				},
+				{
+					"pattern": "DashboardAdminBMVgFA/SUBDETAIL/AufwachsendeBewertung/{DID}/{SID}/:layout:",
+					"name": "DashFAAdminBMVgM1D3S1",
+					"target": [
+						"DashFAAdminBMVgM1",
+						"DashFAAdminBMVgM1D3",
+						"DashFAAdminBMVgM1D3S1"
+					],
+					"targetTitle": "DashFAAdminBMVgM1D3S1"
+				},
+				{
+					"pattern": "DashboardAdminBMVgFA/DETAIL/Besetzungslist/{DID}/:layout:",
+					"name": "DashFAAdminBMVgM1D4",
+					"target": [
+						"DashFAAdminBMVgM1",
+						"DashFAAdminBMVgM1D4"
+					],
+					"targetTitle": "DashFAAdminBMVgM1D4"
+				}
+			],
+			"targets": {
+				"Home": {
+					"id": "Home",
+					"name": "Home",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.frame",
+					"title": "{{appTitle}}",
+					"controlAggregation": "beginColumnPages"
+				},
+				"Dev": {
+					"id": "Dev",
+					"name": "Dev",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.frame",
+					"title": "Entwicklersicht",
+					"controlAggregation": "beginColumnPages"
+				},
+				"NotFound": {
+					"id": "NotFound",
+					"name": "NotFound",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.frame",
+					"title": "Sicht nicht gefunden",
+					"controlAggregation": "beginColumnPages"
+				},
+				"NotAuthorized": {
+					"id": "NotAuthorized",
+					"name": "NotAuthorized",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.frame",
+					"controlAggregation": "beginColumnPages"
+				},
+				"DashFAErstbeurM1": {
+					"id": "DashFAErstbeurM1",
+					"name": "DashFAErstbeurM1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "beginColumnPages",
+					"title": "Dashboard Erstbeurteilung FähigkbezAufg"
+				},
+				"DashFAErstbeurM1D1": {
+					"id": "DashFAErstbeurM1D1",
+					"name": "DashFAErstbeurM1D1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Erstbeurteilung FähigkbezAufg | Beurteilung"
+				},
+				"DashFAErstbeurM1D2": {
+					"id": "DashFAErstbeurM1D2",
+					"name": "DashFAErstbeurM1D2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Erstbeurteilung FähigkbezAufg | Handlungsbedarfe"
+				},
+				"DashFAErstbeurM1D2S1": {
+					"id": "DashFAErstbeurM1D2S1",
+					"name": "DashFAErstbeurM1D2S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Erstbeurteilung FähigkbezAufg | Handlungsbedarfe Detail"
+				},
+				"DashFAErstbeurM1D2S2": {
+					"id": "DashFAErstbeurM1D2S2",
+					"name": "DashFAErstbeurM1D2S2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Erstbeurteilung FähigkbezAufg | Handlungsbedarfe Detail"
+				},
+				"DashFAErstbeurM1D4": {
+					"id": "DashFAErstbeurM1D4",
+					"name": "DashFAErstbeurM1D4",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Erstbeurteilung FähigkbezAufg | Besetzungslist"
+				},
+				"DashFAKommM1": {
+					"id": "DashFAKommM1",
+					"name": "DashFAKommM1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "beginColumnPages",
+					"title": "Dashboard Kommentierung Fähigkeitsbezogene Aufgabe"
+				},
+				"DashFAKommM1D1": {
+					"id": "DashFAKommM1D1",
+					"name": "DashFAKommM1D1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Kommentierung FähigkbezAufg | Beurteilung"
+				},
+				"DashFAKommM1D1S1": {
+					"id": "DashFAKommM1D1S1",
+					"name": "DashFAKommM1D1S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Kommentierung FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAKommM1D2": {
+					"id": "DashFAKommM1D2",
+					"name": "DashFAKommM1D2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Kommentierung FähigkbezAufg | Handlungsbedarfe"
+				},
+				"DashFAKommM1D2S1": {
+					"id": "DashFAKommM1D2S1",
+					"name": "DashFAKommM1D2S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Kommentierung FähigkbezAufg | Handlungsbedarfe Detail"
+				},
+				"DashFAKommM1D2S2": {
+					"id": "DashFAKommM1D2S2",
+					"name": "DashFAKommM1D2S2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Kommentierung FähigkbezAufg | Handlungsbedarfe Detail"
+				},
+				"DashFAKommM1D3": {
+					"id": "DashFAKommM1D3",
+					"name": "DashFAKommM1D3",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Kommentierung FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAKommM1D3S1": {
+					"id": "DashFAKommM1D3S1",
+					"name": "DashFAKommM1D3S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Kommentierung FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAKommM1D4": {
+					"id": "DashFAKommM1D4",
+					"name": "DashFAKommM1D4",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Kommentierung FähigkbezAufg | Besetzungslist"
+				},
+				"DashFAKonsM1": {
+					"id": "DashFAKonsM1",
+					"name": "DashFAKonsM1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "beginColumnPages",
+					"title": "Dashboard Konsolidierung Fähigkeitsbezogene Aufgabe"
+				},
+				"DashFAKonsM1D1": {
+					"id": "DashFAKonsM1D1",
+					"name": "DashFAKonsM1D1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Konsolidierung FähigkbezAufg | Beurteilung"
+				},
+				"DashFAKonsM1D1S1": {
+					"id": "DashFAKonsM1D1S1",
+					"name": "DashFAKonsM1D1S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Konsolidierung FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAKonsM1D2": {
+					"id": "DashFAKonsM1D2",
+					"name": "DashFAKonsM1D2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Konsolidierung FähigkbezAufg | Handlungsbedarfe"
+				},
+				"DashFAKonsM1D2S1": {
+					"id": "DashFAKonsM1D2S1",
+					"name": "DashFAKonsM1D2S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Konsolidierung FähigkbezAufg | Eigenschaften"
+				},
+				"DashFAKonsM1D2S2": {
+					"id": "DashFAKonsM1D2S2",
+					"name": "DashFAKonsM1D2S2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Konsolidierung FähigkbezAufg | Eigenschaften"
+				},
+				"DashFAKonsM1D3": {
+					"id": "DashFAKonsM1D3",
+					"name": "DashFAKonsM1D3",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Konsolidierung FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAKonsM1D3S1": {
+					"id": "DashFAKonsM1D3S1",
+					"name": "DashFAKonsM1D3S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Konsolidierung FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAKonsM1D4": {
+					"id": "DashFAKonsM1D4",
+					"name": "DashFAKonsM1D4",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Konsolidierung FähigkbezAufg | Besetzungslist"
+				},
+				"DashFAMinBMVgM1": {
+					"id": "DashFAMinBMVgM1",
+					"name": "DashFAMinBMVgM1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "beginColumnPages",
+					"title": "Ministerium BMVg FähigkbezAufg | Besetzungslist"
+				},
+				"DashFAMinBMVgM1D1": {
+					"id": "DashFAMinBMVgM1D1",
+					"name": "DashFAMinBMVgM1D1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Ministerium BMVg FähigkbezAufg | Beurteilung"
+				},
+				"DashFAMinBMVgM1D1S1": {
+					"id": "DashFAMinBMVgM1D1S1",
+					"name": "DashFAMinBMVgM1D1S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Ministerium BMVg FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAMinBMVgM1D2": {
+					"id": "DashFAMinBMVgM1D2",
+					"name": "DashFAMinBMVgM1D2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Ministerium BMVg FähigkbezAufg | Handlungsbedarfe"
+				},
+				"DashFAMinBMVgM1D2S1": {
+					"id": "DashFAMinBMVgM1D2S1",
+					"name": "DashFAMinBMVgM1D2S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Ministerium BMVg FähigkbezAufg | Handlungsbedarfe Detail"
+				},
+				"DashFAMinBMVgM1D2S2": {
+					"id": "DashFAMinBMVgM1D2S2",
+					"name": "DashFAMinBMVgM1D2S2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Ministerium BMVg FähigkbezAufg | Handlungsbedarfe Detail"
+				},
+				"DashFAMinBMVgM1D3": {
+					"id": "DashFAMinBMVgM1D3",
+					"name": "DashFAMinBMVgM1D3",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Ministerium BMVg FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAMinBMVgM1D3S1": {
+					"id": "DashFAMinBMVgM1D3S1",
+					"name": "DashFAMinBMVgM1D3S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Ministerium BMVg FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAMinBMVgM1D4": {
+					"id": "DashFAMinBMVgM1D4",
+					"name": "DashFAMinBMVgM1D4",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Ministerium BMVg FähigkbezAufg | Besetzungslist"
+				},
+				"DashFAFachsupM1": {
+					"id": "DashFAFachsupM1",
+					"name": "DashFAFachsupM1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "beginColumnPages",
+					"title": "Dashboard FZSt BMVg Fähigkeitsbezogene Aufgabe"
+				},
+				"DashFAFachsupM1D1": {
+					"id": "DashFAFachsupM1D1",
+					"name": "DashFAFachsupM1D1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "FZSt BMVg FähigkbezAufg | Beurteilung"
+				},
+				"DashFAFachsupM1D1S1": {
+					"id": "DashFAFachsupM1D1S1",
+					"name": "DashFAFachsupM1D1S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "FZSt BMVg FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAFachsupM1D2": {
+					"id": "DashFAFachsupM1D2",
+					"name": "DashFAFachsupM1D2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "FZSt BMVg FähigkbezAufg | Handlungsbedarfe"
+				},
+				"DashFAFachsupM1D2S1": {
+					"id": "DashFAFachsupM1D2S1",
+					"name": "DashFAFachsupM1D2S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "FZSt BMVg FähigkbezAufg | Handlungsbedarfe | Detail"
+				},
+				"DashFAFachsupM1D2S2": {
+					"id": "DashFAFachsupM1D2S2",
+					"name": "DashFAFachsupM1D2S2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "FZSt BMVg FähigkbezAufg | Handlungsbedarfe | Detail"
+				},
+				"DashFAFachsupM1D3": {
+					"id": "DashFAFachsupM1D3",
+					"name": "DashFAFachsupM1D3",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "FZSt BMVg FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAFachsupM1D3S1": {
+					"id": "DashFAFachsupM1D3S1",
+					"name": "DashFAFachsupM1D3S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "FZSt BMVg FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAFachsupM1D4": {
+					"id": "DashFAFachsupM1D4",
+					"name": "DashFAFachsupM1D4",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "FZSt BMVg FähigkbezAufg | Besetzungslist"
+				},
+				"DashFAAdminOrgBerM1": {
+					"id": "DashFAAdminOrgBerM1",
+					"name": "DashFAAdminOrgBerM1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "beginColumnPages",
+					"title": "Dashboard Admin OrgBer Fähigkeitsbezogene Aufgabe"
+				},
+				"DashFAAdminOrgBerM1D1": {
+					"id": "DashFAAdminOrgBerM1D1",
+					"name": "DashFAAdminOrgBerM1D1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Dashboard Admin OrgBer Fähigkeitsbez. Aufgabe | Detail"
+				},
+				"DashFAAdminOrgBerM1D1S1": {
+					"id": "DashFAAdminOrgBerM1D1S1",
+					"name": "DashFAAdminOrgBerM1D1S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Dashboard Admin OrgBer Fähigkeitsbez. Aufgabe | Aufwachsende Bewertung"
+				},
+				"DashFAAdminOrgBerM1D2": {
+					"id": "DashFAAdminOrgBerM1D2",
+					"name": "DashFAAdminOrgBerM1D2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Admin OrgBer FähigkbezAufg | Handlungsbedarfe"
+				},
+				"DashFAAdminOrgBerM1D2S1": {
+					"id": "DashFAAdminOrgBerM1D2S1",
+					"name": "DashFAAdminOrgBerM1D2S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Admin OrgBer FähigkbezAufg | Handlungsbedarfe Detail"
+				},
+				"DashFAAdminOrgBerM1D2S2": {
+					"id": "DashFAAdminOrgBerM1D2S2",
+					"name": "DashFAAdminOrgBerM1D2S2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Admin OrgBer FähigkbezAufg | Handlungsbedarfe Detail"
+				},
+				"DashFAAdminOrgBerM1D3": {
+					"id": "DashFAAdminOrgBerM1D3",
+					"name": "DashFAAdminOrgBerM1D3",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Admin OrgBer FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAAdminOrgBerM1D3S1": {
+					"id": "DashFAAdminOrgBerM1D3S1",
+					"name": "DashFAAdminOrgBerM1D3S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Admin OrgBer FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAAdminOrgBerM1D4": {
+					"id": "DashFAAdminOrgBerM1D4",
+					"name": "DashFAAdminOrgBerM1D4",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Admin OrgBer FähigkbezAufg | Besetzungslist"
+				},
+				"DashFAAdminBMVgM1": {
+					"id": "DashFAAdminBMVgM1",
+					"name": "DashFAAdminBMVgM1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "beginColumnPages",
+					"title": "Dashboard Admin BMVg"
+				},
+				"DashFAAdminBMVgM1D1": {
+					"id": "DashFAAdminBMVgM1D1",
+					"name": "DashFAAdminBMVgM1D1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Admin BMVg FähigkbezAufg | Detail"
+				},
+				"DashFAAdminBMVgM1D1S1": {
+					"id": "DashFAAdminBMVgM1D1S1",
+					"name": "DashFAAdminBMVgM1D1S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Admin BMVg FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAAdminBMVgM1D2": {
+					"id": "DashFAAdminBMVgM1D2",
+					"name": "DashFAAdminBMVgM1D2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Admin BMVg FähigkbezAufg | Handlungsbedarfe"
+				},
+				"DashFAAdminBMVgM1D2S1": {
+					"id": "DashFAAdminBMVgM1D2S1",
+					"name": "DashFAAdminBMVgM1D2S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Admin BMVg FähigkbezAufg | Handlungsbedarfe Detail"
+				},
+				"DashFAAdminBMVgM1D2S2": {
+					"id": "DashFAAdminBMVgM1D2S2",
+					"name": "DashFAAdminBMVgM1D2S2",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Admin BMVg FähigkbezAufg | Handlungsbedarfe Detail"
+				},
+				"DashFAAdminBMVgM1D3": {
+					"id": "DashFAAdminBMVgM1D3",
+					"name": "DashFAAdminBMVgM1D3",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Admin BMVg FähigkbezAufg | Aufwachsende Bewertung"
+				},
+				"DashFAAdminBMVgM1D3S1": {
+					"id": "DashFAAdminBMVgM1D3S1",
+					"name": "DashFAAdminBMVgM1D3S1",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "endColumnPages",
+					"title": "Admin BMVg FähigkbezAufg | Aufwachsende Beurteilung"
+				},
+				"DashFAAdminBMVgM1D4": {
+					"id": "DashFAAdminBMVgM1D4",
+					"name": "DashFAAdminBMVgM1D4",
+					"path": "de.bundeswehr.zbcpl_peb_fa.module.fa.roles",
+					"controlAggregation": "midColumnPages",
+					"title": "Admin BMVg FähigkbezAufg | Besetzungslist"
+				}
+			}
+		}
+	}
+}

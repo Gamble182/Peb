@@ -1,0 +1,98 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core">
+   <OverflowToolbarButton
+      class="sapUiTinyMarginBegin"
+      press="onOpenFirstDependentPress"
+      icon="sap-icon://legend"
+      tooltip="Legende zu Anmerkungen anzeigen"
+      visible="{= !${viewModel>/bHideLegendeDiffAnmerkung} }">
+      <dependents>
+         <Popover
+            showHeader="false"
+            placement="VerticalPreferredBottom"
+            contentHeight="7rem"
+            contentWidth="23rem">
+            <VBox width="200px">
+               <HBox height="35px">
+                  <core:Icon
+                     src="{global>/aAnmerkungIcons/empty/Icon}"
+                     color="#104477"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="{global>/aAnmerkungIcons/empty/Tooltip}" />
+                  <Label
+                     text="{global>/aAnmerkungIcons/empty/Tooltip}"
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <HBox height="35px">
+                  <core:Icon
+                     src="{global>/aAnmerkungIcons/full/Icon}"
+                     color="#104477"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="{global>/aAnmerkungIcons/full/Tooltip}" />
+                  <Label
+                     text="{global>/aAnmerkungIcons/full/Tooltip}"
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <HBox height="35px">
+                  <core:Icon
+                     src="{global>/aAnmerkungIcons/diff/Icon}"
+                     color="#104477"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="{global>/aAnmerkungIcons/diff/Tooltip}" />
+                  <Label
+                     text="{global>/aAnmerkungIcons/diff/Tooltip}"
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+            </VBox>
+         </Popover>
+      </dependents>
+   </OverflowToolbarButton>
+   <OverflowToolbarButton
+      class="sapUiTinyMarginBegin"
+      press="onOpenFirstDependentPress"
+      icon="sap-icon://legend"
+      tooltip="Legende zu Anmerkungen anzeigen"
+      visible="{= ${viewModel>/bHideLegendeDiffAnmerkung} === true}">
+      <dependents>
+         <Popover
+            showHeader="false"
+            placement="VerticalPreferredBottom"
+            contentHeight="5rem"
+            contentWidth="23rem">
+            <VBox width="200px">
+               <HBox height="35px">
+                  <core:Icon
+                     src="{global>/aAnmerkungIcons/empty/Icon}"
+                     color="#104477"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="{global>/aAnmerkungIcons/empty/Tooltip}" />
+                  <Label
+                     text="{global>/aAnmerkungIcons/empty/Tooltip}"
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <HBox height="35px">
+                  <core:Icon
+                     src="{global>/aAnmerkungIcons/full/Icon}"
+                     color="#104477"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="{global>/aAnmerkungIcons/full/Tooltip}" />
+                  <Label
+                     text="{global>/aAnmerkungIcons/full/Tooltip}"
+                     width="auto"
+                     class="sapUiSmallMargin" />
+               </HBox>
+            </VBox>
+         </Popover>
+      </dependents>
+   </OverflowToolbarButton>
+</core:FragmentDefinition>

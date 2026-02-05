@@ -1,0 +1,113 @@
+<core:FragmentDefinition
+   height="100%"
+   xmlns:mvc="sap.ui.core.mvc"
+   xmlns:core="sap.ui.core"
+   xmlns:n="de.bundeswehr.zaxxx.framework.v010.global.control.natorating"
+   xmlns:r="de.bundeswehr.zaxxx.framework.v010.global.control.rating"
+   xmlns:t="de.bundeswehr.zaxxx.framework.v010.global.control.trending"
+   xmlns:rt="de.bundeswehr.zaxxx.framework.v010.global.control.ratingAndTrending"
+   xmlns:mc="sap.suite.ui.microchart"
+   xmlns="sap.uxap"
+   xmlns:m="sap.m"
+   xmlns:l="sap.ui.layout"
+   xmlns:s="sap.f.semantic"
+   xmlns:fb="sap.ui.comp.filterbar"
+   xmlns:smartTable="sap.ui.comp.smarttable"
+   xmlns:smartField="sap.ui.comp.smartfield"
+   xmlns:table="sap.ui.table"
+   xmlns:c="de.bundeswehr.zaxxx.framework.v010.global.control.page">
+   <!-- Aufwachsende Beurteilung -->
+
+   <c:DetailObjectPage
+      title="{Strukturelement_Text} ({Strukturelement})"
+      subTitle="Beurteilung"
+      editPress="onEditPress"
+      savePress="onSavePress"
+      cancelPress="onCancelPress"
+      releasePress="onReleasePress"
+      editVisible="false"
+      messagePress="onOpenMessagePopover"
+      releaseVisible="{= ${global>/bAllowRelease} &amp;&amp; false }"
+      column="{fcl>/actionButtonsInfo/midColumn}"
+      editMode="{viewModel>/bEditing}"
+      editEnabled="{= !${global>/bEditing} &amp;&amp; ${viewModel>/bCheckEdit} }"
+      releaseEnabled="{= !${global>/bEditing} &amp;&amp; ${viewModel>/bCheckRelease} }"
+      closePress="onCloseColumn"
+      exitFSPress="onExitFullScreen"
+      openFSPress="onFullScreen">
+
+      <!-- Header Content -->
+      <c:headerContent>
+
+         <core:Fragment
+            fragmentName="de.bundeswehr.zbcpl_peb_fa.global.fragment.FilterHeaderStrukturelementDetail"
+            type="XML" />
+
+         <m:MessageStrip
+            visible="{= ${EinsatzbedingteAbwesenheit} === 'X' }"
+            text="Strukturelement wird in der aktuellen Planungssituation nicht beurteilt. Angezeigte Daten sind aus der vorherigen Planungssituation übernommen."
+            type="Warning"
+            showIcon="true"
+            customIcon="sap-icon://journey-arrive"
+            showCloseButton="false"
+            class="sapUiMediumMarginBottom" />
+
+      </c:headerContent>
+
+      <!-- Content -->
+      <c:sections>
+
+         <ObjectPageSection
+            id="idSectionAufwachsendeBeurteilung"
+            title="Aufwachsende Beurteilung"
+            titleUppercase="false">
+            <subSections>
+               <ObjectPageSubSection>
+                  <blocks>
+
+                     <m:VBox>
+                        <core:Fragment
+                           fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1KommentarAufwBeurteilung"
+                           type="XML" />
+
+                        <core:Fragment
+                           id="fragmentAufwachsendeBeurteilungFa"
+                           fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1AufwachsendeBeurteilung"
+                           type="XML" />
+                     </m:VBox>
+
+                  </blocks>
+               </ObjectPageSubSection>
+            </subSections>
+         </ObjectPageSection>
+
+         <ObjectPageSection
+            id="idSectionSelbstbeurteilung"
+            title="Selbstbeurteilung"
+            titleUppercase="false">
+            <subSections>
+               <ObjectPageSubSection>
+                  <blocks>
+
+                     <m:VBox>
+                        <core:Fragment
+                           class="sapUiLargeMarginTop"
+                           fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1Kommentar"
+                           type="XML" />
+
+                        <core:Fragment
+                           id="fragmentSelbstbeurteilungFa"
+                           fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1AufwachsendeBeurteilung"
+                           type="XML" />
+                     </m:VBox>
+
+                  </blocks>
+               </ObjectPageSubSection>
+            </subSections>
+         </ObjectPageSection>
+
+      </c:sections>
+
+   </c:DetailObjectPage>
+
+</core:FragmentDefinition>

@@ -1,0 +1,80 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core">
+   <OverflowToolbarButton
+      class="sapUiTinyMarginBegin"
+      press="onOpenFirstDependentPress"
+      icon="sap-icon://legend"
+      tooltip="Legende zu Einschränkungen anzeigen">
+      <dependents>
+         <Popover
+            showHeader="false"
+            placement="VerticalPreferredBottom"
+            contentHeight="12rem"
+            contentWidth="13rem">
+            <VBox width="200px">
+               <HBox height="35px">
+                  <core:Icon
+                     src="sap-icon://employee"
+                     color="#104477"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="Personal" />
+                  <Label
+                     text="Personal"
+                     width="6rem"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <HBox height="35px">
+                  <core:Icon
+                     src="sap-icon://education"
+                     color="#104477"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="Ausbildung" />
+                  <Label
+                     text="Ausbildung"
+                     width="6rem"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <HBox height="35px">
+                  <core:Icon
+                     src="sap-icon://wrench"
+                     color="#104477"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="Material" />
+                  <Label
+                     text="Material"
+                     width="6rem"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <HBox height="35px">
+                  <core:Icon
+                     src="sap-icon://building"
+                     color="#104477"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="Infrastruktur" />
+                  <Label
+                     text="Infrastruktur"
+                     width="6rem"
+                     class="sapUiSmallMargin" />
+               </HBox>
+               <HBox height="35px">
+                  <core:Icon
+                     src="sap-icon://example"
+                     color="#104477"
+                     class="sapUiSmallMargin"
+                     width="1.2rem"
+                     tooltip="Sonstiges" />
+                  <Label
+                     text="Sonstiges"
+                     width="6rem"
+                     class="sapUiSmallMargin" />
+               </HBox>
+            </VBox>
+         </Popover>
+      </dependents>
+   </OverflowToolbarButton>
+</core:FragmentDefinition>

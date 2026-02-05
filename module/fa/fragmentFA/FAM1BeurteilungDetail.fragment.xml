@@ -1,0 +1,112 @@
+<core:FragmentDefinition
+   xmlns="sap.uxap"
+   xmlns:core="sap.ui.core"
+   xmlns:m="sap.m">
+
+   <ObjectPageSection
+      titleUppercase="false"
+      showTitle="true">
+      <subSections>
+         <ObjectPageSubSection
+            title="Einsatzfähigkeit"
+            titleUppercase="false">
+            <blocks>
+
+               <core:Fragment
+                  fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.beurteilungDetailBlock.FAM1Einsatzfaehigkeit"
+                  type="XML" />
+
+            </blocks>
+         </ObjectPageSubSection>
+      </subSections>
+   </ObjectPageSection>
+
+   <ObjectPageSection
+      title="Einsatzbereitschaft"
+      titleUppercase="false">
+      <subSections>
+         <ObjectPageSubSection>
+            <blocks>
+
+               <core:Fragment
+                  fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.beurteilungDetailBlock.FAM1Einsatzbereitschaft"
+                  type="XML" />
+
+            </blocks>
+         </ObjectPageSubSection>
+      </subSections>
+   </ObjectPageSection>
+
+   <ObjectPageSection
+      title="Besetzungsstand"
+      titleUppercase="false"
+      id="objectPageSectionBesetzungsstand">
+      <subSections>
+         <ObjectPageSubSection>
+            <blocks>
+
+               <core:Fragment
+                  fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.beurteilungDetailBlock.FAM1Besetzungsstand"
+                  type="XML" />
+
+            </blocks>
+         </ObjectPageSubSection>
+      </subSections>
+   </ObjectPageSection>
+
+   <ObjectPageSection
+      title="Entwicklung Besetzungsstand (2 Jahre)"
+      titleUppercase="false"
+      id="objectPageSectionEntwicklungBesetzung">
+      <subSections>
+         <ObjectPageSubSection>
+            <blocks>
+
+               <core:Fragment
+                  fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.beurteilungDetailBlock.FAM1EntwicklungBesetzungsstand"
+                  type="XML" />
+
+            </blocks>
+         </ObjectPageSubSection>
+      </subSections>
+   </ObjectPageSection>
+
+   <ObjectPageSection
+      visible="{= ${Meldetyp} === 'K' }"
+      titleUppercase="false"
+      showTitle="true">
+      <subSections>
+         <ObjectPageSubSection
+            title="Beurteilungen der Vorebene"
+            titleUppercase="false">
+            <blocks>
+
+               <core:Fragment
+                  fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1BeurteilungDetailNachDienststellen"
+                  type="XML" />
+
+            </blocks>
+         </ObjectPageSubSection>
+      </subSections>
+   </ObjectPageSection>
+
+
+   <ObjectPageSection
+      titleUppercase="false"
+      showTitle="true">
+      <subSections>
+         <ObjectPageSubSection
+            title="Besetzungsliste"
+            titleUppercase="false">
+            <blocks>
+
+               <core:Fragment
+                  fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentBL.Besetzungsliste"
+                  type="XML" />
+
+            </blocks>
+         </ObjectPageSubSection>
+      </subSections>
+   </ObjectPageSection>
+
+</core:FragmentDefinition>

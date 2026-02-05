@@ -1,0 +1,36 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
+
+    <FlexBox
+        alignItems="Center"
+        justifyContent="Start">
+        <FlexBox
+            direction="Column"
+            alignItems="Start"
+            justifyContent="SpaceBetween"
+            class="sapUiSmallMarginEnd">
+            <ObjectAttribute
+                title="Planungssituation"
+                text="{global>/sPlanungssituationId}" />
+            <ObjectAttribute
+                title="Beurteilungsstichtag"
+                text="{global>/sPlanungssituationBeurteilungsstichtag}" />
+        </FlexBox>
+        <ObjectStatus
+            inverted="true"
+            class="objectStatus"
+            text="{
+                    path: 'global>/sPlanungssituationStatus',
+                    formatter: '.formatter.getMeldungStatusString',
+                    templateShareable : false
+                }"
+            state="{
+                    path: 'global>/sPlanungssituationStatus',
+                    formatter: '.formatter.getMeldungStatus',
+                    templateShareable : false
+                }" />
+    </FlexBox>
+
+</core:FragmentDefinition>      

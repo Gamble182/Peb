@@ -1,0 +1,331 @@
+<core:FragmentDefinition
+   xmlns:u="sap.uxap"
+   xmlns:mvc="sap.ui.core.mvc"
+   xmlns="sap.m"
+   xmlns:l="sap.ui.layout"
+   xmlns:core="sap.ui.core"
+   xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+   xmlns:c="de.bundeswehr.zaxxx.framework.v010.global.control.page"
+   xmlns:smartField="sap.ui.comp.smartfield"
+   xmlns:table="sap.ui.table"
+   height="100%">
+
+   <c:MasterPage
+      title="{= ${global>/selectedRoleText} + ( (${global>/selectedRole} === 'PEB_EB_FA') ? ''  : ' Fähigkeitsbezogene Aufgabe' )}"
+      messagePress="onOpenMessagePopover"
+      noContentPadding="true"
+      editPress="onEditPress"
+      savePress="onSavePress"
+      cancelPress="onCancelPress"
+      releasePress="onReleasePress"
+      closeVisible="true"
+      closePress="onCloseColumn"
+      editVisible="{= ${viewModel>/isTabEditable} &amp;&amp; ${global>/bRoleFA} &amp;&amp; ${global>/bAllowWrite} &amp;&amp; !${global>/bPlanungssituationOpen} &amp;&amp; ${fcl>/layout} === 'OneColumn' }"
+      releaseVisible="{= ${global>/bRoleFA} &amp;&amp; ${global>/bAllowRelease} &amp;&amp; !${global>/bPlanungssituationOpen} &amp;&amp; ${fcl>/layout} === 'OneColumn' }"
+      editMode="{viewModel>/bEditing}"
+      editEnabled="{= !${global>/bEditing} &amp;&amp; ${viewModel>/bCheckEdit} }"
+      releaseEnabled="{= !${global>/bEditing} &amp;&amp; ${viewModel>/bCheckRelease} }">
+
+
+      <c:headerContent>
+         <core:Fragment
+            fragmentName="de.bundeswehr.zbcpl_peb_fa.global.fragment.FilterHeaderStrukturelement"
+            type="XML" />
+      </c:headerContent>
+
+      <c:content>
+
+         <IconTabBar
+            id="iconTabBar"
+            expandable="false"
+            expanded="true"
+            applyContentPadding="true"
+            select="onIconToolbarSelect"
+            selectedKey="{/viewModel>/selectedTabKey}"
+            stretchContentHeight="true">
+
+            <items>
+
+               <!-- Fehlende Berechtigung -->
+               <IconTabFilter
+                  text="Kennzahlen"
+                  key="FAM1KeineDaten"
+                  visible="{= !${viewModel>/bDataAvailable} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerErstbeurteilung}  &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKommentierung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKonsolidierung}}">
+
+                  <HBox class="sapUiMediumMargin">
+                     <VBox>
+                        <core:Icon
+                           src="sap-icon://message-warning"
+                           tooltip="Sie haben für dieses Strukturelement nicht die erforderlichen Berechtigungen.!"
+                           color="Critical"
+                           size="3.5rem"
+                           visible="true" />
+                     </VBox>
+                     <VBox>
+                        <HBox class="sapUiSmallMarginBegin">
+                           <Label
+                              text="Keine Daten vorhanden! Strukturelement {global>/sStrukturelementText}  ist nicht berechtigt."
+                              design="Bold" />
+                        </HBox>
+                        <HBox class="sapUiSmallMargin">
+                           <Label
+                              text="Zur Beurteilung der Fähigkeitsbezogenen Aufgaben für das Strukturelement {global>/sStrukturelementText} ({global>/sStrukturelementId}) benötigen Sie Berechtigung auf das Strukturelement."
+                              design="Bold" />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin">
+                           <Label
+                              text="Bitte wenden Sie sich an den für Sie zuständigen Nutzerverwalter Log/ReWe."
+                              design="Bold" />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin sapUiLargeMarginTop">
+                           <Label text="Hinweis:" />
+                        </HBox>
+                        <HBox class="sapUiSmallMargin">
+                           <Label text="Den für Sie zuständigen Nutzerverwalter können Sie u.a. über die Intranetseite https://saspf.bundeswehr.org/portal/a/i_saspf/start finden." />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin sapUiLargeMarginTop">
+                           <Label text="Weitere Informationen zur Berechtigungsvergabe im LBPersEB finden Sie u.a.:" />
+                        </HBox>
+                        <HBox class="sapUiSmallMargin">
+                           <Label text="- https://wiki.bundeswehr.org/display/ITUCon/LBPersEB" />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin">
+                           <Label text="- https://teams.ecm.bundeswehr.org/portale/P5608772262/SitePages/Home.aspx" />
+                        </HBox>
+                     </VBox>
+                  </HBox>
+
+               </IconTabFilter>
+
+               <!-- bFalscheSichtMitStrukturelementDerErstbeurteilung -->
+               <IconTabFilter
+                  text="Kennzahlen"
+                  key="SDERS"
+                  visible="{= ${viewModel>/bFalscheSichtMitStrukturelementDerErstbeurteilung} }">
+                  <HBox class="sapUiMediumMargin">
+                     <VBox>
+                        <core:Icon
+                           src="sap-icon://message-warning"
+                           tooltip="Strukturelement ist als Erstbeurteilungsebene festgelegt."
+                           color="Critical"
+                           size="3.5rem"
+                           visible="true" />
+                     </VBox>
+                     <VBox>
+                        <HBox class="sapUiSmallMarginBegin">
+                           <Label
+                              text="Keine Daten vorhanden! Das Strukturelement {global>/sStrukturelementText} ist als Erstbeurteilungsebene festgelegt."
+                              design="Bold" />
+                        </HBox>
+                        <HBox class="sapUiSmallMargin">
+                           <Label
+                              text="Zur Beurteilung der Fähigkeitsbezogenen Aufgaben für das Strukturelement {global>/sStrukturelementText} ({global>/sStrukturelementId}) benötigen Sie die Rolle ''Erstbeurteilung Fähigkeitsbezogene Aufgaben''."
+                              design="Bold" />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin">
+                           <Label
+                              text="Bitte wenden Sie sich an den für Sie zuständigen Nutzerverwalter Log/ReWe."
+                              design="Bold" />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin sapUiLargeMarginTop">
+                           <Label text="Hinweis:" />
+                        </HBox>
+                        <HBox class="sapUiSmallMargin">
+                           <Label text="Den für Sie zuständigen Nutzerverwalter können Sie u.a. über die Intranetseite https://saspf.bundeswehr.org/portal/a/i_saspf/start finden." />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin sapUiLargeMarginTop">
+                           <Label text="Weitere Informationen zur Berechtigungsvergabe im LBPersEB finden Sie u.a.:" />
+                        </HBox>
+                        <HBox class="sapUiSmallMargin">
+                           <Label text="- https://wiki.bundeswehr.org/display/ITUCon/LBPersEB" />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin">
+                           <Label text="- https://teams.ecm.bundeswehr.org/portale/P5608772262/SitePages/Home.aspx" />
+                        </HBox>
+                     </VBox>
+                  </HBox>
+               </IconTabFilter>
+
+               <!-- bFalscheSichtMitStrukturelementDerKommentierung -->
+               <IconTabFilter
+                  text="Kennzahlen"
+                  key="SDKOM"
+                  visible="{= ${viewModel>/bFalscheSichtMitStrukturelementDerKommentierung} }">
+                  <HBox class="sapUiMediumMargin">
+                     <VBox>
+                        <core:Icon
+                           src="sap-icon://message-warning"
+                           tooltip="Strukturelement ist als Kommentierungsebene festgelegt."
+                           color="Critical"
+                           size="3.5rem"
+                           visible="true" />
+                     </VBox>
+                     <VBox>
+                        <HBox class="sapUiSmallMarginBegin">
+                           <Label
+                              text="Keine Daten vorhanden! Das Strukturelement {global>/sStrukturelementText} ist als Kommentierungsebene festgelegt."
+                              design="Bold" />
+                        </HBox>
+                        <HBox class="sapUiSmallMargin">
+                           <Label
+                              text="Zur Beurteilung der Fähigkeitsbezogenen Aufgaben für das Strukturelement {global>/sStrukturelementText} ({global>/sStrukturelementId}) benötigen Sie die Rolle ''Kommentierung Fähigkeitsbezogene Aufgaben''."
+                              design="Bold" />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin">
+                           <Label
+                              text="Bitte wenden Sie sich an den für Sie zuständigen Nutzerverwalter Log/ReWe."
+                              design="Bold" />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin sapUiLargeMarginTop">
+                           <Label text="Hinweis:" />
+                        </HBox>
+                        <HBox class="sapUiSmallMargin">
+                           <Label text="Den für Sie zuständigen Nutzerverwalter können Sie u.a. über die Intranetseite https://saspf.bundeswehr.org/portal/a/i_saspf/start finden." />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin sapUiLargeMarginTop">
+                           <Label text="Weitere Informationen zur Berechtigungsvergabe im LBPersEB finden Sie u.a.:" />
+                        </HBox>
+                        <HBox class="sapUiSmallMargin">
+                           <Label text="- https://wiki.bundeswehr.org/display/ITUCon/LBPersEB" />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin">
+                           <Label text="- https://teams.ecm.bundeswehr.org/portale/P5608772262/SitePages/Home.aspx" />
+                        </HBox>
+                     </VBox>
+                  </HBox>
+               </IconTabFilter>
+
+               <!-- bFalscheSichtMitStrukturelementDerKonsolidierung -->
+               <IconTabFilter
+                  text="Kennzahlen"
+                  key="SDKON"
+                  visible="{= ${viewModel>/bFalscheSichtMitStrukturelementDerKonsolidierung} }">
+                  <HBox class="sapUiMediumMargin">
+                     <VBox>
+                        <core:Icon
+                           src="sap-icon://message-warning"
+                           tooltip="Strukturelement ist als Konsolidierungsebene festgelegt."
+                           color="Critical"
+                           size="3.5rem"
+                           visible="true" />
+                     </VBox>
+                     <VBox>
+                        <HBox class="sapUiSmallMarginBegin">
+                           <Label
+                              text="Keine Daten vorhanden! Das Strukturelement {global>/sStrukturelementText} ist als Konsolidierungsebene festgelegt."
+                              design="Bold" />
+                        </HBox>
+                        <HBox class="sapUiSmallMargin">
+                           <Label
+                              text="Zur Beurteilung der Fähigkeitsbezogenen Aufgaben für das Strukturelement {global>/sStrukturelementText} ({global>/sStrukturelementId}) benötigen Sie die Rolle ''Konsolidierung Fähigkeitsbezogene Aufgaben''."
+                              design="Bold" />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin">
+                           <Label
+                              text="Bitte wenden Sie sich an den für Sie zuständigen Nutzerverwalter Log/ReWe."
+                              design="Bold" />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin sapUiLargeMarginTop">
+                           <Label text="Hinweis:" />
+                        </HBox>
+                        <HBox class="sapUiSmallMargin">
+                           <Label text="Den für Sie zuständigen Nutzerverwalter können Sie u.a. über die Intranetseite https://saspf.bundeswehr.org/portal/a/i_saspf/start finden." />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin sapUiLargeMarginTop">
+                           <Label text="Weitere Informationen zur Berechtigungsvergabe im LBPersEB finden Sie u.a.:" />
+                        </HBox>
+                        <HBox class="sapUiSmallMargin">
+                           <Label text="- https://wiki.bundeswehr.org/display/ITUCon/LBPersEB" />
+                        </HBox>
+                        <HBox class="sapUiSmallMarginBegin">
+                           <Label text="- https://teams.ecm.bundeswehr.org/portale/P5608772262/SitePages/Home.aspx" />
+                        </HBox>
+                     </VBox>
+                  </HBox>
+               </IconTabFilter>
+
+
+               <IconTabFilter
+                  text="Kennzahlen"
+                  key="FAM1Kennzahlen"
+                  visible="{= ${viewModel>/bTabVisibleKennzahlen} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerErstbeurteilung}  &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKommentierung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKonsolidierung}}">
+
+                  <core:Fragment
+                     fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1Kennzahlen"
+                     type="XML" />
+
+               </IconTabFilter>
+
+               <IconTabFilter
+                  text="Selbstbeurteilung"
+                  key="FAM1Erstbeurteilung"
+                  visible="{= ${viewModel>/bTabVisibleErstbeurteilungen} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerErstbeurteilung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKommentierung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKonsolidierung}}">
+
+                  <core:Fragment
+                     fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1BeurteilungSelbst"
+                     type="XML" />
+
+               </IconTabFilter>
+
+               <IconTabFilter
+                  text="Aufwachsende Beurteilung"
+                  key="FAM1AufwBeurteilung"
+                  visible="{= ${viewModel>/bTabVisibleAufwachsendeBewertung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerErstbeurteilung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKommentierung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKonsolidierung}}">
+
+                  <core:Fragment
+                     fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1BeurteilungAufwachsende"
+                     type="XML" />
+
+               </IconTabFilter>
+
+               <IconTabFilter
+                  text="Handlungsbedarfe"
+                  key="FAM1HandBedarf"
+                  visible="{= ${viewModel>/bTabVisibleHandlungsbedarfe} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerErstbeurteilung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKommentierung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKonsolidierung}}">
+
+                  <core:Fragment
+                     fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1HandBedarf"
+                     type="XML" />
+
+               </IconTabFilter>
+
+               <IconTabFilter
+                  key="FAM1VergleichGrid"
+                  text="Vergleich Fähigkeitsbezogene Aufgaben"
+                  visible="{= ${viewModel>/bTabVisibleVergleich} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerErstbeurteilung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKommentierung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKonsolidierung}}">
+                  <core:Fragment
+                     fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1FaehVergleich"
+                     type="XML" />
+               </IconTabFilter>
+
+               <IconTabFilter
+                  text="Vergleich nach Dienststellen"
+                  key="FAM1VergleichNachDienststellen"
+                  visible="{= ${viewModel>/bTabVisibleVergleichNachDienststellen} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerErstbeurteilung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKommentierung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKonsolidierung}}">
+
+                  <core:Fragment
+                     fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1VergleichNachDienststellen"
+                     type="XML" />
+
+               </IconTabFilter>
+
+               <IconTabFilter
+                  text="Meldestatus"
+                  key="FAM1Meldestatus"
+                  visible="{= ${viewModel>/bTabVisibleMeldestatus} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerErstbeurteilung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKommentierung} &amp;&amp; !${viewModel>/bFalscheSichtMitStrukturelementDerKonsolidierung}}">
+
+                  <core:Fragment
+                     fragmentName="de.bundeswehr.zbcpl_peb_fa.module.fa.fragmentFA.FAM1Meldestatus"
+                     type="XML" />
+
+               </IconTabFilter>
+
+            </items>
+         </IconTabBar>
+
+
+      </c:content>
+
+   </c:MasterPage>
+
+</core:FragmentDefinition>

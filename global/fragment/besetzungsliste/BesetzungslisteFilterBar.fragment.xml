@@ -1,0 +1,25 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:core="sap.ui.core">
+
+
+    <smartFilterBar:SmartFilterBar
+        id="smartFilterBarBL"
+        showFilterConfiguration="false"
+        entitySet="ZBCPL_C_REP_BESETZUNGSLISTESet"
+        enableBasicSearch="false"
+        useToolbar="false"        
+        liveMode="true"
+        class=""
+        visible="{= !${global>/actionRoleId}.startsWith('DashVB')}"
+        initialized="onInitialized">
+
+
+        <smartFilterBar:layoutData>
+            <FlexItemData shrinkFactor="0" />
+        </smartFilterBar:layoutData>
+    </smartFilterBar:SmartFilterBar>
+
+</core:FragmentDefinition>
